@@ -1,8 +1,8 @@
+"use client";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import { en } from "@/data/en";
 import { AlertCircle } from "lucide-react";
-import { cache } from "react";
-import { Suspense } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -11,49 +11,29 @@ import {
 } from "@/components/ui/tooltip";
 import Link from "next/link";
 import { Icons } from "../icons";
-interface LeetCodeContestData {
-  contestRating: number;
-  contestParticipation: {
-    attended: number;
-  }[];
-}
+import { trpc } from "@/server/client";
 
-// Cached fetcher function to prevent duplicate requests
-const getLeetCodeData = cache(async (username: string) => {
-  try {
-    // Artificial delay removed in production
-    const res = await fetch(
-      `https://alfa-leetcode-api.onrender.com/${username}/contest`,
-      { next: { revalidate: 3600 } } // Cache for 1 hour
-    );
-
-    if (!res.ok) throw new Error("Failed to fetch LeetCode data");
-    return (await res.json()) as LeetCodeContestData;
-  } catch (error) {
-    console.error("Error fetching LeetCode data:", error);
-    return null;
-  }
-});
-
-function LeetcodeSkeletonLoader() {
-  return (
-    <div className="text-center">
-      <Skeleton className="h-10 w-24 mx-auto mb-2" />
-      <Skeleton className="h-4 w-32 mx-auto" />
-      <div className="mt-2 flex justify-center gap-2">
-        <Skeleton className="h-3 w-20" />
-        <Skeleton className="h-3 w-24" />
-        <Skeleton className="h-3 w-16" />
-      </div>
-    </div>
-  );
-}
-
-async function LeetcodeRatingContent() {
+export function LeetcodeRating() {
   const username = en.leetcode_username;
-  const result = await getLeetCodeData(username);
+  const { data, isLoading, error } = trpc.leetcode.getRating.useQuery({
+    username,
+  });
 
-  if (!result?.contestParticipation?.length) {
+  if (isLoading) {
+    return (
+      <div className="text-center">
+        <Skeleton className="h-10 w-24 mx-auto mb-2" />
+        <Skeleton className="h-4 w-32 mx-auto" />
+        <div className="mt-2 flex justify-center gap-2">
+          <Skeleton className="h-3 w-20" />
+          <Skeleton className="h-3 w-24" />
+          <Skeleton className="h-3 w-16" />
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !data?.success || !data.contestRating) {
     return (
       <div className="text-center">
         <div className="text-4xl font-bold text-primary">
@@ -68,7 +48,7 @@ async function LeetcodeRatingContent() {
                   <AlertCircle size={16} />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>User Not Found</p>
+                  <p>{error?.message || "User Not Found"}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -81,7 +61,7 @@ async function LeetcodeRatingContent() {
   return (
     <div className="text-center">
       <div className="text-4xl font-bold text-primary mb-2">
-        {result.contestRating.toFixed(1) || "--"}
+        {data.contestRating.toFixed(1)}
       </div>
       <div className="text-sm text-muted-foreground flex items-center justify-center gap-2">
         <div>LeetCode Rating</div>
@@ -91,18 +71,15 @@ async function LeetcodeRatingContent() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {/* please use any icon */}
           <Icons.leetcode className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors duration-200 h-4 w-4" />
         </Link>
       </div>
+      {data.globalRanking && (
+        <div className="mt-2 text-xs text-muted-foreground">
+          Global Rank: {data.globalRanking.toLocaleString()}
+          {data.topPercentage && ` (Top ${data.topPercentage.toFixed(2)}%)`}
+        </div>
+      )}
     </div>
-  );
-}
-
-export function LeetcodeRating() {
-  return (
-    <Suspense fallback={<LeetcodeSkeletonLoader />}>
-      <LeetcodeRatingContent />
-    </Suspense>
   );
 }

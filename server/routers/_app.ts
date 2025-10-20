@@ -1,6 +1,7 @@
 import { createTRPCRouter } from "../init";
 import { contactRouter } from "./contact";
 import { chatRouter } from "./chat";
+import { leetcodeRouter } from "./leetcode";
 
 /**
  * This is the primary router for your server.
@@ -10,6 +11,7 @@ import { chatRouter } from "./chat";
 export const appRouter = createTRPCRouter({
   contact: contactRouter,
   chat: chatRouter,
+  leetcode: leetcodeRouter,
 });
 
 // Export type definition of API
