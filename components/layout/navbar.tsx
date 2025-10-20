@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { AnimatedThemeToggler } from "@/components/ui/theme-toggle";
 import { MobileNav } from "@/components/layout/mobile-nav";
 
 // Navigation items
@@ -34,7 +34,7 @@ export function Navbar({
 
         {/* Theme toggle and mobile nav - Right */}
         <div className="flex items-center justify-end gap-2">
-          <ThemeToggle />
+          <AnimatedThemeToggler />
           <MobileNav navItems={navItems} />
         </div>
       </div>
