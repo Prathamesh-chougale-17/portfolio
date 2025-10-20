@@ -1,40 +1,26 @@
 "use client";
 
-import { z } from "zod";
 import { useForm } from "@tanstack/react-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
-import type { ContactFormState } from "@/actions/contact";
-import { submitContactForm } from "@/actions/contact";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { en } from "@/data/en";
-import { useActionState } from "@/hooks/useActionHooks";
-
-const initialState: ContactFormState = {
-  name: "",
-  email: "",
-  subject: "",
-  message: "",
-};
-
-const clientFormSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  subject: z
-    .string()
-    .min(5, { message: "Subject must be at least 5 characters" }),
-  message: z
-    .string()
-    .min(10, { message: "Message must be at least 10 characters" }),
-});
+import { trpc } from "@/server/client";
 
 export function ContactForm() {
-  const [state, formAction, isPending] = useActionState(
-    submitContactForm,
-    initialState,
-  );
+  const contactMutation = trpc.contact.submit.useMutation({
+    onSuccess: (data) => {
+      toast.success(data.message || "Message sent successfully!");
+      form.reset();
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to send message. Please try again.");
+    },
+  });
 
   const form = useForm({
     defaultValues: {
@@ -43,24 +29,12 @@ export function ContactForm() {
       subject: "",
       message: "",
     },
-    validators: {
-      onSubmit: clientFormSchema,
-      // You can also enable onBlur/onChange validation if desired:
-      // onBlur: clientFormSchema,
-      // onChange: clientFormSchema,
-    },
     onSubmit: async ({ value }) => {
-      // Build FormData to send to the server action (preserves server-side behavior)
-      const formData = new FormData();
-      formData.append("name", value.name);
-      formData.append("email", value.email);
-      formData.append("subject", value.subject);
-      formData.append("message", value.message);
-
-      // Call the bound server action via the useActionState hook
-      await formAction(formData);
+      await contactMutation.mutateAsync(value);
     },
   });
+
+  const isPending = contactMutation.isPending;
 
   return (
     <Card className="animate-fade-in-right">
@@ -76,10 +50,15 @@ export function ContactForm() {
           className="space-y-4"
           noValidate
         >
-          <form.Field name="name">
+          <form.Field
+            name="name"
+            validators={{
+              onChange: z.string().min(2, { message: "Name must be at least 2 characters" }),
+            }}
+          >
             {(field) => {
               const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid;
+                field.state.meta.isTouched && field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium">
@@ -94,20 +73,11 @@ export function ContactForm() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     aria-invalid={isInvalid}
-                    disabled={isPending || state.success}
+                    disabled={isPending}
                   />
-                  {/* Client-side validation errors */}
-                  {isInvalid && field.state.meta.errors?.length ? (
+                  {isInvalid && (
                     <p className="text-sm text-destructive">
                       {field.state.meta.errors.join(", ")}
-                    </p>
-                  ) : null}
-                  {/* Server-side errors returned from action */}
-                  {state.errors?.name && (
-                    <p className="text-sm text-destructive">
-                      {Array.isArray(state.errors.name)
-                        ? state.errors.name.join(", ")
-                        : state.errors.name}
                     </p>
                   )}
                 </div>
@@ -115,10 +85,15 @@ export function ContactForm() {
             }}
           </form.Field>
 
-          <form.Field name="email">
+          <form.Field
+            name="email"
+            validators={{
+              onChange: z.string().email({ message: "Please enter a valid email address" }),
+            }}
+          >
             {(field) => {
               const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid;
+                field.state.meta.isTouched && field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium">
@@ -134,18 +109,11 @@ export function ContactForm() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     aria-invalid={isInvalid}
-                    disabled={isPending || state.success}
+                    disabled={isPending}
                   />
-                  {isInvalid && field.state.meta.errors?.length ? (
+                  {isInvalid && (
                     <p className="text-sm text-destructive">
                       {field.state.meta.errors.join(", ")}
-                    </p>
-                  ) : null}
-                  {state.errors?.email && (
-                    <p className="text-sm text-destructive">
-                      {Array.isArray(state.errors.email)
-                        ? state.errors.email.join(", ")
-                        : state.errors.email}
                     </p>
                   )}
                 </div>
@@ -153,10 +121,15 @@ export function ContactForm() {
             }}
           </form.Field>
 
-          <form.Field name="subject">
+          <form.Field
+            name="subject"
+            validators={{
+              onChange: z.string().min(5, { message: "Subject must be at least 5 characters" }),
+            }}
+          >
             {(field) => {
               const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid;
+                field.state.meta.isTouched && field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
                   <label htmlFor="subject" className="text-sm font-medium">
@@ -174,18 +147,11 @@ export function ContactForm() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     aria-invalid={isInvalid}
-                    disabled={isPending || state.success}
+                    disabled={isPending}
                   />
-                  {isInvalid && field.state.meta.errors?.length ? (
+                  {isInvalid && (
                     <p className="text-sm text-destructive">
                       {field.state.meta.errors.join(", ")}
-                    </p>
-                  ) : null}
-                  {state.errors?.subject && (
-                    <p className="text-sm text-destructive">
-                      {Array.isArray(state.errors.subject)
-                        ? state.errors.subject.join(", ")
-                        : state.errors.subject}
                     </p>
                   )}
                 </div>
@@ -193,10 +159,15 @@ export function ContactForm() {
             }}
           </form.Field>
 
-          <form.Field name="message">
+          <form.Field
+            name="message"
+            validators={{
+              onChange: z.string().min(10, { message: "Message must be at least 10 characters" }),
+            }}
+          >
             {(field) => {
               const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid;
+                field.state.meta.isTouched && field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
                   <label htmlFor="message" className="text-sm font-medium">
@@ -212,18 +183,11 @@ export function ContactForm() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     aria-invalid={isInvalid}
-                    disabled={isPending || state.success}
+                    disabled={isPending}
                   />
-                  {isInvalid && field.state.meta.errors?.length ? (
+                  {isInvalid && (
                     <p className="text-sm text-destructive">
                       {field.state.meta.errors.join(", ")}
-                    </p>
-                  ) : null}
-                  {state.errors?.message && (
-                    <p className="text-sm text-destructive">
-                      {Array.isArray(state.errors.message)
-                        ? state.errors.message.join(", ")
-                        : state.errors.message}
                     </p>
                   )}
                 </div>
@@ -231,25 +195,9 @@ export function ContactForm() {
             }}
           </form.Field>
 
-          {state.errors?._form && (
-            <div className="p-3 bg-destructive/20 border border-destructive text-destructive rounded">
-              <p>
-                {Array.isArray(state.errors._form)
-                  ? state.errors._form[0]
-                  : state.errors._form}
-              </p>
-            </div>
-          )}
-
-          {state.success && (
-            <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded animate-fade-in dark:bg-green-900 dark:text-green-300 dark:border-green-700">
-              <p>{en.contact.form.success}</p>
-            </div>
-          )}
-
           <Button
             type="submit"
-            disabled={isPending || state.success}
+            disabled={isPending}
             className="w-full cursor-pointer"
           >
             {isPending ? "Sending..." : en.contact.form.submit}

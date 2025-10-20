@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { publicProcedure, createTRPCRouter } from "../init";
 import nodemailer from "nodemailer";
+import { env } from "@/env";
 
 const contactSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -14,29 +15,27 @@ const contactSchema = z.object({
 });
 
 export const contactRouter = createTRPCRouter({
-  submit: publicProcedure
-    .input(contactSchema)
-    .mutation(async ({ input }) => {
-      const { name, email, subject, message } = input;
+  submit: publicProcedure.input(contactSchema).mutation(async ({ input }) => {
+    const { name, email, subject, message } = input;
 
-      try {
-        // Create email transporter
-        const transporter = nodemailer.createTransport({
-          host: process.env.EMAIL_SERVER_HOST,
-          port: Number(process.env.EMAIL_SERVER_PORT),
-          secure: true,
-          auth: {
-            user: process.env.EMAIL_SERVER_USER,
-            pass: process.env.EMAIL_SERVER_PASSWORD,
-          },
-        });
+    try {
+      // Create email transporter (use typed env)
+      const transporter = nodemailer.createTransport({
+        host: env.EMAIL_SERVER_HOST,
+        port: Number(env.EMAIL_SERVER_PORT),
+        secure: true,
+        auth: {
+          user: env.EMAIL_SERVER_USER,
+          pass: env.EMAIL_SERVER_PASSWORD,
+        },
+      });
 
-        // Prepare email content
-        const mailOptions = {
-          from: process.env.EMAIL_SERVER_USER,
-          to: process.env.EMAIL_ADMIN,
-          subject: `Contact Form: ${subject}`,
-          html: `
+      // Prepare email content
+      const mailOptions = {
+        from: env.EMAIL_SERVER_USER,
+        to: env.EMAIL_ADMIN,
+        subject: `Contact Form: ${subject}`,
+        html: `
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -132,14 +131,14 @@ export const contactRouter = createTRPCRouter({
             </body>
             </html>
           `,
-        };
+      };
 
-        // Send thank you email
-        const thankYouMailOptions = {
-          from: process.env.EMAIL_SERVER_USER,
-          to: email,
-          subject: "Thank you for reaching out!",
-          html: `
+      // Send thank you email
+      const thankYouMailOptions = {
+        from: env.EMAIL_SERVER_USER,
+        to: email,
+        subject: "Thank you for reaching out!",
+        html: `
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -223,19 +222,19 @@ export const contactRouter = createTRPCRouter({
             </body>
             </html>
           `,
-        };
+      };
 
-        // Send emails
-        await transporter.sendMail(mailOptions);
-        await transporter.sendMail(thankYouMailOptions);
+      // Send emails
+      await transporter.sendMail(mailOptions);
+      await transporter.sendMail(thankYouMailOptions);
 
-        return {
-          success: true,
-          message: "Your message has been sent successfully!",
-        };
-      } catch (error) {
-        console.error("Failed to send email:", error);
-        throw new Error("Failed to send your message. Please try again later.");
-      }
-    }),
+      return {
+        success: true,
+        message: "Your message has been sent successfully!",
+      };
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      throw new Error("Failed to send your message. Please try again later.");
+    }
+  }),
 });

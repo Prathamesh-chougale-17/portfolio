@@ -2,6 +2,7 @@ import { google } from "@ai-sdk/google";
 import { streamText } from "ai";
 import { z } from "zod";
 import { en } from "@/data/en";
+import { env } from "@/env";
 import { createTRPCRouter, publicProcedure } from "../init";
 
 const chatMessageSchema = z.object({
@@ -60,9 +61,16 @@ ${en.projects
 - Show enthusiasm about your work and projects
 - Use emojis sparingly and professionally`;
 
-        // Generate response using AI SDK
+        // Ensure GEMINI API key is available to the AI SDK and prepare model
+        if (!env.GEMINI_API_KEY) {
+          throw new Error("GEMINI_API_KEY is not configured");
+        }
+        // Some SDKs read from process.env — ensure runtime is populated (server-only)
+        process.env.GEMINI_API_KEY = env.GEMINI_API_KEY;
+
+        const model = google("gemini-2.0-flash-exp");
         const result = streamText({
-          model: google("gemini-2.0-flash-exp"),
+          model,
           system: systemPrompt,
           messages,
           temperature: 0.7,
@@ -104,8 +112,15 @@ Portfolio Info:
 
 Format responses using Markdown when appropriate. Keep answers concise but informative.`;
 
+        // Ensure GEMINI API key is available to the AI SDK and prepare model
+        if (!env.GEMINI_API_KEY) {
+          throw new Error("GEMINI_API_KEY is not configured");
+        }
+        process.env.GEMINI_API_KEY = env.GEMINI_API_KEY;
+
+        const model = google("gemini-2.0-flash-exp");
         const result = streamText({
-          model: google("gemini-2.0-flash-exp"),
+          model,
           system: systemPrompt,
           messages,
           temperature: 0.7,
