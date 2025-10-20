@@ -183,7 +183,7 @@ export default function ChatButton() {
             "p-3 sm:p-4 w-[calc(100vw-32px)] sm:w-[350px] md:w-[400px] h-[450px] sm:h-[500px] flex flex-col shadow-lg",
             "bg-gradient-to-br from-background to-background/95 dark:from-background dark:to-background/90",
             "border border-border/50 dark:border-border/30",
-            "animate-in slide-in-from-bottom-5 duration-300"
+            "animate-in slide-in-from-bottom-5 duration-300",
           )}
         >
           <div className="flex justify-between items-center mb-3 sm:mb-4 border-b dark:border-border/30 pb-2 sm:pb-3">
@@ -218,7 +218,7 @@ export default function ChatButton() {
                     "p-2 sm:p-3 rounded-lg max-w-[85%] sm:max-w-[80%]",
                     msg.role === "assistant"
                       ? "bg-primary/10 dark:bg-primary/20 rounded-tl-none self-start"
-                      : "bg-muted dark:bg-muted/30 rounded-tr-none self-end"
+                      : "bg-muted dark:bg-muted/30 rounded-tr-none self-end",
                   )}
                 >
                   {msg.role === "assistant" ? (
@@ -283,7 +283,7 @@ export default function ChatButton() {
               onClick={toggleListening}
               className={cn(
                 "rounded-full h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0",
-                isListening ? "bg-red-500 hover:bg-red-600" : ""
+                isListening ? "bg-red-500 hover:bg-red-600" : "",
               )}
               aria-label={isListening ? "Stop listening" : "Start listening"}
               disabled={isLoading}
@@ -324,7 +324,7 @@ export default function ChatButton() {
             size="icon"
             className={cn(
               "rounded-full cursor-pointer h-12 w-12 sm:h-14 sm:w-14 shadow-lg dark:shadow-primary/10 hover:scale-110 transition-all duration-300",
-              "bg-primary hover:bg-primary/90 dark:bg-primary dark:hover:bg-primary/90"
+              "bg-primary hover:bg-primary/90 dark:bg-primary dark:hover:bg-primary/90",
             )}
             aria-label="Open chat"
           >
