@@ -11,7 +11,7 @@ export const en: entype = {
   ],
   hero: {
     name: "Prathamesh Chougale",
-    image: "/placeholder.svg",
+    image: "/profile.jpg",
     title: "Software Engineer Intern",
     company: "HSBC",
     companyLink: "https://hsbc.com",
@@ -45,7 +45,7 @@ export const en: entype = {
       "A collection of my recent projects highlighting my skills in web development, user experience design, and modern technologies.",
   },
   projects: [
-    {
+      {
       title: "NextGen E-commerce",
       description:
         "A blazing fast e-commerce platform built with Next.js, TypeScript and Tailwind CSS.",
@@ -104,15 +104,15 @@ export const en: entype = {
       featured: false,
     },
   ],
-  about: {
+    about: {
     hero: {
       title: "About Me",
-      image: "/placeholder.svg",
+      image: "/profile.jpg",
       subtitle: "Full Stack Developer specializing in modern web technologies",
       description:
         "I'm a passionate developer with over 7 years of experience building web applications and digital experiences. My journey has taken me from startups to enterprise organizations, where I've honed my skills in creating performant, accessible, and beautiful interfaces.",
       skills: ["React", "TypeScript", "Next.js", "Node.js", "TailwindCSS"],
-    },
+  },
     techSkills: [
       { name: "React", level: 5, icon: Icons.react },
       { name: "TypeScript", level: 5, icon: Icons.typescript },

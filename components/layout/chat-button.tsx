@@ -114,7 +114,7 @@ export default function ChatButton() {
         <Card
           className={cn(
             "w-[calc(100vw-32px)] sm:w-[380px] h-[500px]",
-            "flex flex-col border border-border gap-0 bg-background/60 backdrop-blur-xl rounded-2xl shadow-lg py-0"
+            "flex flex-col border border-border bg-background/60 backdrop-blur-xl rounded-2xl shadow-lg py-0"
           )}
         >
           {/* Header */}
@@ -141,14 +141,14 @@ export default function ChatButton() {
           </div>
 
           {/* Messages */}
-          <div ref={chatContainerRef} className="flex-1">
+          <div ref={chatContainerRef} className="flex-1 overflow-y-auto">
             {messages.map((m) => (
               <Message key={m.id} from={m.role}>
                 <MessageAvatar
                   src={
                     m.role === "user"
-                      ? "https://api.dicebear.com/7.x/avataaars/svg?seed=user"
-                      : "https://api.dicebear.com/7.x/bottts/svg?seed=ai"
+                      ? "/user.png"
+                      : "/profile.jpg"
                   }
                   name={m.role === "assistant" ? en.hero.name : "You"}
                 />
@@ -180,7 +180,7 @@ export default function ChatButton() {
             {sendMessageMutation.isPending && (
               <Message from="assistant">
                 <MessageAvatar
-                  src="https://api.dicebear.com/7.x/bottts/svg?seed=ai"
+                  src="/profile.jpg"
                   name={en.hero.name}
                 />
                 <MessageContent variant="contained" className="bg-muted/50 border border-border">
