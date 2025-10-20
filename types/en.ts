@@ -29,7 +29,7 @@ export interface entype {
     title: string;
     description: string;
     tags: string[];
-    githubLink: string;
+    githubLink?: string;
     liveLink?: string;
     image: string;
     featured: boolean;

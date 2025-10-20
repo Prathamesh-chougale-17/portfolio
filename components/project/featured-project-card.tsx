@@ -48,17 +48,19 @@ export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" size="sm" asChild>
-          <Link
-            href={project.githubLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2"
-          >
-            <Github className="w-4 h-4" />
-            Code
-          </Link>
-        </Button>
+        {project.githubLink && (
+          <Button size="sm" asChild>
+            <Link
+              href={project.githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2"
+            >
+              <Github className="w-4 h-4" />
+              Code
+            </Link>
+          </Button>
+        )}
         {project.liveLink && (
           <Button size="sm" asChild>
             <Link

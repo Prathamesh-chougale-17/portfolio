@@ -1,191 +1,160 @@
 import { Icons } from "@/components/icons";
 import { entype } from "@/types/en";
 export const en: entype = {
-  leetcode_username: "prathameshchougale17", // Add your LeetCode username here to dynamically fetch your stats
+  leetcode_username: "prathameshchougale17",
   navItems: [
     { title: "Home", href: "/" },
     { title: "Projects", href: "/projects" },
-    // { title: "Blog", href: "/blog" },
     { title: "About", href: "/about" },
     { title: "Contact", href: "/contact" },
   ],
   hero: {
     name: "Prathamesh Chougale",
     image: "/profile.jpg",
-    title: "Software Engineer Intern",
-    company: "HSBC",
-    companyLink: "https://hsbc.com",
+    title: "Software Engineer",
+    company: "RDM",
+    companyLink: "https://rdmtoken.com",
     description:
-      "Passionate developer focused on creating performant and accessible web applications using modern technologies like React, Next.js, and TypeScript.",
+      "Full-stack developer skilled in React, Next.js, and TypeScript. Passionate about building performant, accessible, and scalable web applications with real-world impact.",
   },
   achievements: [
     {
+      title: "Smart India Hackathon Winner",
+      description:
+        "Secured Rank 1 in the Smart India Hackathon for developing an innovative real-world solution under national evaluation.",
+      Icon: Icons.trophy,
+    },
+    {
+      title: "HSBC Hackathon Winner 2024",
+      description:
+        "Won HSBC Hackathon 2024 by developing a high-impact web-based solution addressing financial workflow challenges.",
+      Icon: Icons.award,
+    },
+    {
       title: "Open Source Contributor",
       description:
-        "Contributed to over 50 open source projects including React, Next.js, and various popular libraries.",
+        "Contributed to popular open-source repositories such as Next.js SaaS Starter (12k+ stars), enhancing production-grade SaaS development tools.",
       Icon: Icons.gitHub,
-    },
-    {
-      title: "Tech Conference Speaker",
-      description:
-        "Presented at 10+ international conferences on topics related to web performance and accessibility.",
-      Icon: Icons.mic,
-    },
-    {
-      title: "Award-Winning Developer",
-      description:
-        "Received the Developer of the Year award at the 2023 Web Excellence Awards.",
-      Icon: Icons.trophy,
     },
   ],
   projectsPage: {
     title: "My Projects",
     subtitle: "Showcasing My Creative Work",
     description:
-      "A collection of my recent projects highlighting my skills in web development, user experience design, and modern technologies.",
+      "Explore my portfolio of projects that combine creativity, engineering, and real-world problem solving using React, Next.js, and AI technologies.",
   },
   projects: [
-      {
-      title: "NextGen E-commerce",
+    {
+      title: "Oorja AI",
       description:
-        "A blazing fast e-commerce platform built with Next.js, TypeScript and Tailwind CSS.",
-      tags: ["Next.js", "TypeScript", "Tailwind"],
-      githubLink: "https://github.com/johndoe/nextgen-ecommerce",
-      liveLink: "https://nextgen-ecommerce.vercel.app",
-      image: "/placeholder.svg",
+        "A wellness platform offering personalized mental and physical health assessments. Integrated AI features for personalized recommendations and interactive learning.",
+      tags: ["Next.js", "Next auth", "Shadcn", "MongoDB"],
+      liveLink: "https://oorjaai.vercel.app",
+      image: "/projects/oorja.png",
       featured: true,
     },
     {
-      title: "DevCollab",
+      title: "Swaad Link",
       description:
-        "Real-time collaboration tool for developers with integrated code editor and version control.",
-      tags: ["React", "Socket.io", "Node.js"],
-      githubLink: "https://github.com/johndoe/devcollab",
-      image: "/placeholder.svg",
+        "A full-stack web app for booking personal chefs with real-time availability, Chef Profiles, and advanced search/filtering.",
+      tags: ["React.js", "Clerk", "Node.js", "Express.js", "MongoDB"],
+      githubLink: "https://github.com/Prathamesh-chougale-17/swaadLink",
+      liveLink: "https://swaadlink.vercel.app",
+      image: "/projects/swaadlink.png",
       featured: false,
     },
     {
-      title: "Accessible UI Library",
+      title: "Health Vault",
       description:
-        "A collection of accessible, reusable UI components following WCAG guidelines.",
-      tags: ["React", "TypeScript", "ARIA"],
-      githubLink: "https://github.com/johndoe/accessible-ui",
-      liveLink: "https://accessible-ui.vercel.app",
-      image: "/placeholder.svg",
+        "Digital health record platform using Next.js and Clerk, enabling patients to store, retrieve, and manage health data efficiently.",
+      tags: ["Next.js", "Sanity", "MongoDB", "Clerk"],
+      githubLink: "https://github.com/Prathamesh-chougale-17/health-vault",
+      liveLink: "https://health-vault.vercel.app",
+      image: "/projects/health-vault.png",
       featured: false,
     },
     {
-      title: "Task Management Dashboard",
+      title: "Next.js SaaS Starter Contributions",
       description:
-        "A productivity application for managing tasks, deadlines, and team collaboration.",
-      tags: ["Next.js", "Prisma", "tRPC"],
-      githubLink: "https://github.com/johndoe/task-dashboard",
-      liveLink: "https://task-dashboard.vercel.app",
-      image: "/placeholder.svg",
+        "Open-source contributions to Next.js SaaS Starter (12.3k+ stars) — improving developer experience for production-grade SaaS products.",
+      tags: ["Next.js", "TypeScript", "Open Source"],
+      githubLink: "https://github.com/nextjs/saas-starter",
+      liveLink: "https://next-saas-start.vercel.app",
+      image: "/projects/saas.png",
       featured: true,
-    },
-    {
-      title: "AI Content Generator",
-      description:
-        "An AI-powered tool for generating marketing copy, blog posts, and social media content.",
-      tags: ["OpenAI", "React", "Node.js"],
-      githubLink: "https://github.com/johndoe/ai-content-generator",
-      image: "/placeholder.svg",
-      featured: false,
-    },
-    {
-      title: "Personal Finance Tracker",
-      description:
-        "A secure application for tracking expenses, creating budgets, and visualizing financial data.",
-      tags: ["Next.js", "Chart.js", "PostgreSQL"],
-      githubLink: "https://github.com/johndoe/finance-tracker",
-      liveLink: "https://finance-tracker.vercel.app",
-      image: "/placeholder.svg",
-      featured: false,
     },
   ],
-    about: {
+  about: {
     hero: {
       title: "About Me",
       image: "/profile.jpg",
-      subtitle: "Full Stack Developer specializing in modern web technologies",
+      subtitle: "Full Stack Developer | Open Source Contributor | Problem Solver",
       description:
-        "I'm a passionate developer with over 7 years of experience building web applications and digital experiences. My journey has taken me from startups to enterprise organizations, where I've honed my skills in creating performant, accessible, and beautiful interfaces.",
-      skills: ["React", "TypeScript", "Next.js", "Node.js", "TailwindCSS"],
-  },
+        "I'm a passionate full-stack developer with a strong foundation in computer science and hands-on experience building scalable web applications. My journey includes developing enterprise dashboards for HSBC, leading hackathon teams, and contributing to open source projects.",
+      skills: ["React", "Next.js", "TypeScript", "Node.js", "MongoDB"],
+    },
     techSkills: [
       { name: "React", level: 5, icon: Icons.react },
       { name: "TypeScript", level: 5, icon: Icons.typescript },
-      { name: "Next.js", level: 4, icon: Icons.nextjs },
+      { name: "Next.js", level: 5, icon: Icons.nextjs },
       { name: "Node.js", level: 4, icon: Icons.nodejs },
       { name: "Tailwind CSS", level: 5, icon: Icons.tailwindcss },
       { name: "Python", level: 3, icon: Icons.python },
       { name: "Docker", level: 3, icon: Icons.docker },
-      { name: "AWS", level: 4, icon: Icons.aws },
-      { name: "Databases", level: 4, icon: Icons.database },
       { name: "Git/GitHub", level: 5, icon: Icons.gitHub },
+      { name: "Databases", level: 4, icon: Icons.database },
     ],
     experiences: [
       {
-        title: "Senior Frontend Developer",
-        company: "Tech Innovations Inc.",
-        period: "2021 - Present",
+        title: "Software Trainee Intern",
+        company: "HSBC",
+        period: "Jan 2025 - Mar 2025",
         description:
-          "Lead frontend development using React, TypeScript, and Next.js. Implemented design systems and improved performance by 40%.",
+          "Developed a full-stack internal web application to consolidate team updates and organizational data into a unified dashboard. Improved internal visibility and collaboration using React.js and Java.",
       },
       {
-        title: "Full Stack Developer",
-        company: "Digital Solutions",
-        period: "2018 - 2021",
+        title: "Freelance Full Stack Developer",
+        company: "Self-employed",
+        period: "Sep 2024 - Dec 2024",
         description:
-          "Developed full-stack applications with Node.js and React. Collaborated with cross-functional teams to deliver client projects.",
+          "Built and maintained dynamic web applications for clients using React.js, Next.js, and TypeScript. Contributed clean, reusable, and scalable code to open-source repositories.",
       },
       {
-        title: "Junior Developer",
-        company: "StartUp Ventures",
-        period: "2016 - 2018",
+        title: "Community Contributor",
+        company: "ACM Chapter, PCCOE",
+        period: "2024",
         description:
-          "Built responsive web applications and contributed to the company's core product development.",
+          "Conducted sessions for 300+ students on Git, GitHub, and Open Source. Helped establish a strong developer community and fostered contributions to public projects.",
       },
     ],
     stats: {
       statItems: [
-        { label: "Projects Completed", value: "25" },
-        { label: "Hackathon Participations", value: "12" },
-        // Add more stats as needed
+        { label: "LeetCode Problems Solved", value: "250+" },
+        { label: "Hackathon Wins", value: "5+" },
       ],
-      leetcodeRating: "1850+",
+      leetcodeRating: "1500+",
     },
   },
   contact: {
-    thoughtTitle: "Let's Create Something Amazing Together",
+    thoughtTitle: "Let's Build Something Impactful",
     thoughtText:
-      "I'm passionate about turning ideas into reality. Whether you have a project in mind or just want to say hello, I'd love to hear from you!",
+      "I love collaborating on innovative ideas that push boundaries. If you’re working on something exciting or need a developer to bring your vision to life, let’s connect!",
     imageUrl: "/placeholder.svg",
-    imageAlt: "Person working at desk with laptop and notebook",
+    imageAlt: "Developer working on laptop",
     socials: {
       title: "Connect with me",
       links: [
-        { name: Icons.instagram, url: "https://instagram.com/username" },
-        { name: Icons.x, url: "https://twitter.com/username" },
-        { name: Icons.linkedin, url: "https://linkedin.com/in/username" },
-        { name: Icons.gitHub, url: "https://github.com/username" },
+        { name: Icons.instagram, url: "https://instagram.com/prathamesh_chougale_17" },
+        { name: Icons.x, url: "https://twitter.com/prathamesh_7717" },
+        { name: Icons.linkedin, url: "https://linkedin.com/in/prathamesh-chougale" },
+        { name: Icons.gitHub, url: "https://github.com/prathamesh-chougale-17" },
       ],
     },
     form: {
       title: "Send Me a Message",
-      name: {
-        label: "Name",
-        placeholder: "Your name",
-      },
-      email: {
-        label: "Email",
-        placeholder: "your.email@example.com",
-      },
-      subject: {
-        label: "Subject",
-        placeholder: "Enter message subject",
-      },
+      name: { label: "Name", placeholder: "Your name" },
+      email: { label: "Email", placeholder: "your.email@example.com" },
+      subject: { label: "Subject", placeholder: "Enter message subject" },
       message: {
         label: "Message",
         placeholder: "Tell me about your project or inquiry...",

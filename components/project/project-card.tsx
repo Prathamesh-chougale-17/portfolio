@@ -17,7 +17,7 @@ export interface Project {
   description: string;
   image: string;
   tags: string[];
-  githubLink: string;
+  githubLink?: string;
   liveLink?: string;
   featured?: boolean;
 }
@@ -57,17 +57,19 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="ghost" size="sm" asChild>
-          <Link
-            href={project.githubLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2"
-          >
-            <Github className="w-4 h-4" />
-            GitHub
-          </Link>
-        </Button>
+        {project.githubLink && (
+          <Button variant="outline" size="sm" asChild>
+            <Link
+              href={project.githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2"
+            >
+              <Github className="w-4 h-4" />
+              GitHub
+            </Link>
+          </Button>
+        )}
         {project.liveLink && (
           <Button variant="ghost" size="sm" asChild>
             <Link

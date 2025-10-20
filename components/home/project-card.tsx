@@ -47,21 +47,23 @@ export function ProjectCard({
         </CardDescription>
       </CardContent>
       <CardFooter className="flex gap-2 relative z-10">
-        <Button
-          asChild
-          variant="outline"
-          size="sm"
-          className="border-primary/50 hover:bg-primary/10 hover:text-primary transition-all"
-        >
-          <a
-            href={githubLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1"
+        {githubLink && (
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="border-primary/50 hover:bg-primary/10 hover:text-primary transition-all"
           >
-            <Github className="h-4 w-4" /> Code
-          </a>
-        </Button>
+            <a
+              href={githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1"
+            >
+              <Github className="h-4 w-4" /> Code
+            </a>
+          </Button>
+        )}
         {liveLink && (
           <Button
             asChild
