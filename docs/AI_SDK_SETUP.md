@@ -116,7 +116,7 @@ tRPC sends the complete response back, and the UI updates with the AI message.
 Add to your `.env.local`:
 
 ```env
-GEMINI_API_KEY=your-gemini-api-key-here
+GOOGLE_GENERATIVE_AI_API_KEY=your-gemini-api-key-here
 ```
 
 **Get your API key:**
@@ -371,7 +371,7 @@ if (messageCount > 10) {
 
 ### "API key not valid" error
 **Solution:**
-- Check `GEMINI_API_KEY` in `.env.local`
+- Check `GOOGLE_GENERATIVE_AI_API_KEY` in `.env.local`
 - Ensure no extra spaces or quotes
 - Restart dev server: `bun run dev`
 - Verify key at [Google AI Studio](https://aistudio.google.com/app/apikey)

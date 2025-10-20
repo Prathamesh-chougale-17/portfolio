@@ -10,7 +10,7 @@ const chatMessageSchema = z.object({
     z.object({
       role: z.enum(["user", "assistant", "system"]),
       content: z.string(),
-    }),
+    })
   ),
 });
 
@@ -27,7 +27,9 @@ export const chatRouter = createTRPCRouter({
         const { messages } = input;
 
         // Prepare context with portfolio data
-        const systemPrompt = `You are ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}.
+        const systemPrompt = `You are ${en.hero.name}, a ${en.hero.title} at ${
+          en.hero.company
+        }.
 
 Respond to questions as if you are this person, using first-person perspective. Use the following information about yourself to craft authentic responses:
 
@@ -44,7 +46,7 @@ ${en.about.hero.skills.join(", ")}
 ${en.about.experiences
   .map(
     (exp) =>
-      `- ${exp.title} at ${exp.company} (${exp.period}): ${exp.description}`,
+      `- ${exp.title} at ${exp.company} (${exp.period}): ${exp.description}`
   )
   .join("\n")}
 
@@ -60,13 +62,6 @@ ${en.projects
 - If asked about something not in your information, politely redirect to topics you can discuss
 - Show enthusiasm about your work and projects
 - Use emojis sparingly and professionally`;
-
-        // Ensure GEMINI API key is available to the AI SDK and prepare model
-        if (!env.GEMINI_API_KEY) {
-          throw new Error("GEMINI_API_KEY is not configured");
-        }
-        // Some SDKs read from process.env — ensure runtime is populated (server-only)
-        process.env.GEMINI_API_KEY = env.GEMINI_API_KEY;
 
         const model = google("gemini-2.0-flash-exp");
         const result = streamText({
@@ -89,7 +84,7 @@ ${en.projects
         throw new Error(
           error instanceof Error
             ? error.message
-            : "Failed to process your message. Please try again.",
+            : "Failed to process your message. Please try again."
         );
       }
     }),
@@ -101,22 +96,20 @@ ${en.projects
       try {
         const { messages } = input;
 
-        const systemPrompt = `You are ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}.
+        const systemPrompt = `You are ${en.hero.name}, a ${en.hero.title} at ${
+          en.hero.company
+        }.
 
 Respond to questions as if you are this person, using first-person perspective. Be helpful, friendly, and professional.
 
 Portfolio Info:
 - Skills: ${en.about.hero.skills.join(", ")}
-- Experience: ${en.about.experiences.map((exp) => `${exp.title} at ${exp.company}`).join("; ")}
+- Experience: ${en.about.experiences
+          .map((exp) => `${exp.title} at ${exp.company}`)
+          .join("; ")}
 - Projects: ${en.projects.map((p) => p.title).join(", ")}
 
 Format responses using Markdown when appropriate. Keep answers concise but informative.`;
-
-        // Ensure GEMINI API key is available to the AI SDK and prepare model
-        if (!env.GEMINI_API_KEY) {
-          throw new Error("GEMINI_API_KEY is not configured");
-        }
-        process.env.GEMINI_API_KEY = env.GEMINI_API_KEY;
 
         const model = google("gemini-2.0-flash-exp");
         const result = streamText({

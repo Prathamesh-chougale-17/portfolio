@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { TRPCProvider } from "@/server/client";
 import { ThemeProvider } from "@/context/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -32,13 +33,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark">
-          <Navbar navItems={en.navItems} />
-          <main className="px-4 sm:px-6 md:px-8 lg:px-12">{children}</main>
-          <ChatButton />
-          <Footer />
-          <Toaster />
-        </ThemeProvider>
+        <TRPCProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark">
+            <Navbar navItems={en.navItems} />
+            <main className="px-4 sm:px-6 md:px-8 lg:px-12">{children}</main>
+            <ChatButton />
+            <Footer />
+            <Toaster />
+          </ThemeProvider>
+        </TRPCProvider>
       </body>
     </html>
   );

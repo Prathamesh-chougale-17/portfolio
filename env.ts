@@ -25,7 +25,7 @@ export const env = createEnv({
     EMAIL_ADMIN: z.string().min(1),
 
     // 3rd-party / AI
-    GEMINI_API_KEY: z.string().min(1),
+    GOOGLE_GENERATIVE_AI_API_KEY: z.string().min(1),
 
     // Optional misc server vars
     NODE_ENV: z.string().optional(),
@@ -48,7 +48,7 @@ export const env = createEnv({
     EMAIL_SERVER_USER: process.env.EMAIL_SERVER_USER,
     EMAIL_SERVER_PASSWORD: process.env.EMAIL_SERVER_PASSWORD,
     EMAIL_ADMIN: process.env.EMAIL_ADMIN,
-    GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+    GOOGLE_GENERATIVE_AI_API_KEY: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     NEXT_PUBLIC_SOME_FEATURE_FLAG: process.env.NEXT_PUBLIC_SOME_FEATURE_FLAG,
     NODE_ENV: process.env.NODE_ENV,
