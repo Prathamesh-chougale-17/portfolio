@@ -9,7 +9,7 @@ const chatMessageSchema = z.object({
     z.object({
       role: z.enum(["user", "assistant", "system"]),
       content: z.string(),
-    })
+    }),
   ),
 });
 
@@ -33,16 +33,16 @@ ${en.about.hero.skills.join(", ")}
 
 ### Experience
 ${en.about.experiences
-    .map(
-      (exp) =>
-        `- ${exp.title} at ${exp.company} (${exp.period}): ${exp.description}`
-    )
-    .join("\n")}
+  .map(
+    (exp) =>
+      `- ${exp.title} at ${exp.company} (${exp.period}): ${exp.description}`,
+  )
+  .join("\n")}
 
 ### Projects
 ${en.projects
-    .map((p) => `- ${p.title}: ${p.description}\n  Tech: ${p.tags.join(", ")}`)
-    .join("\n")}
+  .map((p) => `- ${p.title}: ${p.description}\n  Tech: ${p.tags.join(", ")}`)
+  .join("\n")}
 
 ---
 
@@ -87,7 +87,7 @@ export const chatRouter = createTRPCRouter({
         throw new Error(
           error instanceof Error
             ? error.message
-            : "Failed to process your message. Please try again."
+            : "Failed to process your message. Please try again.",
         );
       }
     }),

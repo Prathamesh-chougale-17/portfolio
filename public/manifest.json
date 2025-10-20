@@ -10,7 +10,6 @@
   "scope": "/",
   "lang": "en",
   "icons": [
-
     {
       "src": "/icons/android-chrome-192x192.png",
       "sizes": "192x192",
@@ -22,11 +21,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
-    },{
-        "src": "/icons/apple-touch-icon.png",
-        "sizes": "180x180",
-        "type": "image/png",
-        "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "maskable any"
     }
   ],
   "screenshots": [
@@ -38,18 +38,18 @@
       "label": "Prathamesh's Portfolio Website"
     },
     {
-        "src": "/screenshots/about.png",
-        "sizes": "1900x920",
-        "type": "image/png",
-        "form_factor": "wide",
-        "label": "Prathamesh's Portfolio Website"
+      "src": "/screenshots/about.png",
+      "sizes": "1900x920",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Prathamesh's Portfolio Website"
     },
     {
-        "src": "/screenshots/projects.png",
-        "sizes": "1900x920",
-        "type": "image/png",
-        "form_factor": "wide",
-        "label": "Prathamesh's Portfolio Website"
+      "src": "/screenshots/projects.png",
+      "sizes": "1900x920",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Prathamesh's Portfolio Website"
     },
     {
       "src": "/screenshots/contact.png",

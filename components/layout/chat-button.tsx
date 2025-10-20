@@ -13,7 +13,11 @@ import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import { Action, Actions } from "@/components/ai-elements/actions";
-import { Message, MessageAvatar, MessageContent } from "@/components/ai-elements/message";
+import {
+  Message,
+  MessageAvatar,
+  MessageContent,
+} from "@/components/ai-elements/message";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -48,7 +52,12 @@ export default function ChatButton() {
     onSuccess: (data) => {
       setMessages((prev) => [
         ...prev,
-        { id: Date.now().toString(), role: "assistant", content: data.response, timestamp: new Date() },
+        {
+          id: Date.now().toString(),
+          role: "assistant",
+          content: data.response,
+          timestamp: new Date(),
+        },
       ]);
     },
     onError: () => {
@@ -92,7 +101,10 @@ export default function ChatButton() {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
-    const conversation = [...messages, userMessage].map((m) => ({ role: m.role, content: m.content }));
+    const conversation = [...messages, userMessage].map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
     await sendMessageMutation.mutateAsync({ messages: conversation });
   };
 
@@ -114,7 +126,7 @@ export default function ChatButton() {
         <Card
           className={cn(
             "w-[calc(100vw-32px)] sm:w-[380px] h-[500px]",
-            "flex flex-col border border-border bg-background/60 backdrop-blur-xl rounded-2xl shadow-lg py-0"
+            "flex flex-col border border-border bg-background/60 backdrop-blur-xl rounded-2xl shadow-lg py-0",
           )}
         >
           {/* Header */}
@@ -131,7 +143,11 @@ export default function ChatButton() {
               </div>
             </div>
             <Actions>
-              <Action tooltip="Clear" onClick={handleClear} disabled={messages.length <= 1}>
+              <Action
+                tooltip="Clear"
+                onClick={handleClear}
+                disabled={messages.length <= 1}
+              >
                 <Trash2 className="h-4 w-4" />
               </Action>
               <Action tooltip="Close" onClick={() => setIsOpen(false)}>
@@ -145,11 +161,7 @@ export default function ChatButton() {
             {messages.map((m) => (
               <Message key={m.id} from={m.role}>
                 <MessageAvatar
-                  src={
-                    m.role === "user"
-                      ? "/user.png"
-                      : "/profile.jpg"
-                  }
+                  src={m.role === "user" ? "/user.png" : "/profile.jpg"}
                   name={m.role === "assistant" ? en.hero.name : "You"}
                 />
                 <MessageContent
@@ -158,7 +170,7 @@ export default function ChatButton() {
                     "text-sm leading-relaxed",
                     m.role === "user"
                       ? "bg-primary text-primary-foreground"
-                      : "bg-muted/50 border border-border"
+                      : "bg-muted/50 border border-border",
                   )}
                 >
                   {m.role === "assistant" ? (
@@ -169,8 +181,15 @@ export default function ChatButton() {
                 </MessageContent>
                 {m.role === "assistant" && (
                   <Actions>
-                    <Action tooltip="Copy" onClick={() => handleCopy(m.content, m.id)}>
-                      {copiedId === m.id ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                    <Action
+                      tooltip="Copy"
+                      onClick={() => handleCopy(m.content, m.id)}
+                    >
+                      {copiedId === m.id ? (
+                        <Check className="h-4 w-4" />
+                      ) : (
+                        <Copy className="h-4 w-4" />
+                      )}
                     </Action>
                   </Actions>
                 )}
@@ -179,11 +198,11 @@ export default function ChatButton() {
 
             {sendMessageMutation.isPending && (
               <Message from="assistant">
-                <MessageAvatar
-                  src="/profile.jpg"
-                  name={en.hero.name}
-                />
-                <MessageContent variant="contained" className="bg-muted/50 border border-border">
+                <MessageAvatar src="/profile.jpg" name={en.hero.name} />
+                <MessageContent
+                  variant="contained"
+                  className="bg-muted/50 border border-border"
+                >
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Loader2 className="h-4 w-4 animate-spin" />
                     Thinking...
@@ -194,7 +213,10 @@ export default function ChatButton() {
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSubmit} className="p-3 border-t flex gap-2 items-end">
+          <form
+            onSubmit={handleSubmit}
+            className="p-3 border-t flex gap-2 items-end"
+          >
             <Textarea
               ref={inputRef}
               value={input}
@@ -215,7 +237,11 @@ export default function ChatButton() {
               disabled={!input.trim() || sendMessageMutation.isPending}
               className="rounded-xl"
             >
-              {sendMessageMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+              {sendMessageMutation.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
             </Button>
           </form>
         </Card>

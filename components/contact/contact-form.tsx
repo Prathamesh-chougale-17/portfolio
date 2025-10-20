@@ -54,14 +54,20 @@ export function ContactForm() {
             name="name"
             validators={{
               onChange: ({ value }) => {
-                const result = z.string().min(2, { message: "Name must be at least 2 characters" }).safeParse(value);
-                return result.success ? undefined : result.error.issues[0].message;
+                const result = z
+                  .string()
+                  .min(2, { message: "Name must be at least 2 characters" })
+                  .safeParse(value);
+                return result.success
+                  ? undefined
+                  : result.error.issues[0].message;
               },
             }}
           >
             {(field) => {
               const isInvalid =
-                field.state.meta.isTouched && field.state.meta.errors.length > 0;
+                field.state.meta.isTouched &&
+                field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium">
@@ -92,14 +98,20 @@ export function ContactForm() {
             name="email"
             validators={{
               onChange: ({ value }) => {
-                const result = z.string().email({ message: "Please enter a valid email address" }).safeParse(value);
-                return result.success ? undefined : result.error.issues[0].message;
+                const result = z
+                  .string()
+                  .email({ message: "Please enter a valid email address" })
+                  .safeParse(value);
+                return result.success
+                  ? undefined
+                  : result.error.issues[0].message;
               },
             }}
           >
             {(field) => {
               const isInvalid =
-                field.state.meta.isTouched && field.state.meta.errors.length > 0;
+                field.state.meta.isTouched &&
+                field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium">
@@ -131,14 +143,20 @@ export function ContactForm() {
             name="subject"
             validators={{
               onChange: ({ value }) => {
-                const result = z.string().min(5, { message: "Subject must be at least 5 characters" }).safeParse(value);
-                return result.success ? undefined : result.error.issues[0].message;
+                const result = z
+                  .string()
+                  .min(5, { message: "Subject must be at least 5 characters" })
+                  .safeParse(value);
+                return result.success
+                  ? undefined
+                  : result.error.issues[0].message;
               },
             }}
           >
             {(field) => {
               const isInvalid =
-                field.state.meta.isTouched && field.state.meta.errors.length > 0;
+                field.state.meta.isTouched &&
+                field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
                   <label htmlFor="subject" className="text-sm font-medium">
@@ -172,14 +190,22 @@ export function ContactForm() {
             name="message"
             validators={{
               onChange: ({ value }) => {
-                const result = z.string().min(10, { message: "Message must be at least 10 characters" }).safeParse(value);
-                return result.success ? undefined : result.error.issues[0].message;
+                const result = z
+                  .string()
+                  .min(10, {
+                    message: "Message must be at least 10 characters",
+                  })
+                  .safeParse(value);
+                return result.success
+                  ? undefined
+                  : result.error.issues[0].message;
               },
             }}
           >
             {(field) => {
               const isInvalid =
-                field.state.meta.isTouched && field.state.meta.errors.length > 0;
+                field.state.meta.isTouched &&
+                field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
                   <label htmlFor="message" className="text-sm font-medium">

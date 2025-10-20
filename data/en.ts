@@ -88,7 +88,8 @@ export const en: entype = {
     hero: {
       title: "About Me",
       image: "/profile.jpg",
-      subtitle: "Full Stack Developer | Open Source Contributor | Problem Solver",
+      subtitle:
+        "Full Stack Developer | Open Source Contributor | Problem Solver",
       description:
         "I'm a passionate full-stack developer with a strong foundation in computer science and hands-on experience building scalable web applications. My journey includes developing enterprise dashboards for HSBC, leading hackathon teams, and contributing to open source projects.",
       skills: ["React", "Next.js", "TypeScript", "Node.js", "MongoDB"],
@@ -144,10 +145,19 @@ export const en: entype = {
     socials: {
       title: "Connect with me",
       links: [
-        { name: Icons.instagram, url: "https://instagram.com/prathamesh_chougale_17" },
+        {
+          name: Icons.instagram,
+          url: "https://instagram.com/prathamesh_chougale_17",
+        },
         { name: Icons.x, url: "https://twitter.com/prathamesh_7717" },
-        { name: Icons.linkedin, url: "https://linkedin.com/in/prathamesh-chougale" },
-        { name: Icons.gitHub, url: "https://github.com/prathamesh-chougale-17" },
+        {
+          name: Icons.linkedin,
+          url: "https://linkedin.com/in/prathamesh-chougale",
+        },
+        {
+          name: Icons.gitHub,
+          url: "https://github.com/prathamesh-chougale-17",
+        },
       ],
     },
     form: {

@@ -24,7 +24,8 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://prathamesh-chougale.vercel.app"),
   openGraph: {
     title: "Prathamesh Chougale",
-    description: "Portfolio of a software engineer showcasing projects and skills.",
+    description:
+      "Portfolio of a software engineer showcasing projects and skills.",
     url: "https://prathamesh-chougale.vercel.app",
     siteName: "Prathamesh Chougale",
     images: [
@@ -41,7 +42,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Prathamesh Chougale",
-    description: "Portfolio of a software engineer showcasing projects and skills.",
+    description:
+      "Portfolio of a software engineer showcasing projects and skills.",
     images: ["/icons/og-image.png"],
     creator: "@prathamesh_7717", // optional
   },
@@ -50,12 +52,9 @@ export const metadata: Metadata = {
       { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
-    apple: [
-      { url: "/icons/apple-touch-icon.png", sizes: "180x180" },
-    ],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
   },
   manifest: "/manifest.json",
-  
 };
 
 export default function RootLayout({
@@ -66,7 +65,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-
         <meta name="application-name" content="Prathamesh Chougale" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -80,7 +78,6 @@ export default function RootLayout({
         <link rel="icon" href="/icons/android-chrome-192x192.png" />
 
         <link rel="canonical" href="https://prathamesh-chougale.vercel.app" />
-
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
