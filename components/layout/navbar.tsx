@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { AnimatedThemeToggler } from "@/components/ui/theme-toggle";
 import { MobileNav } from "@/components/layout/mobile-nav";
-
+import Image from "next/image";
 // Navigation items
 
 export function Navbar({
@@ -15,9 +15,14 @@ export function Navbar({
         {/* Logo - Left */}
         <div className="flex items-center">
           <Link href="/" className="items-center space-x-2 md:flex">
-            <span className="font-bold inline-block font-mono">
-              Prathamesh Chougale
-            </span>
+            <Image
+              src="/icons/android-chrome-192x192.png"
+              alt="Logo"
+              width={64}
+              height={64}
+              className="hidden md:inline-block"
+            />
+            {/* <span className="text-xl font-bold">MyApp</span> */}
           </Link>
         </div>
 
