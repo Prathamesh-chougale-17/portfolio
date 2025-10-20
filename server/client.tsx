@@ -33,7 +33,7 @@ function getUrl() {
 export function TRPCProvider(
   props: Readonly<{
     children: React.ReactNode;
-  }>
+  }>,
 ) {
   const queryClient = getQueryClient();
 
@@ -49,7 +49,7 @@ export function TRPCProvider(
           },
         }),
       ],
-    })
+    }),
   );
 
   return (

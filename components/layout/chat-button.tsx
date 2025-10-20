@@ -1,17 +1,5 @@
 "use client";
 
-import { Action, Actions } from "@/components/ai-elements/actions";
-import {
-  Message,
-  MessageAvatar,
-  MessageContent,
-} from "@/components/ai-elements/message";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { en } from "@/data/en";
-import { cn } from "@/lib/utils";
-import { trpc } from "@/server/client";
 import {
   Check,
   Copy,
@@ -25,6 +13,18 @@ import {
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
+import { Action, Actions } from "@/components/ai-elements/actions";
+import {
+  Message,
+  MessageAvatar,
+  MessageContent,
+} from "@/components/ai-elements/message";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { en } from "@/data/en";
+import { cn } from "@/lib/utils";
+import { trpc } from "@/server/client";
 
 interface ChatMessage {
   id: string;
