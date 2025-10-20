@@ -104,6 +104,7 @@ export const en: entype = {
       { name: "Docker", level: 3, icon: Icons.docker },
       { name: "Git/GitHub", level: 5, icon: Icons.gitHub },
       { name: "Databases", level: 4, icon: Icons.database },
+      { name: "Arch Linux", level: 3, icon: Icons.arch },
     ],
     experiences: [
       {
