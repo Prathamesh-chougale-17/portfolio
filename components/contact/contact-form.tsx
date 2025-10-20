@@ -53,7 +53,10 @@ export function ContactForm() {
           <form.Field
             name="name"
             validators={{
-              onChange: z.string().min(2, { message: "Name must be at least 2 characters" }),
+              onChange: ({ value }) => {
+                const result = z.string().min(2, { message: "Name must be at least 2 characters" }).safeParse(value);
+                return result.success ? undefined : result.error.issues[0].message;
+              },
             }}
           >
             {(field) => {
@@ -88,7 +91,10 @@ export function ContactForm() {
           <form.Field
             name="email"
             validators={{
-              onChange: z.string().email({ message: "Please enter a valid email address" }),
+              onChange: ({ value }) => {
+                const result = z.string().email({ message: "Please enter a valid email address" }).safeParse(value);
+                return result.success ? undefined : result.error.issues[0].message;
+              },
             }}
           >
             {(field) => {
@@ -124,7 +130,10 @@ export function ContactForm() {
           <form.Field
             name="subject"
             validators={{
-              onChange: z.string().min(5, { message: "Subject must be at least 5 characters" }),
+              onChange: ({ value }) => {
+                const result = z.string().min(5, { message: "Subject must be at least 5 characters" }).safeParse(value);
+                return result.success ? undefined : result.error.issues[0].message;
+              },
             }}
           >
             {(field) => {
@@ -162,7 +171,10 @@ export function ContactForm() {
           <form.Field
             name="message"
             validators={{
-              onChange: z.string().min(10, { message: "Message must be at least 10 characters" }),
+              onChange: ({ value }) => {
+                const result = z.string().min(10, { message: "Message must be at least 10 characters" }).safeParse(value);
+                return result.success ? undefined : result.error.issues[0].message;
+              },
             }}
           >
             {(field) => {
