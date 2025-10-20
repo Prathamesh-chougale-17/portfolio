@@ -41,7 +41,7 @@ export const contactRouter = createTRPCRouter({
             <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>Portfolio Contact Response</title>
+              <title>Prathamesh Chougale Contact Response</title>
               <style>
                 body {
                   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

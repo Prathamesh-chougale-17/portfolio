@@ -139,7 +139,7 @@ export const en: entype = {
     thoughtTitle: "Let's Build Something Impactful",
     thoughtText:
       "I love collaborating on innovative ideas that push boundaries. If you’re working on something exciting or need a developer to bring your vision to life, let’s connect!",
-    imageUrl: "/placeholder.svg",
+    imageUrl: "/contact/recieved.gif",
     imageAlt: "Developer working on laptop",
     socials: {
       title: "Connect with me",

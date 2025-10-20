@@ -15,7 +15,7 @@ export function Navbar({
         {/* Logo - Left */}
         <div className="flex items-center">
           <Link href="/" className="items-center space-x-2 md:flex">
-            <span className="font-bold inline-block font-mono">Portfolio</span>
+            <span className="font-bold inline-block font-mono">Prathamesh Chougale</span>
           </Link>
         </div>
 

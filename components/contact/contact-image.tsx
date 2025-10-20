@@ -10,6 +10,7 @@ export function ContactImage() {
         fill
         className="object-cover hover:scale-105 transition-transform duration-700"
         priority
+        unoptimized // Add this line for GIFs
       />
     </div>
   );

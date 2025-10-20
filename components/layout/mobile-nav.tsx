@@ -33,7 +33,7 @@ export function MobileNav({ navItems }: MobileNavProps) {
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between pb-6 border-b mb-6">
-            <DialogTitle>Portfolio</DialogTitle>
+            <DialogTitle>Prathamesh Chougale</DialogTitle>
             <DialogDescription></DialogDescription>
           </div>
           <nav className="flex flex-col gap-5">

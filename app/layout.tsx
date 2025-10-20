@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
+  title: "Prathamesh Chougale",
   description: " Portfolio of a software engineer",
 };
 
