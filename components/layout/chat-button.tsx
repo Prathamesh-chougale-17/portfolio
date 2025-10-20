@@ -1,15 +1,33 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Mic, MicOff } from "lucide-react";
+import { Action, Actions } from "@/components/ai-elements/actions";
+import {
+  Message,
+  MessageAvatar,
+  MessageContent,
+} from "@/components/ai-elements/message";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import ReactMarkdown from "react-markdown";
-import { generateChatResponse } from "@/actions/generate";
+import { Textarea } from "@/components/ui/textarea";
 import { en } from "@/data/en";
+import { cn } from "@/lib/utils";
+import { trpc } from "@/server/client";
+import {
+  Check,
+  Copy,
+  Loader2,
+  MessageCircle,
+  Send,
+  Sparkles,
+  Trash2,
+  X,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { toast } from "sonner";
 
-interface Message {
+interface ChatMessage {
+  id: string;
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
@@ -17,83 +35,64 @@ interface Message {
 
 export default function ChatButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
   const [isPulsing, setIsPulsing] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
+  const [input, setInput] = useState("");
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
+      id: "welcome",
       role: "assistant",
-      content: `Hi there! 👋 I'm ${en.hero.name}
-      , a ${en.hero.title} at ${en.hero.company}. How can I help you today?`,
+      content: `Hi there! 👋 I'm ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}. I'm here to answer your questions about my experience, projects, and skills. How can I help you today?`,
       timestamp: new Date(),
     },
   ]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [speechRecognition, setSpeechRecognition] =
-    useState<SpeechRecognition | null>(null);
 
-  const messageRef = useRef<HTMLInputElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Initialize speech recognition
-  useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      ("SpeechRecognition" in window || "webkitSpeechRecognition" in window)
-    ) {
-      const SpeechRecognitionAPI =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
-      const recognition = new SpeechRecognitionAPI();
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.lang = "en-US";
-
-      recognition.onresult = (event: SpeechRecognitionEvent) => {
-        const transcript = Array.from(event.results)
-          .map((result) => result[0])
-          .map((result) => result.transcript)
-          .join("");
-
-        setMessage(transcript);
-      };
-
-      recognition.onerror = (event) => {
-        console.error("Speech recognition error", event.error);
-        setIsListening(false);
-      };
-
-      recognition.onend = () => {
-        if (isListening) {
-          recognition.start();
-        }
-      };
-
-      setSpeechRecognition(recognition);
-    } else {
-      console.error("Speech recognition not supported in this browser");
-    }
-
-    return () => {
-      if (speechRecognition) {
-        speechRecognition.stop();
-      }
-    };
-  }, []);
+  const sendMessageMutation = trpc.chat.sendMessage.useMutation({
+    onSuccess: (data) => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now().toString(),
+          role: "assistant",
+          content: data.response,
+          timestamp: new Date(),
+        },
+      ]);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to send message");
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now().toString(),
+          role: "assistant",
+          content:
+            "I'm sorry, I'm having trouble responding right now. Please try again later.",
+          timestamp: new Date(),
+        },
+      ]);
+    },
+  });
 
   // Focus input when chat opens
   useEffect(() => {
-    if (isOpen && messageRef.current) {
-      messageRef.current.focus();
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
     }
   }, [isOpen]);
 
   // Scroll to bottom when messages change
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
-  }, [messages]);
+  }, [messages, sendMessageMutation.isPending]);
 
   // Pulse animation every 30 seconds
   useEffect(() => {
@@ -103,237 +102,323 @@ export default function ChatButton() {
         setTimeout(() => setIsPulsing(false), 2000);
       }, 30000);
 
-      // Initial pulse
-      setIsPulsing(true);
-      setTimeout(() => setIsPulsing(false), 2000);
+      const timeout = setTimeout(() => {
+        setIsPulsing(true);
+        setTimeout(() => setIsPulsing(false), 2000);
+      }, 3000);
 
-      return () => clearInterval(interval);
+      return () => {
+        clearInterval(interval);
+        clearTimeout(timeout);
+      };
     }
   }, [isOpen]);
 
-  const toggleListening = () => {
-    if (!speechRecognition) return;
-
-    if (isListening) {
-      speechRecognition.stop();
-      setIsListening(false);
-    } else {
-      speechRecognition.start();
-      setIsListening(true);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!message.trim() || isLoading) return;
+    if (!input.trim() || sendMessageMutation.isPending) return;
 
-    // Stop speech recognition if it's active
-    if (isListening && speechRecognition) {
-      speechRecognition.stop();
-      setIsListening(false);
-    }
-
-    const userMessage = {
-      role: "user" as const,
-      content: message,
+    const userMessage: ChatMessage = {
+      id: Date.now().toString(),
+      role: "user",
+      content: input.trim(),
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setMessage("");
-    setIsLoading(true);
+    setInput("");
 
-    try {
-      // Use the server action directly
-      const result = await generateChatResponse(userMessage.content);
+    // Send message with full conversation context
+    const conversationMessages = [...messages, userMessage].map((msg) => ({
+      role: msg.role,
+      content: msg.content,
+    }));
 
-      if (result.success && result.response) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "assistant",
-            content: result.response,
-            timestamp: new Date(),
-          },
-        ]);
-      } else {
-        throw new Error(result.error || "Failed to generate response");
+    await sendMessageMutation.mutateAsync({
+      messages: conversationMessages,
+    });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (input.trim() && !sendMessageMutation.isPending) {
+        handleSubmit(e as any);
       }
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content:
-            "I'm sorry, I'm having trouble responding right now. Please try again later.",
-          timestamp: new Date(),
-        },
-      ]);
-    } finally {
-      setIsLoading(false);
     }
   };
 
+  const handleCopy = async (content: string, id: string) => {
+    await navigator.clipboard.writeText(content);
+    setCopiedId(id);
+    toast.success("Message copied to clipboard");
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleClear = () => {
+    setMessages([
+      {
+        id: "welcome",
+        role: "assistant",
+        content: `Hi there! 👋 I'm ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}. I'm here to answer your questions about my experience, projects, and skills. How can I help you today?`,
+        timestamp: new Date(),
+      },
+    ]);
+    toast.success("Chat cleared");
+  };
+
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-50">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
       {isOpen ? (
         <Card
           className={cn(
-            "p-3 sm:p-4 w-[calc(100vw-32px)] sm:w-[350px] md:w-[400px] h-[450px] sm:h-[500px] flex flex-col shadow-lg",
-            "bg-gradient-to-br from-background to-background/95 dark:from-background dark:to-background/90",
-            "border border-border/50 dark:border-border/30",
-            "animate-in slide-in-from-bottom-5 duration-300",
+            "w-[calc(100vw-32px)] sm:w-[400px] md:w-[450px] h-[500px] sm:h-[600px]",
+            "flex flex-col shadow-2xl border-2",
+            "bg-gradient-to-br from-background via-background to-muted/20",
+            "animate-in slide-in-from-bottom-5 fade-in-0 duration-300",
+            "backdrop-blur-xl",
           )}
         >
-          <div className="flex justify-between items-center mb-3 sm:mb-4 border-b dark:border-border/30 pb-2 sm:pb-3">
-            <div className="flex items-center space-x-2">
-              <div className="bg-primary dark:bg-primary h-7 w-7 sm:h-8 sm:w-8 rounded-full flex items-center justify-center">
-                <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary-foreground" />
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-primary/10 via-primary/5 to-transparent">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <div className="bg-gradient-to-br from-primary to-primary/80 h-10 w-10 rounded-full flex items-center justify-center shadow-lg">
+                  <Sparkles className="h-5 w-5 text-primary-foreground" />
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-background"></div>
               </div>
-              <h3 className="font-semibold text-sm sm:text-base">
-                Chat with us
-              </h3>
+              <div>
+                <h3 className="font-semibold text-base">
+                  {en.hero.name.split(" ")[0]}
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  {sendMessageMutation.isPending
+                    ? "Typing..."
+                    : "AI Assistant • Online"}
+                </p>
+              </div>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(false)}
-              className="hover:bg-muted dark:hover:bg-muted/30 cursor-pointer rounded-full h-7 w-7 sm:h-8 sm:w-8 p-0"
-              aria-label="Close chat"
-            >
-              <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            </Button>
+            <Actions>
+              <Action
+                tooltip="Clear chat"
+                onClick={handleClear}
+                disabled={messages.length <= 1}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Action>
+              <Action tooltip="Close chat" onClick={() => setIsOpen(false)}>
+                <X className="h-4 w-4" />
+              </Action>
+            </Actions>
           </div>
 
+          {/* Messages Container */}
           <div
             ref={chatContainerRef}
-            className="flex-1 overflow-y-auto mb-3 sm:mb-4 border dark:border-border/30 rounded-md p-2 sm:p-3 bg-muted/30 dark:bg-muted/10"
+            className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth"
           >
-            <div className="flex flex-col gap-2 sm:gap-3">
-              {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={cn(
-                    "p-2 sm:p-3 rounded-lg max-w-[85%] sm:max-w-[80%]",
-                    msg.role === "assistant"
-                      ? "bg-primary/10 dark:bg-primary/20 rounded-tl-none self-start"
-                      : "bg-muted dark:bg-muted/30 rounded-tr-none self-end",
-                  )}
-                >
-                  {msg.role === "assistant" ? (
-                    <div className="text-xs sm:text-sm dark:text-foreground prose prose-sm dark:prose-invert max-w-none">
-                      <ReactMarkdown
-                        components={{
-                          a: ({ ...props }) => (
-                            <a
-                              {...props}
-                              style={{
-                                color: "#6F42C1",
-                              }}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            />
-                          ),
-                        }}
+            {messages.map((message) => (
+              <Message
+                key={message.id}
+                from={message.role}
+                className={cn(
+                  "animate-in fade-in-0 slide-in-from-bottom-2 duration-300",
+                )}
+              >
+                <MessageAvatar
+                  src={
+                    message.role === "user"
+                      ? "https://api.dicebear.com/7.x/avataaars/svg?seed=user"
+                      : "https://api.dicebear.com/7.x/bottts/svg?seed=ai"
+                  }
+                  name={message.role === "assistant" ? en.hero.name : "You"}
+                />
+                <div className="flex flex-col gap-1 flex-1 min-w-0">
+                  <MessageContent
+                    variant="contained"
+                    className={cn(
+                      "shadow-sm",
+                      message.role === "user"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted/80 backdrop-blur",
+                    )}
+                  >
+                    {message.role === "assistant" ? (
+                      <div className="prose prose-sm dark:prose-invert max-w-none">
+                        <ReactMarkdown
+                          components={{
+                            p: ({ children }) => (
+                              <p className="mb-2 last:mb-0">{children}</p>
+                            ),
+                            ul: ({ children }) => (
+                              <ul className="mb-2 ml-4">{children}</ul>
+                            ),
+                            ol: ({ children }) => (
+                              <ol className="mb-2 ml-4">{children}</ol>
+                            ),
+                            li: ({ children }) => (
+                              <li className="mb-1">{children}</li>
+                            ),
+                            code: ({ children, className }) => {
+                              const isInline = !className;
+                              return isInline ? (
+                                <code className="bg-black/10 dark:bg-white/10 px-1.5 py-0.5 rounded text-xs">
+                                  {children}
+                                </code>
+                              ) : (
+                                <code className={className}>{children}</code>
+                              );
+                            },
+                            a: ({ children, href }) => (
+                              <a
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary hover:underline font-medium"
+                              >
+                                {children}
+                              </a>
+                            ),
+                          }}
+                        >
+                          {message.content}
+                        </ReactMarkdown>
+                      </div>
+                    ) : (
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+                        {message.content}
+                      </p>
+                    )}
+                  </MessageContent>
+                  {message.role === "assistant" && (
+                    <Actions className="opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Action
+                        tooltip="Copy message"
+                        onClick={() => handleCopy(message.content, message.id)}
                       >
-                        {msg.content}
-                      </ReactMarkdown>
-                    </div>
-                  ) : (
-                    <p className="text-xs sm:text-sm dark:text-foreground">
-                      {msg.content}
-                    </p>
+                        {copiedId === message.id ? (
+                          <Check className="h-4 w-4" />
+                        ) : (
+                          <Copy className="h-4 w-4" />
+                        )}
+                      </Action>
+                    </Actions>
                   )}
-                  <span className="text-[10px] sm:text-xs text-muted-foreground dark:text-muted-foreground/80 mt-1 block">
-                    {msg.role === "assistant" ? `${en.hero.name}` : "You"} •{" "}
-                    {new Date(msg.timestamp).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </span>
                 </div>
-              ))}
-              {isLoading && (
-                <div className="bg-primary/10 dark:bg-primary/20 p-2 sm:p-3 rounded-lg rounded-tl-none max-w-[85%] sm:max-w-[80%] self-start">
-                  <div className="flex space-x-2">
-                    <div
-                      className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary/50 animate-bounce"
-                      style={{ animationDelay: "0ms" }}
-                    ></div>
-                    <div
-                      className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary/50 animate-bounce"
-                      style={{ animationDelay: "150ms" }}
-                    ></div>
-                    <div
-                      className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary/50 animate-bounce"
-                      style={{ animationDelay: "300ms" }}
-                    ></div>
+              </Message>
+            ))}
+
+            {/* Loading Indicator */}
+            {sendMessageMutation.isPending && (
+              <Message from="assistant" className="animate-in fade-in-0">
+                <MessageAvatar
+                  src="https://api.dicebear.com/7.x/bottts/svg?seed=ai"
+                  name={en.hero.name}
+                />
+                <MessageContent variant="contained" className="bg-muted/80">
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                    <span className="text-sm text-muted-foreground">
+                      Thinking...
+                    </span>
                   </div>
-                </div>
-              )}
-            </div>
+                </MessageContent>
+              </Message>
+            )}
           </div>
 
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <Button
-              type="button"
-              size="icon"
-              variant={isListening ? "destructive" : "outline"}
-              onClick={toggleListening}
-              className={cn(
-                "rounded-full h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0",
-                isListening ? "bg-red-500 hover:bg-red-600" : "",
-              )}
-              aria-label={isListening ? "Stop listening" : "Start listening"}
-              disabled={isLoading}
-            >
-              {isListening ? (
-                <MicOff className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              ) : (
-                <Mic className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              )}
-            </Button>
-
-            <input
-              ref={messageRef}
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder={
-                isListening ? "Speak now..." : "Type your message..."
-              }
-              className="flex-1 p-2 sm:p-2.5 border dark:border-border/30 rounded-full text-xs sm:text-sm focus:ring-2 focus:ring-primary/30 focus:outline-none bg-background dark:bg-background/80"
-              disabled={isLoading}
-            />
-
-            <Button
-              type="submit"
-              size="icon"
-              className="rounded-full h-8 w-8 sm:h-10 sm:w-10 hover:scale-105 transition-transform cursor-pointer"
-              disabled={!message.trim() || isLoading}
-            >
-              <Send className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            </Button>
-          </form>
+          {/* Input Form */}
+          <div className="p-4 border-t bg-muted/30 backdrop-blur">
+            <form onSubmit={handleSubmit} className="flex gap-2">
+              <div className="flex-1 relative">
+                <Textarea
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask me anything..."
+                  className={cn(
+                    "min-h-[44px] max-h-[120px] resize-none pr-10",
+                    "focus-visible:ring-2 focus-visible:ring-primary/50",
+                    "bg-background/80 backdrop-blur",
+                  )}
+                  disabled={sendMessageMutation.isPending}
+                  rows={1}
+                  maxLength={500}
+                />
+                {input.length > 0 && (
+                  <div className="absolute bottom-2 right-2 text-xs text-muted-foreground">
+                    {input.length}/500
+                  </div>
+                )}
+              </div>
+              <Button
+                type="submit"
+                size="icon"
+                disabled={!input.trim() || sendMessageMutation.isPending}
+                className={cn(
+                  "h-11 w-11 rounded-xl cursor-pointer shadow-lg",
+                  "bg-gradient-to-br from-primary to-primary/80",
+                  "hover:scale-105 active:scale-95 transition-all",
+                  "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
+                )}
+              >
+                {sendMessageMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Send className="h-4 w-4" />
+                )}
+              </Button>
+            </form>
+            <p className="text-xs text-muted-foreground mt-2 text-center">
+              Press{" "}
+              <kbd className="px-1.5 py-0.5 bg-muted rounded text-xs">
+                Enter
+              </kbd>{" "}
+              to send,{" "}
+              <kbd className="px-1.5 py-0.5 bg-muted rounded text-xs">
+                Shift + Enter
+              </kbd>{" "}
+              for new line
+            </p>
+          </div>
         </Card>
       ) : (
-        <div className="relative">
+        <div className="relative group">
           <Button
             onClick={() => setIsOpen(true)}
             size="icon"
             className={cn(
-              "rounded-full cursor-pointer h-12 w-12 sm:h-14 sm:w-14 shadow-lg dark:shadow-primary/10 hover:scale-110 transition-all duration-300",
-              "bg-primary hover:bg-primary/90 dark:bg-primary dark:hover:bg-primary/90",
+              "h-14 w-14 rounded-full cursor-pointer shadow-2xl",
+              "bg-gradient-to-br from-primary via-primary to-primary/80",
+              "hover:scale-110 active:scale-95 transition-all duration-300",
+              "border-2 border-primary-foreground/20",
             )}
-            aria-label="Open chat"
+            aria-label="Open AI chat"
           >
-            <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />
+            <MessageCircle className="h-6 w-6" />
           </Button>
 
+          {/* Pulse Animation */}
           {isPulsing && (
-            <span className="absolute inset-0 rounded-full animate-ping bg-primary/75 dark:bg-primary/50 opacity-75"></span>
+            <>
+              <span className="absolute inset-0 rounded-full animate-ping bg-primary/75 opacity-75"></span>
+              <span className="absolute inset-0 rounded-full animate-ping bg-primary/50 opacity-50 animation-delay-150"></span>
+            </>
           )}
+
+          {/* Tooltip */}
+          <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+            <div className="bg-popover text-popover-foreground text-xs px-3 py-1.5 rounded-lg shadow-lg whitespace-nowrap border border-border">
+              Chat with {en.hero.name}
+            </div>
+          </div>
+
+          {/* Badge for new visitors */}
+          <div className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/80 text-[10px] font-bold text-primary-foreground shadow-lg animate-bounce">
+            AI
+          </div>
         </div>
       )}
     </div>

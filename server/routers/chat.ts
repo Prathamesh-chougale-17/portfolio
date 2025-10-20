@@ -1,129 +1,133 @@
+import { google } from "@ai-sdk/google";
+import { streamText } from "ai";
 import { z } from "zod";
-import { publicProcedure, createTRPCRouter } from "../init";
-import { generateResponse } from "@/lib/gemini";
-import client from "@/db/client";
-import { insertChatMessage } from "@/db/schema/chat";
 import { en } from "@/data/en";
+import { createTRPCRouter, publicProcedure } from "../init";
 
 const chatMessageSchema = z.object({
-  message: z.string().min(1, { message: "Message cannot be empty" }),
+  messages: z.array(
+    z.object({
+      role: z.enum(["user", "assistant", "system"]),
+      content: z.string(),
+    }),
+  ),
 });
 
+// const singleMessageSchema = z.object({
+//   message: z.string().min(1, { message: "Message cannot be empty" }),
+// });
+
 export const chatRouter = createTRPCRouter({
+  // Send a message and get a streaming response
   sendMessage: publicProcedure
     .input(chatMessageSchema)
     .mutation(async ({ input }) => {
-      const { message } = input;
-
       try {
-        // Connect to the database
-        await client.connect();
-        const db = client.db(process.env.DATABASE_NAME);
-
-        // Store the user message
-        const query = await insertChatMessage(db, {
-          role: "user",
-          content: message,
-          timestamp: new Date(),
-        });
+        const { messages } = input;
 
         // Prepare context with portfolio data
-        const contextPrompt = `You are ${en.hero.name}, a ${en.hero.title} at ${
-          en.hero.company
-        }.
+        const systemPrompt = `You are ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}.
 
 Respond to questions as if you are this person, using first-person perspective. Use the following information about yourself to craft authentic responses:
 
+**About Me:**
 - Name: ${en.hero.name}
 - Title: ${en.hero.title}
 - Company: ${en.hero.company}
 - Description: ${en.hero.description}
-- Skills: ${en.about.hero.skills.join(", ")}
-- Experience: ${en.about.experiences
-          .map((exp) => `${exp.title} at ${exp.company} (${exp.period})`)
-          .join("; ")}
-- Projects: ${en.projects.map((p) => p.title).join(", ")}
 
-Format your response using Markdown.
-If you cannot answer a question based on the provided information, respond with "I don't have enough information to answer that question, but I'd be happy to discuss my projects, experience, or skills."
+**Skills:**
+${en.about.hero.skills.join(", ")}
 
-User question: ${message}`;
+**Experience:**
+${en.about.experiences
+  .map(
+    (exp) =>
+      `- ${exp.title} at ${exp.company} (${exp.period}): ${exp.description}`,
+  )
+  .join("\n")}
 
-        // Generate response with context
-        const responseText = await generateResponse([
-          {
-            role: "user",
-            content: contextPrompt,
-          },
-        ]);
+**Projects:**
+${en.projects
+  .map((p) => `- ${p.title}: ${p.description}\n  Tech: ${p.tags.join(", ")}`)
+  .join("\n")}
 
-        // Store the assistant response
-        await insertChatMessage(db, {
-          queryId: query.insertedId.toString(),
-          role: "assistant",
-          content: responseText,
-          timestamp: new Date(),
+**Guidelines:**
+- Be friendly, professional, and conversational
+- Use markdown for formatting when appropriate
+- Keep responses concise but informative (max 300 words)
+- If asked about something not in your information, politely redirect to topics you can discuss
+- Show enthusiasm about your work and projects
+- Use emojis sparingly and professionally`;
+
+        // Generate response using AI SDK
+        const result = streamText({
+          model: google("gemini-2.0-flash-exp"),
+          system: systemPrompt,
+          messages,
+          temperature: 0.7,
         });
+
+        // Get the complete text response
+        const response = await result.text;
 
         return {
           success: true,
-          response: responseText,
-          id: query.insertedId.toString(),
+          response,
+          id: Date.now().toString(),
         };
       } catch (error) {
         console.error("Error in chat mutation:", error);
-        throw new Error("Failed to process your message. Please try again.");
-      } finally {
-        await client.close();
+        throw new Error(
+          error instanceof Error
+            ? error.message
+            : "Failed to process your message. Please try again.",
+        );
       }
     }),
 
-  getHistory: publicProcedure.query(async () => {
-    try {
-      await client.connect();
-      const db = client.db(process.env.DATABASE_NAME);
+  // Stream endpoint for AI SDK useChat hook
+  stream: publicProcedure
+    .input(chatMessageSchema)
+    .mutation(async ({ input }) => {
+      try {
+        const { messages } = input;
 
-      // Get the most recent conversation (limited to last 50 messages)
-      const messages = await db
-        .collection("chat_messages")
-        .find({})
-        .sort({ timestamp: -1 })
-        .limit(50)
-        .toArray();
+        const systemPrompt = `You are ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}.
 
-      return {
-        success: true,
-        messages: messages.reverse().map((msg) => ({
-          id: msg._id.toString(),
-          role: msg.role as "user" | "assistant",
-          content: msg.content,
-          timestamp: msg.timestamp,
-        })),
-      };
-    } catch (error) {
-      console.error("Error fetching chat history:", error);
-      throw new Error("Failed to fetch chat history.");
-    } finally {
-      await client.close();
-    }
-  }),
+Respond to questions as if you are this person, using first-person perspective. Be helpful, friendly, and professional.
 
-  clearHistory: publicProcedure.mutation(async () => {
-    try {
-      await client.connect();
-      const db = client.db(process.env.DATABASE_NAME);
+Portfolio Info:
+- Skills: ${en.about.hero.skills.join(", ")}
+- Experience: ${en.about.experiences.map((exp) => `${exp.title} at ${exp.company}`).join("; ")}
+- Projects: ${en.projects.map((p) => p.title).join(", ")}
 
-      await db.collection("chat_messages").deleteMany({});
+Format responses using Markdown when appropriate. Keep answers concise but informative.`;
 
-      return {
-        success: true,
-        message: "Chat history cleared successfully",
-      };
-    } catch (error) {
-      console.error("Error clearing chat history:", error);
-      throw new Error("Failed to clear chat history.");
-    } finally {
-      await client.close();
-    }
+        const result = streamText({
+          model: google("gemini-2.0-flash-exp"),
+          system: systemPrompt,
+          messages,
+          temperature: 0.7,
+        });
+
+        const response = await result.text;
+
+        return {
+          success: true,
+          content: response,
+        };
+      } catch (error) {
+        console.error("Error in stream mutation:", error);
+        throw new Error("Failed to generate response");
+      }
+    }),
+
+  // Get initial welcome message
+  getWelcome: publicProcedure.query(() => {
+    return {
+      success: true,
+      message: `Hi there! 👋 I'm ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}. I'm here to answer your questions about my experience, projects, and skills. How can I help you today?`,
+    };
   }),
 });
