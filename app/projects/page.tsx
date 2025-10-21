@@ -1,28 +1,22 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { en } from "@/data/en";
 import { ProjectList } from "@/components/project/project-list";
+import { ProjectFilters } from "@/components/project/project-filters";
+import { type Project } from "@/components/project/project-card";
 
 const ProjectPage = () => {
   const { projects } = en;
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
 
   return (
     <section className="py-12">
-      {/* Header Section */}
-      {/* <div className="max-w-3xl mx-auto mb-16 text-center animate-fade-up">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-          {projectsPage.title}
-        </h1>
-        <p className="mt-3 text-xl text-muted-foreground sm:mt-4">
-          {projectsPage.subtitle}
-        </p>
-        <div className="max-w-2xl mx-auto mt-6">
-          <p className="text-lg text-muted-foreground">
-            {projectsPage.description}
-          </p>
-        </div>
-      </div> */}
+      <ProjectFilters
+        projects={projects}
+        onFilteredProjectsChange={setFilteredProjects}
+      />
 
-      <ProjectList projects={projects} />
+      <ProjectList projects={filteredProjects} />
     </section>
   );
 };
