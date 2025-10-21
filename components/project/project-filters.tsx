@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Filter } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -27,7 +27,7 @@ export function ProjectFilters({
 
   // Get all tags directly (no useMemo)
   const allTags = Array.from(
-    new Set(projects.flatMap((project) => project.tags))
+    new Set(projects.flatMap((project) => project.tags)),
   ).sort();
 
   // Call filter each time something changes
@@ -49,7 +49,7 @@ export function ProjectFilters({
   const handleFilterAfterChange = (
     query: string,
     tag: string,
-    featured: boolean
+    featured: boolean,
   ) => {
     const filtered = projects.filter((project) => {
       const search = query.toLowerCase();
