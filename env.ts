@@ -26,6 +26,7 @@ export const env = createEnv({
 
     // 3rd-party / AI
     GOOGLE_GENERATIVE_AI_API_KEY: z.string().min(1),
+    GOOGLE_ANALYTICS_ID: z.string().min(1),
 
     // Optional misc server vars
     NODE_ENV: z.string().optional(),
@@ -51,6 +52,7 @@ export const env = createEnv({
     GOOGLE_GENERATIVE_AI_API_KEY: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     NEXT_PUBLIC_SOME_FEATURE_FLAG: process.env.NEXT_PUBLIC_SOME_FEATURE_FLAG,
+    GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID,
     NODE_ENV: process.env.NODE_ENV,
   },
 

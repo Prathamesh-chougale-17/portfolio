@@ -9,6 +9,8 @@ import { en } from "@/data/en";
 import { Toaster } from "sonner";
 import ChatButton from "@/components/layout/chat-button";
 import { PWARegister } from "@/components/pwa-register";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { env } from "@/env";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -115,6 +117,7 @@ export default function RootLayout({
           </ThemeProvider>
         </TRPCProvider>
       </body>
+      <GoogleAnalytics gaId={env.GOOGLE_ANALYTICS_ID} />
     </html>
   );
 }
