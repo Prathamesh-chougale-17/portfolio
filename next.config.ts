@@ -7,7 +7,8 @@ const nextConfig: NextConfig = {
 
   // Environment variables
   env: {
-    NEXT_PUBLIC_APP_URL: process.env.APP_URL || "http://localhost:3000",
+    NEXT_PUBLIC_APP_URL:
+      process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   },
 
   // Security headers for production

@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/contacts`,
+      url: `${baseUrl}/contact`,
       lastModified: currentDate,
       changeFrequency: "monthly",
       priority: 0.8,
@@ -31,6 +31,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: currentDate,
       changeFrequency: "weekly",
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/offline`,
+      lastModified: currentDate,
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     // You can add dynamic routes here as well
     // For example, if you have project details pages:
