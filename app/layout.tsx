@@ -21,33 +21,59 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Prathamesh Chougale",
-  description: "Portfolio of a software engineer",
+  title: {
+    default: "Prathamesh Chougale | Software Engineer",
+    template: "%s | Prathamesh Chougale",
+  },
+  description:
+    "Full-stack software engineer specializing in React, Next.js, and TypeScript. Winner of Smart India Hackathon and HSBC Hackathon 2024. Building performant, scalable web applications.",
   metadataBase: new URL("https://prathamesh-chougale.vercel.app"),
+  keywords: [
+    "Software Engineer",
+    "Full Stack Developer",
+    "React Developer",
+    "Next.js Developer",
+    "TypeScript",
+    "Web Development",
+    "Prathamesh Chougale",
+  ],
+  authors: [{ name: "Prathamesh Chougale" }],
+  creator: "Prathamesh Chougale",
   openGraph: {
-    title: "Prathamesh Chougale",
-    description:
-      "Portfolio of a software engineer showcasing projects and skills.",
+    type: "website",
+    locale: "en_US",
     url: "https://prathamesh-chougale.vercel.app",
     siteName: "Prathamesh Chougale",
+    title: "Prathamesh Chougale | Software Engineer",
+    description:
+      "Full-stack software engineer specializing in React, Next.js, and TypeScript. Building performant, scalable web applications.",
     images: [
       {
-        url: "/icons/og-image.png", // Recommended size: 1200 x 630 px
+        url: "/icons/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Prathamesh Chougale Portfolio Preview",
+        alt: "Prathamesh Chougale - Software Engineer",
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prathamesh Chougale",
+    title: "Prathamesh Chougale | Software Engineer",
     description:
-      "Portfolio of a software engineer showcasing projects and skills.",
+      "Full-stack software engineer specializing in React, Next.js, and TypeScript.",
     images: ["/icons/og-image.png"],
-    creator: "@prathamesh_7717", // optional
+    creator: "@prathamesh_7717",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   icons: {
     icon: [
@@ -72,13 +98,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Prathamesh Chougale" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="theme-color" content="#0070f3" />
-
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#0070f3" />
-        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-        <link rel="icon" href="/icons/android-chrome-192x192.png" />
-
+        <meta name="theme-color" content="#000000" />
         <link rel="canonical" href="https://prathamesh-chougale.vercel.app" />
       </head>
       <body
