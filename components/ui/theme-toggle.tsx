@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { flushSync } from "react-dom";
@@ -15,6 +15,12 @@ type Props = {
 export const AnimatedThemeToggler = ({ className }: Props) => {
   const { theme, setTheme } = useTheme();
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  // Fix hydration mismatch by only rendering theme-specific content after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleTheme = useCallback(async () => {
     if (!buttonRef.current) return;
@@ -39,7 +45,7 @@ export const AnimatedThemeToggler = ({ className }: Props) => {
     const y = top + height / 2;
     const maxRadius = Math.hypot(
       Math.max(left, window.innerWidth - left),
-      Math.max(top, window.innerHeight - top),
+      Math.max(top, window.innerHeight - top)
     );
 
     document.documentElement.animate(
@@ -53,7 +59,7 @@ export const AnimatedThemeToggler = ({ className }: Props) => {
         duration: 700,
         easing: "ease-in-out",
         pseudoElement: "::view-transition-new(root)",
-      },
+      }
     );
   }, [theme, setTheme]);
 
@@ -66,7 +72,10 @@ export const AnimatedThemeToggler = ({ className }: Props) => {
       className={cn("h-9 w-9 p-0", className)}
       aria-label="Toggle theme"
     >
-      {theme === "dark" ? (
+      {!mounted ? (
+        // Render a neutral icon during SSR to prevent hydration mismatch
+        <Sun className="h-4 w-4 transition-all" />
+      ) : theme === "dark" ? (
         <Sun className="h-4 w-4 transition-all" />
       ) : (
         <Moon className="h-4 w-4 transition-all" />

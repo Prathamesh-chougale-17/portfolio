@@ -8,6 +8,8 @@ import { Footer } from "@/components/layout/footer";
 import { en } from "@/data/en";
 import { Toaster } from "sonner";
 import ChatButton from "@/components/layout/chat-button";
+import { PWARegister } from "@/components/pwa-register";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -82,6 +84,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
+        <PWARegister />
         <TRPCProvider>
           <ThemeProvider attribute="class" defaultTheme="dark">
             <Navbar navItems={en.navItems} />

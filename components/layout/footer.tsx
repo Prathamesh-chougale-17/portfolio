@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { en } from "@/data/en";
 
 export function Footer() {

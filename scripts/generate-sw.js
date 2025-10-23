@@ -1,123 +1,162 @@
-// Service Worker for Portfolio PWA
-// Generated: 2025-10-23T07:10:49.435Z
+#!/usr/bin/env node
 
-const CACHE_VERSION = 'v1761203449435';
-const STATIC_CACHE = 'portfolio-static-v1761203449435';
-const RUNTIME_CACHING = [
-  {
-    "urlPattern": {},
-    "handler": "CacheFirst",
-    "options": {
-      "cacheName": "google-fonts-cache",
-      "expiration": {
-        "maxEntries": 10,
-        "maxAgeSeconds": 31536000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "CacheFirst",
-    "options": {
-      "cacheName": "gstatic-fonts-cache",
-      "expiration": {
-        "maxEntries": 10,
-        "maxAgeSeconds": 31536000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "StaleWhileRevalidate",
-    "options": {
-      "cacheName": "static-font-assets",
-      "expiration": {
-        "maxEntries": 4,
-        "maxAgeSeconds": 604800
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "StaleWhileRevalidate",
-    "options": {
-      "cacheName": "static-image-assets",
-      "expiration": {
-        "maxEntries": 64,
-        "maxAgeSeconds": 2592000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "StaleWhileRevalidate",
-    "options": {
-      "cacheName": "next-image",
-      "expiration": {
-        "maxEntries": 64,
-        "maxAgeSeconds": 2592000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "StaleWhileRevalidate",
-    "options": {
-      "cacheName": "static-js-assets",
-      "expiration": {
-        "maxEntries": 48,
-        "maxAgeSeconds": 2592000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "StaleWhileRevalidate",
-    "options": {
-      "cacheName": "static-style-assets",
-      "expiration": {
-        "maxEntries": 32,
-        "maxAgeSeconds": 2592000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "CacheFirst",
-    "options": {
-      "cacheName": "next-static-js-assets",
-      "expiration": {
-        "maxEntries": 64,
-        "maxAgeSeconds": 2592000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "NetworkFirst",
-    "method": "GET",
-    "options": {
-      "cacheName": "apis",
-      "expiration": {
-        "maxEntries": 16,
-        "maxAgeSeconds": 86400
+/**
+ * PWA Build Script for Turbopack
+ * 
+ * This script generates a service worker file that works with Turbopack.
+ * It should be run after the Next.js build completes.
+ * 
+ * Usage: node scripts/generate-sw.js
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+const PUBLIC_DIR = path.join(process.cwd(), 'public');
+const SW_PATH = path.join(PUBLIC_DIR, 'sw.js');
+const WORKBOX_PATH = path.join(PUBLIC_DIR, 'workbox-1bb06f5e.js');
+
+// Read the PWA configuration
+const pwaConfigPath = path.join(process.cwd(), 'pwa.config.ts');
+let runtimeCaching = [];
+
+try {
+  // For this simple script, we'll define the config inline
+  // In production, you might want to parse the TS file or use a JSON config
+  runtimeCaching = [
+    {
+      urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "google-fonts-cache",
+        expiration: {
+          maxEntries: 10,
+          maxAgeSeconds: 60 * 60 * 24 * 365,
+        },
       },
-      "networkTimeoutSeconds": 10
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "NetworkFirst",
-    "options": {
-      "cacheName": "others",
-      "expiration": {
-        "maxEntries": 32,
-        "maxAgeSeconds": 86400
+    },
+    {
+      urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "gstatic-fonts-cache",
+        expiration: {
+          maxEntries: 10,
+          maxAgeSeconds: 60 * 60 * 24 * 365,
+        },
       },
-      "networkTimeoutSeconds": 10
-    }
-  }
-];
+    },
+    {
+      urlPattern: /\.(?:eot|otf|ttc|ttf|woff|woff2|font\.css)$/i,
+      handler: "StaleWhileRevalidate",
+      options: {
+        cacheName: "static-font-assets",
+        expiration: {
+          maxEntries: 4,
+          maxAgeSeconds: 60 * 60 * 24 * 7,
+        },
+      },
+    },
+    {
+      urlPattern: /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i,
+      handler: "StaleWhileRevalidate",
+      options: {
+        cacheName: "static-image-assets",
+        expiration: {
+          maxEntries: 64,
+          maxAgeSeconds: 60 * 60 * 24 * 30,
+        },
+      },
+    },
+    {
+      urlPattern: /\/_next\/image\?url=.+$/i,
+      handler: "StaleWhileRevalidate",
+      options: {
+        cacheName: "next-image",
+        expiration: {
+          maxEntries: 64,
+          maxAgeSeconds: 60 * 60 * 24 * 30,
+        },
+      },
+    },
+    {
+      urlPattern: /\.(?:js)$/i,
+      handler: "StaleWhileRevalidate",
+      options: {
+        cacheName: "static-js-assets",
+        expiration: {
+          maxEntries: 48,
+          maxAgeSeconds: 60 * 60 * 24 * 30,
+        },
+      },
+    },
+    {
+      urlPattern: /\.(?:css|less)$/i,
+      handler: "StaleWhileRevalidate",
+      options: {
+        cacheName: "static-style-assets",
+        expiration: {
+          maxEntries: 32,
+          maxAgeSeconds: 60 * 60 * 24 * 30,
+        },
+      },
+    },
+    {
+      urlPattern: /\/_next\/static.+\.js$/i,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "next-static-js-assets",
+        expiration: {
+          maxEntries: 64,
+          maxAgeSeconds: 60 * 60 * 24 * 30,
+        },
+      },
+    },
+    {
+      urlPattern: /\/api\/.*/i,
+      handler: "NetworkFirst",
+      method: "GET",
+      options: {
+        cacheName: "apis",
+        expiration: {
+          maxEntries: 16,
+          maxAgeSeconds: 60 * 60 * 24,
+        },
+        networkTimeoutSeconds: 10,
+      },
+    },
+    {
+      urlPattern: /.*/i,
+      handler: "NetworkFirst",
+      options: {
+        cacheName: "others",
+        expiration: {
+          maxEntries: 32,
+          maxAgeSeconds: 60 * 60 * 24,
+        },
+        networkTimeoutSeconds: 10,
+      },
+    },
+  ];
+} catch (error) {
+  console.error('Error reading PWA config:', error);
+}
+
+// Generate service worker content
+const generateServiceWorker = () => {
+  const cacheVersion = `v${Date.now()}`;
+  const staticCacheName = `portfolio-static-${cacheVersion}`;
+  
+  const runtimeCachingStr = JSON.stringify(runtimeCaching, null, 2)
+    .replace(/"urlPattern":\s*"([^"]+)"/g, '"urlPattern": $1')
+    .replace(/\/(.+?)\/i/g, (match) => match);
+
+  return `// Service Worker for Portfolio PWA
+// Generated: ${new Date().toISOString()}
+
+const CACHE_VERSION = '${cacheVersion}';
+const STATIC_CACHE = '${staticCacheName}';
+const RUNTIME_CACHING = ${JSON.stringify(runtimeCaching, null, 2)};
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
@@ -272,3 +311,15 @@ async function staleWhileRevalidate(request, options = {}) {
 }
 
 console.log('[SW] Service worker loaded');
+`;
+};
+
+// Write the service worker file
+try {
+  const swContent = generateServiceWorker();
+  fs.writeFileSync(SW_PATH, swContent, 'utf8');
+  console.log('✓ Service worker generated successfully:', SW_PATH);
+} catch (error) {
+  console.error('✗ Error generating service worker:', error);
+  process.exit(1);
+}
