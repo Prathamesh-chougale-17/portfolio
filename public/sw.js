@@ -1,122 +1,14 @@
 // Service Worker for Portfolio PWA
-// Generated: 2025-10-23T07:10:49.435Z
+// Following Next.js official PWA documentation
+// https://nextjs.org/docs/app/guides/progressive-web-apps
 
-const CACHE_VERSION = 'v1761203449435';
-const STATIC_CACHE = 'portfolio-static-v1761203449435';
-const RUNTIME_CACHING = [
-  {
-    "urlPattern": {},
-    "handler": "CacheFirst",
-    "options": {
-      "cacheName": "google-fonts-cache",
-      "expiration": {
-        "maxEntries": 10,
-        "maxAgeSeconds": 31536000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "CacheFirst",
-    "options": {
-      "cacheName": "gstatic-fonts-cache",
-      "expiration": {
-        "maxEntries": 10,
-        "maxAgeSeconds": 31536000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "StaleWhileRevalidate",
-    "options": {
-      "cacheName": "static-font-assets",
-      "expiration": {
-        "maxEntries": 4,
-        "maxAgeSeconds": 604800
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "StaleWhileRevalidate",
-    "options": {
-      "cacheName": "static-image-assets",
-      "expiration": {
-        "maxEntries": 64,
-        "maxAgeSeconds": 2592000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "StaleWhileRevalidate",
-    "options": {
-      "cacheName": "next-image",
-      "expiration": {
-        "maxEntries": 64,
-        "maxAgeSeconds": 2592000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "StaleWhileRevalidate",
-    "options": {
-      "cacheName": "static-js-assets",
-      "expiration": {
-        "maxEntries": 48,
-        "maxAgeSeconds": 2592000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "StaleWhileRevalidate",
-    "options": {
-      "cacheName": "static-style-assets",
-      "expiration": {
-        "maxEntries": 32,
-        "maxAgeSeconds": 2592000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "CacheFirst",
-    "options": {
-      "cacheName": "next-static-js-assets",
-      "expiration": {
-        "maxEntries": 64,
-        "maxAgeSeconds": 2592000
-      }
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "NetworkFirst",
-    "method": "GET",
-    "options": {
-      "cacheName": "apis",
-      "expiration": {
-        "maxEntries": 16,
-        "maxAgeSeconds": 86400
-      },
-      "networkTimeoutSeconds": 10
-    }
-  },
-  {
-    "urlPattern": {},
-    "handler": "NetworkFirst",
-    "options": {
-      "cacheName": "others",
-      "expiration": {
-        "maxEntries": 32,
-        "maxAgeSeconds": 86400
-      },
-      "networkTimeoutSeconds": 10
-    }
-  }
+const CACHE_NAME = 'portfolio-v1';
+const STATIC_ASSETS = [
+  '/',
+  '/about',
+  '/projects',
+  '/contact',
+  '/offline',
 ];
 
 // Install event - cache static assets
@@ -124,15 +16,14 @@ self.addEventListener('install', (event) => {
   console.log('[SW] Installing service worker...');
   
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => {
+    caches.open(CACHE_NAME).then((cache) => {
       console.log('[SW] Caching static assets');
-      return cache.addAll([
-        '/',
-        '/offline.html',
-      ].filter(Boolean));
+      return cache.addAll(STATIC_ASSETS.filter(Boolean));
     }).then(() => {
       console.log('[SW] Service worker installed');
       return self.skipWaiting();
+    }).catch((error) => {
+      console.error('[SW] Installation failed:', error);
     })
   );
 });
@@ -145,9 +36,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
-          .filter((cacheName) => {
-            return cacheName.startsWith('portfolio-') && cacheName !== STATIC_CACHE;
-          })
+          .filter((cacheName) => cacheName !== CACHE_NAME)
           .map((cacheName) => {
             console.log('[SW] Deleting old cache:', cacheName);
             return caches.delete(cacheName);
@@ -160,7 +49,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - handle requests with caching strategies
+// Fetch event - network first, cache fallback strategy
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
@@ -170,105 +59,95 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Find matching runtime caching strategy
-  let matchedStrategy = null;
-  for (const strategy of RUNTIME_CACHING) {
-    const pattern = strategy.urlPattern;
-    if (pattern instanceof RegExp && pattern.test(url.pathname)) {
-      matchedStrategy = strategy;
-      break;
-    } else if (typeof pattern === 'string' && url.pathname === pattern) {
-      matchedStrategy = strategy;
-      break;
-    }
+  // Skip chrome-extension and other special schemes
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    return;
   }
 
-  if (matchedStrategy) {
-    const handler = matchedStrategy.handler;
-    
-    if (handler === 'CacheFirst') {
-      event.respondWith(cacheFirst(request, matchedStrategy.options));
-    } else if (handler === 'NetworkFirst') {
-      event.respondWith(networkFirst(request, matchedStrategy.options));
-    } else if (handler === 'StaleWhileRevalidate') {
-      event.respondWith(staleWhileRevalidate(request, matchedStrategy.options));
-    }
-  } else {
-    // Default: NetworkFirst for navigation, CacheFirst for others
-    if (request.mode === 'navigate') {
-      event.respondWith(networkFirst(request, { cacheName: 'pages' }));
-    } else {
-      event.respondWith(cacheFirst(request, { cacheName: 'assets' }));
-    }
-  }
+  event.respondWith(
+    fetch(request)
+      .then((response) => {
+        // Clone the response before caching
+        const responseToCache = response.clone();
+        
+        // Cache successful responses
+        if (response.ok && request.method === 'GET') {
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseToCache);
+          });
+        }
+        
+        return response;
+      })
+      .catch(() => {
+        // Network failed, try cache
+        return caches.match(request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          
+          // Return offline page for navigation requests
+          if (request.mode === 'navigate') {
+            return caches.match('/offline');
+          }
+          
+          // Return a basic 503 response for other requests
+          return new Response('Service Unavailable', {
+            status: 503,
+            statusText: 'Service Unavailable',
+          });
+        });
+      })
+  );
 });
 
-// Caching strategies
-async function cacheFirst(request, options = {}) {
-  const cacheName = options.cacheName || 'cache-first';
-  const cache = await caches.open(cacheName);
-  const cached = await cache.match(request);
-  
-  if (cached) {
-    return cached;
+// Push notification support
+self.addEventListener('push', (event) => {
+  if (!event.data) {
+    return;
   }
-  
-  try {
-    const response = await fetch(request);
-    if (response.ok) {
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch (error) {
-    console.error('[SW] Fetch failed:', error);
-    return new Response('Offline', { status: 503 });
-  }
-}
 
-async function networkFirst(request, options = {}) {
-  const cacheName = options.cacheName || 'network-first';
-  const timeout = options.networkTimeoutSeconds ? options.networkTimeoutSeconds * 1000 : 5000;
-  
-  try {
-    const fetchPromise = fetch(request);
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Network timeout')), timeout)
-    );
-    
-    const response = await Promise.race([fetchPromise, timeoutPromise]);
-    
-    if (response.ok) {
-      const cache = await caches.open(cacheName);
-      cache.put(request, response.clone());
-    }
-    
-    return response;
-  } catch (error) {
-    console.log('[SW] Network failed, trying cache:', error);
-    const cache = await caches.open(cacheName);
-    const cached = await cache.match(request);
-    
-    if (cached) {
-      return cached;
-    }
-    
-    return new Response('Offline', { status: 503 });
-  }
-}
+  const data = event.data.json();
+  const options = {
+    body: data.body,
+    icon: data.icon || '/icons/android-chrome-192x192.png',
+    badge: '/icons/android-chrome-192x192.png',
+    vibrate: [100, 50, 100],
+    data: {
+      dateOfArrival: Date.now(),
+      primaryKey: '2',
+      url: data.url || '/',
+    },
+  };
 
-async function staleWhileRevalidate(request, options = {}) {
-  const cacheName = options.cacheName || 'stale-while-revalidate';
-  const cache = await caches.open(cacheName);
-  const cached = await cache.match(request);
+  event.waitUntil(
+    self.registration.showNotification(data.title, options)
+  );
+});
+
+// Notification click handler
+self.addEventListener('notificationclick', (event) => {
+  console.log('[SW] Notification click received.');
   
-  const fetchPromise = fetch(request).then((response) => {
-    if (response.ok) {
-      cache.put(request, response.clone());
-    }
-    return response;
-  });
+  event.notification.close();
   
-  return cached || fetchPromise;
-}
+  const urlToOpen = event.notification.data?.url || '/';
+  
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true })
+      .then((windowClients) => {
+        // Check if there's already a window open
+        for (const client of windowClients) {
+          if (client.url === urlToOpen && 'focus' in client) {
+            return client.focus();
+          }
+        }
+        // If not, open a new window
+        if (clients.openWindow) {
+          return clients.openWindow(urlToOpen);
+        }
+      })
+  );
+});
 
 console.log('[SW] Service worker loaded');

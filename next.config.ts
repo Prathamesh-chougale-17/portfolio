@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
     }
 
     return [
+      // Global security headers
       {
         source: "/:path*",
         headers: [
@@ -46,6 +47,25 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Service Worker specific headers (per Next.js PWA docs)
+      {
+        source: "/sw.js",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/javascript; charset=utf-8",
+          },
+          {
+            key: "Cache-Control",
+            value: "no-cache, no-store, must-revalidate",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: "default-src 'self'; script-src 'self'",
+          },
+        ],
+      },
+      // API CORS headers
       {
         source: "/api/:path*",
         headers: [
