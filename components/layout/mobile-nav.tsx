@@ -36,15 +36,20 @@ export function MobileNav({ navItems }: MobileNavProps) {
             <DialogTitle>Prathamesh Chougale</DialogTitle>
             <DialogDescription></DialogDescription>
           </div>
-          <nav className="flex flex-col gap-5">
-            {navItems.map((item) => (
+          <nav className="flex flex-col gap-3">
+            {navItems.map((item, index) => (
               <AnimatedLink
                 key={item.href}
                 href={item.href}
-                className="text-foreground/70 transition-colors hover:text-foreground text-lg font-medium hover:translate-x-1 duration-200"
+                className="relative text-foreground/70 transition-all duration-300 hover:text-foreground text-lg font-medium hover:translate-x-2 px-4 py-3 rounded-lg hover:bg-accent/50"
+                activeClassName="text-foreground font-semibold bg-accent/30 translate-x-1"
+                showActiveIndicator={false}
                 onClick={() => setOpen(false)}
+                style={{
+                  animationDelay: `${index * 50}ms`,
+                }}
               >
-                {item.title}
+                <span className="relative z-10">{item.title}</span>
               </AnimatedLink>
             ))}
           </nav>

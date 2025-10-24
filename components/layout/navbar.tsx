@@ -14,7 +14,11 @@ export function Navbar({
       <div className="flex justify-between items-center h-16 py-4">
         {/* Logo - Left */}
         <div className="flex items-center">
-          <AnimatedLink href="/" className="items-center space-x-2 md:flex">
+          <AnimatedLink
+            href="/"
+            className="items-center space-x-2 md:flex"
+            showActiveIndicator={false}
+          >
             <Image
               src="/icons/android-chrome-192x192.png"
               alt="Logo"
@@ -27,12 +31,12 @@ export function Navbar({
         </div>
 
         {/* Desktop navigation - Center */}
-        <nav className="hidden md:flex justify-center gap-6">
+        <nav className="hidden md:flex justify-center gap-8 items-center">
           {navItems.map((item) => (
             <AnimatedLink
               key={item.href}
               href={item.href}
-              className="flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm"
+              className="flex items-center text-base font-medium transition-all duration-300 hover:text-foreground text-foreground/70 py-1"
             >
               {item.title}
             </AnimatedLink>

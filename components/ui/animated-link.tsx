@@ -2,13 +2,16 @@
 
 import { useCallback, useRef, type MouseEvent } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { flushSync } from "react-dom";
+import { cn } from "@/lib/utils";
 
 type AnimatedLinkProps = {
   href: string;
   children: React.ReactNode;
   className?: string;
+  activeClassName?: string;
+  showActiveIndicator?: boolean;
   [key: string]: any;
 };
 
@@ -16,10 +19,17 @@ export const AnimatedLink = ({
   href,
   children,
   className,
+  activeClassName,
+  showActiveIndicator = true,
   ...props
 }: AnimatedLinkProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Check if this link is active
+  const isActive =
+    pathname === href || (href !== "/" && pathname.startsWith(href));
 
   const handleClick = useCallback(
     async (e: MouseEvent<HTMLAnchorElement>) => {
@@ -75,10 +85,32 @@ export const AnimatedLink = ({
       ref={linkRef}
       href={href}
       onClick={handleClick}
-      className={className}
+      className={cn(
+        "relative group",
+        className,
+        isActive && (activeClassName || "text-foreground font-semibold")
+      )}
       {...props}
     >
       {children}
+      {showActiveIndicator && (
+        <>
+          {/* Active indicator - bottom border with gradient */}
+          <span
+            className={cn(
+              "absolute -bottom-1 left-0 h-0.5 bg-linear-to-r from-primary via-purple-500 to-primary transition-all duration-300",
+              isActive ? "w-full" : "w-0 group-hover:w-full"
+            )}
+          />
+          {/* Glow effect on active */}
+          <span
+            className={cn(
+              "absolute inset-0 -z-10 blur-xl opacity-0 transition-opacity duration-300",
+              isActive && "opacity-20 bg-primary"
+            )}
+          />
+        </>
+      )}
     </Link>
   );
 };
