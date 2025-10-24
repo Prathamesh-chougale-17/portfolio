@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { AnimatedThemeToggler } from "@/components/ui/theme-toggle";
 import { AnimatedLink } from "@/components/ui/animated-link";
 import { MobileNav } from "@/components/layout/mobile-nav";
