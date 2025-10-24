@@ -12,7 +12,8 @@ type AnimatedLinkProps = {
   className?: string;
   activeClassName?: string;
   showActiveIndicator?: boolean;
-  [key: string]: any;
+  onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
+  style?: React.CSSProperties;
 };
 
 export const AnimatedLink = ({
