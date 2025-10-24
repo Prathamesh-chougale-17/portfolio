@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/constant";
 
 export default function robots(): MetadataRoute.Robots {
-  // Define your website URL - replace with your actual domain
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+  const baseUrl = SITE_URL;
 
   return {
     // Rules for all bots, with Google specifically mentioned

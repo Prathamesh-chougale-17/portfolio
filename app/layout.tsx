@@ -10,6 +10,7 @@ import { PWARegister } from "@/components/pwa-register";
 import { ThemeProvider } from "@/context/theme-provider";
 import { en } from "@/data/en";
 import { env } from "@/env";
+import { ICONS, MANIFEST_ROUTE, OG_IMAGE, SITE_URL } from "@/lib/constant";
 import { TRPCProvider } from "@/server/client";
 
 const geistSans = Geist({
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
   },
   description:
     "Full-stack software engineer specializing in React, Next.js, and TypeScript. Winner of Smart India Hackathon and HSBC Hackathon 2024. Building performant, scalable web applications.",
-  metadataBase: new URL("https://prathamesh-chougale.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   keywords: [
     "Software Engineer",
     "Full Stack Developer",
@@ -44,14 +45,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://prathamesh-chougale.vercel.app",
+    url: SITE_URL,
     siteName: "Prathamesh Chougale",
     title: "Prathamesh Chougale | Software Engineer",
     description:
       "Full-stack software engineer specializing in React, Next.js, and TypeScript. Building performant, scalable web applications.",
     images: [
       {
-        url: "/icons/og-image.png",
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "Prathamesh Chougale - Software Engineer",
@@ -63,7 +64,7 @@ export const metadata: Metadata = {
     title: "Prathamesh Chougale | Software Engineer",
     description:
       "Full-stack software engineer specializing in React, Next.js, and TypeScript.",
-    images: ["/icons/og-image.png"],
+    images: [OG_IMAGE],
     creator: "@prathamesh_7717",
   },
   robots: {
@@ -79,12 +80,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: ICONS.favicon32, sizes: "32x32", type: "image/png" },
+      { url: ICONS.favicon16, sizes: "16x16", type: "image/png" },
     ],
-    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
+    apple: [{ url: ICONS.appleTouch, sizes: "180x180" }],
   },
-  manifest: "/manifest.json",
+  manifest: MANIFEST_ROUTE,
 };
 
 export default function RootLayout({

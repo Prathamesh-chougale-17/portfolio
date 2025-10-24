@@ -9,6 +9,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Menu</title>
       <path
         d="M3 5H11"
         stroke="currentColor"
@@ -34,6 +35,7 @@ export const Icons = {
   ),
   nextjs: (props: IconProps) => (
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <title>Nextjs</title>
       <path
         d="M11.572 0c-.176 0-.31.001-.358.007a19.76 19.76 0 0 1-.364.033C7.443.346 4.25 2.185 2.228 5.012a11.875 11.875 0 0 0-2.119 5.243c-.096.659-.108.854-.108 1.747s.012 1.089.108 1.748c.652 4.506 3.86 8.292 8.209 9.695.779.25 1.6.422 2.534.525.363.04 1.935.04 2.299 0 1.611-.178 2.977-.577 4.323-1.264.207-.106.247-.134.219-.158-.02-.013-.9-1.193-1.955-2.62l-1.919-2.592-2.404-3.558a338.739 338.739 0 0 0-2.422-3.556c-.009-.002-.018 1.579-.023 3.51-.007 3.38-.01 3.515-.052 3.595a.426.426 0 0 1-.206.214c-.075.037-.14.044-.495.044H7.81l-.108-.068a.438.438 0 0 1-.157-.171l-.05-.106.006-4.703.007-4.705.072-.092a.645.645 0 0 1 .174-.143c.096-.047.134-.051.54-.051.478 0 .558.018.682.154.035.038 1.337 1.999 2.895 4.361a10760.433 10760.433 0 0 0 4.735 7.17l1.9 2.879.096-.063a12.317 12.317 0 0 0 2.466-2.163 11.944 11.944 0 0 0 2.824-6.134c.096-.66.108-.854.108-1.748 0-.893-.012-1.088-.108-1.747-.652-4.506-3.859-8.292-8.208-9.695a12.597 12.597 0 0 0-2.499-.523A33.119 33.119 0 0 0 11.573 0zm4.069 7.217c.347 0 .408.005.486.047a.473.473 0 0 1 .237.277c.018.06.023 1.365.018 4.304l-.006 4.218-.744-1.14-.746-1.14v-3.066c0-1.982.01-3.097.023-3.15a.478.478 0 0 1 .233-.296c.096-.05.13-.054.5-.054z"
         fill="currentColor"
@@ -42,6 +44,7 @@ export const Icons = {
   ),
   gitHub: (props: IconProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
+      <title>GitHub</title>
       <path
         d="M409.132 114.573c-19.608-33.596-46.205-60.194-79.798-79.8-33.598-19.607-70.277-29.408-110.063-29.408-39.781 0-76.472 9.804-110.063 29.408-33.596 19.605-60.192 46.204-79.8 79.8C9.803 148.168 0 184.854 0 224.63c0 47.78 13.94 90.745 41.827 128.906 27.884 38.164 63.906 64.572 108.063 79.227 5.14.954 8.945.283 11.419-1.996 2.475-2.282 3.711-5.14 3.711-8.562 0-.571-.049-5.708-.144-15.417a2549.81 2549.81 0 01-.144-25.406l-6.567 1.136c-4.187.767-9.469 1.092-15.846 1-6.374-.089-12.991-.757-19.842-1.999-6.854-1.231-13.229-4.086-19.13-8.559-5.898-4.473-10.085-10.328-12.56-17.556l-2.855-6.57c-1.903-4.374-4.899-9.233-8.992-14.559-4.093-5.331-8.232-8.945-12.419-10.848l-1.999-1.431c-1.332-.951-2.568-2.098-3.711-3.429-1.142-1.331-1.997-2.663-2.568-3.997-.572-1.335-.098-2.43 1.427-3.289 1.525-.859 4.281-1.276 8.28-1.276l5.708.853c3.807.763 8.516 3.042 14.133 6.851 5.614 3.806 10.229 8.754 13.846 14.842 4.38 7.806 9.657 13.754 15.846 17.847 6.184 4.093 12.419 6.136 18.699 6.136 6.28 0 11.704-.476 16.274-1.423 4.565-.952 8.848-2.383 12.847-4.285 1.713-12.758 6.377-22.559 13.988-29.41-10.848-1.14-20.601-2.857-29.264-5.14-8.658-2.286-17.605-5.996-26.835-11.14-9.235-5.137-16.896-11.516-22.985-19.126-6.09-7.614-11.088-17.61-14.987-29.979-3.901-12.374-5.852-26.648-5.852-42.826 0-23.035 7.52-42.637 22.557-58.817-7.044-17.318-6.379-36.732 1.997-58.24 5.52-1.715 13.706-.428 24.554 3.853 10.85 4.283 18.794 7.952 23.84 10.994 5.046 3.041 9.089 5.618 12.135 7.708 17.705-4.947 35.976-7.421 54.818-7.421s37.117 2.474 54.823 7.421l10.849-6.849c7.419-4.57 16.18-8.758 26.262-12.565 10.088-3.805 17.802-4.853 23.134-3.138 8.562 21.509 9.325 40.922 2.279 58.24 15.036 16.18 22.559 35.787 22.559 58.817 0 16.178-1.958 30.497-5.853 42.966-3.9 12.471-8.941 22.457-15.125 29.979-6.191 7.521-13.901 13.85-23.131 18.986-9.232 5.14-18.182 8.85-26.84 11.136-8.662 2.286-18.415 4.004-29.263 5.146 9.894 8.562 14.842 22.077 14.842 40.539v60.237c0 3.422 1.19 6.279 3.572 8.562 2.379 2.279 6.136 2.95 11.276 1.995 44.163-14.653 80.185-41.062 108.068-79.226 27.88-38.161 41.825-81.126 41.825-128.906-.01-39.771-9.818-76.454-29.414-110.049z"
         fill="currentColor"
@@ -50,6 +53,7 @@ export const Icons = {
   ),
   google: ({ ...props }: IconProps) => (
     <svg role="img" viewBox="0 0 24 24" {...props}>
+      <title>Google</title>
       <path
         d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
         fill="currentColor"
@@ -64,11 +68,13 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>X</title>
       <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" />
     </svg>
   ),
   facebook: ({ ...props }: IconProps) => (
     <svg viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <title>Facebook</title>
       <path
         d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
         fill="currentColor"
@@ -77,6 +83,7 @@ export const Icons = {
   ),
   discord: ({ ...props }: IconProps) => (
     <svg viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <title>Discord</title>
       <path
         d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"
         fill="currentColor"
@@ -94,6 +101,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Spinner</title>
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
     </svg>
   ),
@@ -108,6 +116,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Dollar Sign</title>
       <line x1="12" x2="12" y1="2" y2="22" />
       <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
     </svg>
@@ -123,6 +132,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Activity</title>
       <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
     </svg>
   ),
@@ -137,6 +147,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Bot</title>
       <path d="M12 8V4H8" />
       <rect height="12" rx="2" width="16" x="4" y="8" />
       <path d="M2 14h2" />
@@ -156,6 +167,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Robot</title>
       <rect height="10" rx="2" width="18" x="3" y="11" />
       <circle cx="12" cy="5" r="2" />
       <path d="M12 7v4" />
@@ -165,6 +177,7 @@ export const Icons = {
   ),
   javascript: (props: IconProps) => (
     <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <title>JavaScript</title>
       <path
         d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM243.8 381.4c0 43.6-25.6 63.5-62.9 63.5-33.7 0-53.2-17.4-63.2-38.5l34.3-20.7c6.6 11.7 12.6 21.6 27.1 21.6 13.8 0 22.6-5.4 22.6-26.5V237.7h42.1v143.7zm99.6 63.5c-39.1 0-64.4-18.6-76.7-43l34.3-19.8c9 14.7 20.8 25.6 41.5 25.6 17.4 0 28.6-8.7 28.6-20.8 0-14.4-11.4-19.5-30.7-28l-10.5-4.5c-30.4-12.9-50.5-29.2-50.5-63.5 0-31.6 24.1-55.6 61.6-55.6 26.8 0 46 9.3 59.8 33.7L368 290c-7.2-12.9-15-18-27.1-18-12.3 0-20.1 7.8-20.1 18 0 12.6 7.8 17.7 25.9 25.6l10.5 4.5c35.8 15.3 55.9 31 55.9 66.2 0 37.8-29.8 58.6-69.7 58.6z"
         fill="currentColor"
@@ -202,6 +215,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Bash</title>
       <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
       <path d="M14 2v4a2 2 0 0 0 2 2h4" />
       <path d="m8 16 2-2-2-2" />
@@ -219,6 +233,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Analytics</title>
       <path d="M3 3v18h18" />
       <path d="m19 9-5 5-4-4-3 3" />
     </svg>
@@ -230,6 +245,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Database</title>
       <g strokeWidth="0" />
       <g strokeLinecap="round" strokeLinejoin="round" />
       <g>
@@ -267,6 +283,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Docker</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -288,6 +305,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Python</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -343,6 +361,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>React</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -367,6 +386,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Vue.js</title>
       <rect fill="#fff" height="512" rx="15%" width="512" />
       <path d="M300 140l-44 77-44-77H64l192 333 192-333z" fill="#42b883" />
       <path d="M300 140l-44 77-44-77h-71l115 200 115-200z" fill="#35495e" />
@@ -379,6 +399,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Angular</title>
       <path
         d="M21.316 18.755 23 3.986 12 0 1 3.986l1.684 14.769L12 24l9.316-5.245zm-13.624-.444H5.114L12 2.651l6.892 15.659h-2.573l-1.387-3.504H9.079l-1.387 3.505z"
         fill="#F44336"
@@ -394,6 +415,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Node.js</title>
       <defs>
         <clipPath id="hexClip">
           <path d="M22.8725 0.4166C22.136 0 21.2616 0 20.5253 0.4166L1.1505 11.6694C0.4142 12.0862 0 12.8733 0 13.707V36.2584C0 37.0921 0.4602 37.8791 1.1505 38.296L20.5253 49.5487C21.2616 49.9653 22.136 49.9653 22.8725 49.5487L42.2471 38.296C42.9836 37.8791 43.3976 37.0921 43.3976 36.2584V13.707C43.3976 12.8733 42.9375 12.0862 42.2471 11.6694L22.8725 0.4166Z" />
@@ -467,6 +489,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Arch Linux</title>
       <g strokeWidth="0" />
       <g strokeLinecap="round" strokeLinejoin="round" />
       <g>
@@ -563,6 +586,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>LinkedIn</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -590,6 +614,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Instagram</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -686,6 +711,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>AWS</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -712,6 +738,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Express.js</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -947,6 +974,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>PostgreSQL</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1016,6 +1044,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Redis</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1081,6 +1110,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Firebase</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1208,6 +1238,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Figma</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1246,6 +1277,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Adobe XD</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1266,6 +1298,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Go</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1600,6 +1633,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>PHP</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1634,6 +1668,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Java</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1685,6 +1720,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Kotlin</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1757,6 +1793,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Swift</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1791,6 +1828,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>C#</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1830,6 +1868,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>C++</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1871,6 +1910,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>C Language</title>
       <path
         d="M117.5 33.5l.3-.2c-.6-1.1-1.5-2.1-2.4-2.6l-48.3-27.8c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.3.9 3.4l-.2.1c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4v-55.8c.1-.8 0-1.7-.4-2.6zm-53.5 55c9.1 0 17.1-5 21.3-12.4l12.9 7.6c-6.8 11.8-19.6 19.8-34.2 19.8-21.8 0-39.5-17.7-39.5-39.5s17.7-39.5 39.5-39.5c14.7 0 27.5 8.1 34.3 20l-13 7.5c-4.2-7.5-12.2-12.5-21.3-12.5-13.5 0-24.5 11-24.5 24.5s11 24.5 24.5 24.5z"
         fill="#03599C"
@@ -1884,6 +1924,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Microphone</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"
@@ -1907,6 +1948,7 @@ export const Icons = {
       y="0px"
       {...props}
     >
+      <title>Trophy</title>
       <g id="objects">
         <g>
           <ellipse
@@ -2078,6 +2120,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Award</title>
       <g id="Layer_x0020_1">
         <metadata id="CorelCorpID_0Corel-Layer" />
         <polygon
@@ -2120,6 +2163,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>LeetCode</title>
       <path
         d="M22 14.355c0-.742-.564-1.346-1.26-1.346H10.676c-.696 0-1.26.604-1.26 1.346s.563 1.346 1.26 1.346H20.74c.696.001 1.26-.603 1.26-1.346z"
         fill="#B3B1B0"
@@ -2142,6 +2186,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Codeforces</title>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g
         id="SVGRepo_tracerCarrier"

@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/constant";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Define your website URL - replace with your actual domain
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+  // Use centralized site URL
+  const baseUrl = SITE_URL;
 
   // Get current date for lastModified
   const currentDate = new Date().toISOString();
