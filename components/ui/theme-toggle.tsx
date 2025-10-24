@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Button } from "@/components/ui/button";
 
@@ -23,7 +23,9 @@ export const AnimatedThemeToggler = ({ className }: Props) => {
   }, []);
 
   const toggleTheme = useCallback(async () => {
-    if (!buttonRef.current) return;
+    if (!buttonRef.current) {
+      return;
+    }
 
     const newTheme = theme === "dark" ? "light" : "dark";
 
@@ -65,20 +67,22 @@ export const AnimatedThemeToggler = ({ className }: Props) => {
 
   return (
     <Button
-      ref={buttonRef}
-      variant="ghost"
-      size="sm"
-      onClick={toggleTheme}
-      className={cn("h-9 w-9 p-0", className)}
       aria-label="Toggle theme"
+      className={cn("h-9 w-9 p-0", className)}
+      onClick={toggleTheme}
+      ref={buttonRef}
+      size="sm"
+      variant="ghost"
     >
-      {!mounted ? (
+      {mounted ? (
+        theme === "dark" ? (
+          <Sun className="h-4 w-4 transition-all" />
+        ) : (
+          <Moon className="h-4 w-4 transition-all" />
+        )
+      ) : (
         // Render a neutral icon during SSR to prevent hydration mismatch
         <Sun className="h-4 w-4 transition-all" />
-      ) : theme === "dark" ? (
-        <Sun className="h-4 w-4 transition-all" />
-      ) : (
-        <Moon className="h-4 w-4 transition-all" />
       )}
     </Button>
   );

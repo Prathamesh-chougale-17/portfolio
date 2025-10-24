@@ -1,6 +1,6 @@
 import { createTRPCRouter } from "../init";
-import { contactRouter } from "./contact";
 import { chatRouter } from "./chat";
+import { contactRouter } from "./contact";
 import { leetcodeRouter } from "./leetcode";
 
 /**

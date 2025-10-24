@@ -1,8 +1,9 @@
-import { useState } from "react";
 import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import type { Project } from "@/components/project/project-card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -10,12 +11,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { type Project } from "@/components/project/project-card";
 
-interface ProjectFiltersProps {
+type ProjectFiltersProps = {
   projects: Project[];
   onFilteredProjectsChange: (filteredProjects: Project[]) => void;
-}
+};
 
 export function ProjectFilters({
   projects,
@@ -27,7 +27,7 @@ export function ProjectFilters({
 
   // Get all tags directly (no useMemo)
   const allTags = Array.from(
-    new Set(projects.flatMap((project) => project.tags)),
+    new Set(projects.flatMap((project) => project.tags))
   ).sort();
 
   // Call filter each time something changes
@@ -49,7 +49,7 @@ export function ProjectFilters({
   const handleFilterAfterChange = (
     query: string,
     tag: string,
-    featured: boolean,
+    featured: boolean
   ) => {
     const filtered = projects.filter((project) => {
       const search = query.toLowerCase();
@@ -75,24 +75,24 @@ export function ProjectFilters({
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 lg:items-center justify-between mb-8">
+    <div className="mb-8 flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
       <div className="flex-1">
         {/* Search Input */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+          <Search className="-translate-y-1/2 absolute top-1/2 left-3 h-4 w-4 transform text-muted-foreground" />
           <Input
+            className="w-full pl-10"
+            onChange={(e) => handleSearchChange(e.target.value)}
             placeholder="Search projects by title, description, or tags..."
             value={searchQuery}
-            onChange={(e) => handleSearchChange(e.target.value)}
-            className="pl-10 w-full"
           />
         </div>
       </div>
 
-      <div className="flex flex-row flex-wrap gap-4 items-center">
+      <div className="flex flex-row flex-wrap items-center gap-4">
         {/* Tag Filter */}
         <div className="flex items-center gap-2">
-          <Select value={selectedTag} onValueChange={handleTagChange}>
+          <Select onValueChange={handleTagChange} value={selectedTag}>
             <SelectTrigger className="w-full sm:w-[180px]">
               <SelectValue placeholder="Filter by tag" />
             </SelectTrigger>
@@ -108,24 +108,24 @@ export function ProjectFilters({
         </div>
 
         {/* Featured Filter */}
-        <div className="items-center hidden md:flex space-x-2">
+        <div className="hidden items-center space-x-2 md:flex">
           <Checkbox
-            id="featured"
             checked={showFeaturedOnly}
+            id="featured"
             onCheckedChange={(checked) =>
               handleFeaturedChange(checked as boolean)
             }
           />
           <label
+            className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             htmlFor="featured"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             Featured only
           </label>
         </div>
 
         {/* Clear Filters */}
-        <Button variant="outline" size="sm" onClick={clearFilters}>
+        <Button onClick={clearFilters} size="sm" variant="outline">
           Clear filters
         </Button>
       </div>

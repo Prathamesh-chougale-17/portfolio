@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { TRPCProvider } from "@/server/client";
-import { ThemeProvider } from "@/context/theme-provider";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { en } from "@/data/en";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "sonner";
 import ChatButton from "@/components/layout/chat-button";
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/layout/navbar";
 import { PWARegister } from "@/components/pwa-register";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { ThemeProvider } from "@/context/theme-provider";
+import { en } from "@/data/en";
 import { env } from "@/env";
+import { TRPCProvider } from "@/server/client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -95,16 +95,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="application-name" content="Prathamesh Chougale" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Prathamesh Chougale" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="theme-color" content="#000000" />
-        <link rel="canonical" href="https://prathamesh-chougale.vercel.app" />
+        <meta content="Prathamesh Chougale" name="application-name" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="default" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="Prathamesh Chougale" name="apple-mobile-web-app-title" />
+        <meta content="yes" name="mobile-web-app-capable" />
+        <meta content="#000000" name="theme-color" />
+        <link href="https://prathamesh-chougale.vercel.app" rel="canonical" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
       >
         <PWARegister />
         <TRPCProvider>

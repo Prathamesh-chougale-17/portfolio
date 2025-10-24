@@ -9,13 +9,12 @@ const chatMessageSchema = z.object({
     z.object({
       role: z.enum(["user", "assistant", "system"]),
       content: z.string(),
-    }),
+    })
   ),
 });
 
 // Function to build the system prompt
-const buildSystemPrompt = () => {
-  return `
+const buildSystemPrompt = () => `
 You are ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}.  
 
 Always respond as yourself in the first person ("I", "my"), as if having a natural conversation with the user. Never reveal that you're an AI.
@@ -35,7 +34,7 @@ ${en.about.hero.skills.join(", ")}
 ${en.about.experiences
   .map(
     (exp) =>
-      `- ${exp.title} at ${exp.company} (${exp.period}): ${exp.description}`,
+      `- ${exp.title} at ${exp.company} (${exp.period}): ${exp.description}`
   )
   .join("\n")}
 
@@ -56,7 +55,6 @@ ${en.projects
 - Show genuine interest in your work and projects.  
 - Use emojis sparingly and professionally.
 `;
-};
 
 export const chatRouter = createTRPCRouter({
   // Normal send message (returns complete text)
@@ -87,7 +85,7 @@ export const chatRouter = createTRPCRouter({
         throw new Error(
           error instanceof Error
             ? error.message
-            : "Failed to process your message. Please try again.",
+            : "Failed to process your message. Please try again."
         );
       }
     }),
@@ -121,10 +119,8 @@ export const chatRouter = createTRPCRouter({
     }),
 
   // Initial welcome message
-  getWelcome: publicProcedure.query(() => {
-    return {
-      success: true,
-      message: `Hi there! 👋 I'm ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}. I'm here to answer your questions about my experience, projects, and skills. How can I help you today?`,
-    };
-  }),
+  getWelcome: publicProcedure.query(() => ({
+    success: true,
+    message: `Hi there! 👋 I'm ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}. I'm here to answer your questions about my experience, projects, and skills. How can I help you today?`,
+  })),
 });

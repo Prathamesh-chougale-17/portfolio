@@ -1,7 +1,7 @@
-import { IconProps } from "@/components/icons";
-import { JSX } from "react";
+import type { JSX } from "react";
+import type { IconProps } from "@/components/icons";
 
-export interface entype {
+export type entype = {
   leetcode_username: string;
   navItems: {
     title: string;
@@ -96,4 +96,4 @@ export interface entype {
       error: string;
     };
   };
-}
+};

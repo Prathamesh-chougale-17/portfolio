@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useRef, type MouseEvent } from "react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { type MouseEvent, useCallback, useRef } from "react";
 import { flushSync } from "react-dom";
 import { cn } from "@/lib/utils";
 
@@ -83,14 +83,14 @@ export const AnimatedLink = ({
 
   return (
     <Link
-      ref={linkRef}
+      className={cn(
+        "group relative",
+        className,
+        isActive && (activeClassName || "font-semibold text-foreground")
+      )}
       href={href}
       onClick={handleClick}
-      className={cn(
-        "relative group",
-        className,
-        isActive && (activeClassName || "text-foreground font-semibold")
-      )}
+      ref={linkRef}
       {...props}
     >
       {children}
@@ -99,15 +99,15 @@ export const AnimatedLink = ({
           {/* Active indicator - bottom border with gradient */}
           <span
             className={cn(
-              "absolute -bottom-1 left-0 h-0.5 bg-linear-to-r from-primary via-purple-500 to-primary transition-all duration-300",
+              "-bottom-1 absolute left-0 h-0.5 bg-linear-to-r from-primary via-purple-500 to-primary transition-all duration-300",
               isActive ? "w-full" : "w-0 group-hover:w-full"
             )}
           />
           {/* Glow effect on active */}
           <span
             className={cn(
-              "absolute inset-0 -z-10 blur-xl opacity-0 transition-opacity duration-300",
-              isActive && "opacity-20 bg-primary"
+              "-z-10 absolute inset-0 opacity-0 blur-xl transition-opacity duration-300",
+              isActive && "bg-primary opacity-20"
             )}
           />
         </>

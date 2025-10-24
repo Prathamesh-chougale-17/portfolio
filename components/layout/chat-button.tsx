@@ -25,12 +25,12 @@ import { en } from "@/data/en";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/server/client";
 
-interface ChatMessage {
+type ChatMessage = {
   id: string;
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
-}
+};
 
 export default function ChatButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,7 +75,9 @@ export default function ChatButton() {
   });
 
   useEffect(() => {
-    if (isOpen && inputRef.current) inputRef.current.focus();
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -85,11 +87,13 @@ export default function ChatButton() {
         behavior: "smooth",
       });
     }
-  }, [messages, sendMessageMutation.isPending]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!input.trim() || sendMessageMutation.isPending) return;
+    if (!input.trim() || sendMessageMutation.isPending) {
+      return;
+    }
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -121,57 +125,57 @@ export default function ChatButton() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
+    <div className="fixed right-4 bottom-4 z-50 sm:right-6 sm:bottom-6">
       {isOpen ? (
         <Card
           className={cn(
-            "w-[calc(100vw-32px)] sm:w-[380px] h-[500px]",
-            "flex flex-col border border-border bg-background/60 backdrop-blur-xl rounded-2xl shadow-lg py-0",
+            "h-[500px] w-[calc(100vw-32px)] sm:w-[380px]",
+            "flex flex-col rounded-2xl border border-border bg-background/60 py-0 shadow-lg backdrop-blur-xl"
           )}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-3 border-b">
+          <div className="flex items-center justify-between border-b p-3">
             <div className="flex items-center gap-2">
-              <div className="relative h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm">
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm">
                 AI
               </div>
               <div>
                 <h3 className="font-semibold text-sm">{en.hero.name}</h3>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   {sendMessageMutation.isPending ? "Typing..." : "Online"}
                 </p>
               </div>
             </div>
             <Actions>
               <Action
-                tooltip="Clear"
-                onClick={handleClear}
                 disabled={messages.length <= 1}
+                onClick={handleClear}
+                tooltip="Clear"
               >
                 <Trash2 className="h-4 w-4" />
               </Action>
-              <Action tooltip="Close" onClick={() => setIsOpen(false)}>
+              <Action onClick={() => setIsOpen(false)} tooltip="Close">
                 <X className="h-4 w-4" />
               </Action>
             </Actions>
           </div>
 
           {/* Messages */}
-          <div ref={chatContainerRef} className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto" ref={chatContainerRef}>
             {messages.map((m) => (
-              <Message key={m.id} from={m.role}>
+              <Message from={m.role} key={m.id}>
                 <MessageAvatar
-                  src={m.role === "user" ? "/user.png" : "/profile.jpg"}
                   name={m.role === "assistant" ? en.hero.name : "You"}
+                  src={m.role === "user" ? "/user.png" : "/profile.jpg"}
                 />
                 <MessageContent
-                  variant="contained"
                   className={cn(
                     "text-sm leading-relaxed",
                     m.role === "user"
                       ? "bg-primary text-primary-foreground"
-                      : "bg-muted/50 border border-border",
+                      : "border border-border bg-muted/50"
                   )}
+                  variant="contained"
                 >
                   {m.role === "assistant" ? (
                     <ReactMarkdown>{m.content}</ReactMarkdown>
@@ -182,8 +186,8 @@ export default function ChatButton() {
                 {m.role === "assistant" && (
                   <Actions>
                     <Action
-                      tooltip="Copy"
                       onClick={() => handleCopy(m.content, m.id)}
+                      tooltip="Copy"
                     >
                       {copiedId === m.id ? (
                         <Check className="h-4 w-4" />
@@ -198,12 +202,12 @@ export default function ChatButton() {
 
             {sendMessageMutation.isPending && (
               <Message from="assistant">
-                <MessageAvatar src="/profile.jpg" name={en.hero.name} />
+                <MessageAvatar name={en.hero.name} src="/profile.jpg" />
                 <MessageContent
+                  className="border border-border bg-muted/50"
                   variant="contained"
-                  className="bg-muted/50 border border-border"
                 >
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 text-muted-foreground text-sm">
                     <Loader2 className="h-4 w-4 animate-spin" />
                     Thinking...
                   </div>
@@ -214,28 +218,28 @@ export default function ChatButton() {
 
           {/* Input */}
           <form
+            className="flex items-end gap-2 border-t p-3"
             onSubmit={handleSubmit}
-            className="p-3 border-t flex gap-2 items-end"
           >
             <Textarea
-              ref={inputRef}
-              value={input}
+              className="flex-1 resize-none rounded-xl border border-border bg-muted/30 focus-visible:ring-1 focus-visible:ring-primary"
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 resize-none rounded-xl bg-muted/30 border border-border focus-visible:ring-1 focus-visible:ring-primary"
-              rows={1}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
                   handleSubmit(e as any);
                 }
               }}
+              placeholder="Type your message..."
+              ref={inputRef}
+              rows={1}
+              value={input}
             />
             <Button
-              type="submit"
-              size="icon"
-              disabled={!input.trim() || sendMessageMutation.isPending}
               className="rounded-xl"
+              disabled={!input.trim() || sendMessageMutation.isPending}
+              size="icon"
+              type="submit"
             >
               {sendMessageMutation.isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -247,10 +251,10 @@ export default function ChatButton() {
         </Card>
       ) : (
         <Button
+          aria-label="Open chat"
+          className="h-14 w-14 rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105"
           onClick={() => setIsOpen(true)}
           size="icon"
-          className="h-14 w-14 rounded-full shadow-lg bg-primary text-primary-foreground hover:scale-105 transition-transform"
-          aria-label="Open chat"
         >
           <MessageCircle className="h-6 w-6" />
         </Button>

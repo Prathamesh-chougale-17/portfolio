@@ -3,13 +3,13 @@ import { en } from "@/data/en";
 
 export function ContactImage() {
   return (
-    <div className="relative h-[500px] rounded-lg overflow-hidden shadow-lg animate-fade-in-left">
+    <div className="relative h-[500px] animate-fade-in-left overflow-hidden rounded-lg shadow-lg">
       <Image
-        src={en.contact.imageUrl || "/placeholder.svg"}
         alt={en.contact.imageAlt}
+        className="object-cover transition-transform duration-700 hover:scale-105"
         fill
-        className="object-cover hover:scale-105 transition-transform duration-700"
         priority
+        src={en.contact.imageUrl || "/placeholder.svg"}
         unoptimized // Add this line for GIFs
       />
     </div>

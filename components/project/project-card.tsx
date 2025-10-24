@@ -1,6 +1,6 @@
+import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Github, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export interface Project {
+export type Project = {
   title: string;
   description: string;
   image: string;
@@ -20,25 +20,25 @@ export interface Project {
   githubLink?: string;
   liveLink?: string;
   featured?: boolean;
-}
+};
 
-interface ProjectCardProps {
+type ProjectCardProps = {
   project: Project;
   index: number;
-}
+};
 
 export function ProjectCard({ project, index }: ProjectCardProps) {
   return (
     <Card
-      className="overflow-hidden hover:shadow-lg cursor-pointer transition-all duration-300 animate-fade-up pt-0"
+      className="animate-fade-up cursor-pointer overflow-hidden pt-0 transition-all duration-300 hover:shadow-lg"
       style={{ animationDelay: `${index * 100}ms` }}
     >
       <div className="relative h-50 w-full">
         <Image
-          src={project.image}
           alt={project.title}
-          fill
           className="object-cover"
+          fill
+          src={project.image}
         />
       </div>
       <CardHeader>
@@ -50,7 +50,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       <CardContent>
         <div className="flex flex-wrap gap-1">
           {project.tags.map((tag, tagIndex) => (
-            <Badge key={tagIndex} variant="outline" className="text-xs">
+            <Badge className="text-xs" key={tagIndex} variant="outline">
               {tag}
             </Badge>
           ))}
@@ -58,27 +58,27 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       </CardContent>
       <CardFooter className="flex justify-between">
         {project.githubLink && (
-          <Button variant="outline" size="sm" asChild>
+          <Button asChild size="sm" variant="outline">
             <Link
-              href={project.githubLink}
-              target="_blank"
-              rel="noopener noreferrer"
               className="flex items-center gap-2"
+              href={project.githubLink}
+              rel="noopener noreferrer"
+              target="_blank"
             >
-              <Github className="w-4 h-4" />
+              <Github className="h-4 w-4" />
               GitHub
             </Link>
           </Button>
         )}
         {project.liveLink && (
-          <Button variant="ghost" size="sm" asChild>
+          <Button asChild size="sm" variant="ghost">
             <Link
-              href={project.liveLink}
-              target="_blank"
-              rel="noopener noreferrer"
               className="flex items-center gap-2"
+              href={project.liveLink}
+              rel="noopener noreferrer"
+              target="_blank"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="h-4 w-4" />
               Demo
             </Link>
           </Button>

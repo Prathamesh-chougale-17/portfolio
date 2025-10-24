@@ -1,30 +1,30 @@
-interface WorkExperience {
+type WorkExperience = {
   title: string;
   company: string;
   period: string;
   description: string;
-}
+};
 
-interface ExperienceTimelineProps {
+type ExperienceTimelineProps = {
   experiences: WorkExperience[];
-}
+};
 
 export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
   return (
     <section>
-      <h2 className="text-3xl font-bold mb-8 tracking-tight">
+      <h2 className="mb-8 font-bold text-3xl tracking-tight">
         Work Experience
       </h2>
       <div className="space-y-8">
         {experiences.map((exp, index) => (
           <div
+            className="relative animate-fade-in border-gray-300 border-l pb-8 pl-8 dark:border-gray-600"
             key={index}
-            className="relative pl-8 pb-8 border-l border-gray-300 dark:border-gray-600 animate-fade-in"
             style={{ animationDelay: `${index * 200}ms` }}
           >
-            <div className="absolute w-4 h-4 bg-primary rounded-full -left-2 top-0" />
-            <div className="mb-1 text-xl font-semibold">{exp.title}</div>
-            <div className="flex justify-between mb-2">
+            <div className="-left-2 absolute top-0 h-4 w-4 rounded-full bg-primary" />
+            <div className="mb-1 font-semibold text-xl">{exp.title}</div>
+            <div className="mb-2 flex justify-between">
               <span className="text-muted-foreground">{exp.company}</span>
               <span className="text-muted-foreground">{exp.period}</span>
             </div>

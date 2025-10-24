@@ -39,16 +39,16 @@ export function ContactForm() {
   return (
     <Card className="animate-fade-in-right">
       <CardContent className="pt-6">
-        <h2 className="text-2xl font-bold mb-6">{en.contact.form.title}</h2>
+        <h2 className="mb-6 font-bold text-2xl">{en.contact.form.title}</h2>
 
         <form
+          className="space-y-4"
           id="contact-form-tanstack"
+          noValidate
           onSubmit={(e) => {
             e.preventDefault();
             form.handleSubmit();
           }}
-          className="space-y-4"
-          noValidate
         >
           <form.Field
             name="name"
@@ -70,22 +70,22 @@ export function ContactForm() {
                 field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium">
+                  <label className="font-medium text-sm" htmlFor="name">
                     {en.contact.form.name.label}
                   </label>
                   <Input
+                    aria-invalid={isInvalid}
+                    className="w-full"
+                    disabled={isPending}
                     id="name"
                     name={field.name}
-                    placeholder={en.contact.form.name.placeholder}
-                    className="w-full"
-                    value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    aria-invalid={isInvalid}
-                    disabled={isPending}
+                    placeholder={en.contact.form.name.placeholder}
+                    value={field.state.value}
                   />
                   {isInvalid && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-destructive text-sm">
                       {field.state.meta.errors.join(", ")}
                     </p>
                   )}
@@ -114,23 +114,23 @@ export function ContactForm() {
                 field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium">
+                  <label className="font-medium text-sm" htmlFor="email">
                     {en.contact.form.email.label}
                   </label>
                   <Input
+                    aria-invalid={isInvalid}
+                    className="w-full"
+                    disabled={isPending}
                     id="email"
                     name={field.name}
-                    type="email"
-                    placeholder={en.contact.form.email.placeholder}
-                    className="w-full"
-                    value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    aria-invalid={isInvalid}
-                    disabled={isPending}
+                    placeholder={en.contact.form.email.placeholder}
+                    type="email"
+                    value={field.state.value}
                   />
                   {isInvalid && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-destructive text-sm">
                       {field.state.meta.errors.join(", ")}
                     </p>
                   )}
@@ -159,25 +159,25 @@ export function ContactForm() {
                 field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
-                  <label htmlFor="subject" className="text-sm font-medium">
+                  <label className="font-medium text-sm" htmlFor="subject">
                     {en.contact.form.subject?.label || "Subject"}
                   </label>
                   <Input
+                    aria-invalid={isInvalid}
+                    className="w-full"
+                    disabled={isPending}
                     id="subject"
                     name={field.name}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
                     placeholder={
                       en.contact.form.subject?.placeholder ||
                       "Enter message subject"
                     }
-                    className="w-full"
                     value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    aria-invalid={isInvalid}
-                    disabled={isPending}
                   />
                   {isInvalid && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-destructive text-sm">
                       {field.state.meta.errors.join(", ")}
                     </p>
                   )}
@@ -208,23 +208,23 @@ export function ContactForm() {
                 field.state.meta.errors.length > 0;
               return (
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium">
+                  <label className="font-medium text-sm" htmlFor="message">
                     {en.contact.form.message.label}
                   </label>
                   <Textarea
+                    aria-invalid={isInvalid}
+                    className="w-full"
+                    disabled={isPending}
                     id="message"
                     name={field.name}
-                    placeholder={en.contact.form.message.placeholder}
-                    rows={4}
-                    className="w-full"
-                    value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    aria-invalid={isInvalid}
-                    disabled={isPending}
+                    placeholder={en.contact.form.message.placeholder}
+                    rows={4}
+                    value={field.state.value}
                   />
                   {isInvalid && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-destructive text-sm">
                       {field.state.meta.errors.join(", ")}
                     </p>
                   )}
@@ -234,9 +234,9 @@ export function ContactForm() {
           </form.Field>
 
           <Button
-            type="submit"
-            disabled={isPending}
             className="w-full cursor-pointer"
+            disabled={isPending}
+            type="submit"
           >
             {isPending ? "Sending..." : en.contact.form.submit}
           </Button>

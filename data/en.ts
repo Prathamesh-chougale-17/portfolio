@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { entype } from "@/types/en";
+import type { entype } from "@/types/en";
 export const en: entype = {
   leetcode_username: "prathameshchougale17",
   navItems: [

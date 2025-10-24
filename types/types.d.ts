@@ -1,7 +1,7 @@
-interface Window {
+type Window = {
   SpeechRecognition: typeof SpeechRecognition;
   webkitSpeechRecognition: typeof SpeechRecognition;
-}
+};
 
 interface SpeechRecognitionErrorEvent extends Event {
   error: string;
@@ -13,23 +13,23 @@ interface SpeechRecognitionEvent extends Event {
   results: SpeechRecognitionResultList;
 }
 
-interface SpeechRecognitionResultList {
+type SpeechRecognitionResultList = {
   length: number;
   item(index: number): SpeechRecognitionResult;
   [index: number]: SpeechRecognitionResult;
-}
+};
 
-interface SpeechRecognitionResult {
+type SpeechRecognitionResult = {
   isFinal: boolean;
   length: number;
   item(index: number): SpeechRecognitionAlternative;
   [index: number]: SpeechRecognitionAlternative;
-}
+};
 
-interface SpeechRecognitionAlternative {
+type SpeechRecognitionAlternative = {
   transcript: string;
   confidence: number;
-}
+};
 
 interface SpeechRecognition extends EventTarget {
   continuous: boolean;
@@ -52,7 +52,7 @@ interface SpeechRecognition extends EventTarget {
   onstart: ((this: SpeechRecognition, ev: Event) => any) | null;
 }
 
-declare var SpeechRecognition: {
+declare let SpeechRecognition: {
   prototype: SpeechRecognition;
   new (): SpeechRecognition;
 };

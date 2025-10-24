@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
-import { en } from "@/data/en";
-import { ProjectList } from "@/components/project/project-list";
+import { useState } from "react";
+import type { Project } from "@/components/project/project-card";
 import { ProjectFilters } from "@/components/project/project-filters";
-import { type Project } from "@/components/project/project-card";
+import { ProjectList } from "@/components/project/project-list";
+import { en } from "@/data/en";
 
 const ProjectPage = () => {
   const { projects } = en;
@@ -12,8 +12,8 @@ const ProjectPage = () => {
   return (
     <section className="py-12">
       <ProjectFilters
-        projects={projects}
         onFilteredProjectsChange={setFilteredProjects}
+        projects={projects}
       />
 
       <ProjectList projects={filteredProjects} />

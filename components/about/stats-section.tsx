@@ -1,31 +1,30 @@
-import React from "react";
 import { LeetcodeRating } from "./leetcode-rating";
 
-interface StatItemProps {
+type StatItemProps = {
   value: string;
   label: string;
-}
+};
 
 function StatItem({ value, label }: StatItemProps) {
   return (
     <div className="text-center">
-      <div className="text-4xl font-bold text-primary mb-2">{value}</div>
-      <div className="text-sm text-muted-foreground">{label}</div>
+      <div className="mb-2 font-bold text-4xl text-primary">{value}</div>
+      <div className="text-muted-foreground text-sm">{label}</div>
     </div>
   );
 }
 
-interface StatsProps {
+type StatsProps = {
   statItems: Array<{ label: string; value: string }>;
-}
+};
 
 export function StatsSection({ statItems }: StatsProps) {
   return (
     <section className="py-12">
-      <h2 className="text-3xl font-bold mb-8">Stats</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <h2 className="mb-8 font-bold text-3xl">Stats</h2>
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {statItems.map((stat, index) => (
-          <StatItem key={index} value={stat.value} label={stat.label} />
+          <StatItem key={index} label={stat.label} value={stat.value} />
         ))}
         <LeetcodeRating />
       </div>

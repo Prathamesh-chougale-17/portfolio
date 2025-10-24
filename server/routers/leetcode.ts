@@ -5,7 +5,7 @@ const leetcodeUsernameSchema = z.object({
   username: z.string().min(1, { message: "Username is required" }),
 });
 
-interface LeetCodeGraphQLResponse {
+type LeetCodeGraphQLResponse = {
   data: {
     matchedUser: {
       username: string;
@@ -20,7 +20,7 @@ interface LeetCodeGraphQLResponse {
       topPercentage: number;
     } | null;
   };
-}
+};
 
 export const leetcodeRouter = createTRPCRouter({
   // Get user's LeetCode contest rating and stats
@@ -66,7 +66,7 @@ export const leetcodeRouter = createTRPCRouter({
 
         const data = (await res.json()) as LeetCodeGraphQLResponse;
 
-        if (!data.data || !data.data.matchedUser) {
+        if (!(data.data && data.data.matchedUser)) {
           throw new Error("User not found or API response invalid");
         }
 
@@ -85,7 +85,7 @@ export const leetcodeRouter = createTRPCRouter({
         throw new Error(
           error instanceof Error
             ? error.message
-            : "Failed to fetch LeetCode rating",
+            : "Failed to fetch LeetCode rating"
         );
       }
     }),

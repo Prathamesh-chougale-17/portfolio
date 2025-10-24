@@ -5,14 +5,14 @@ export function SocialLinks() {
     <div className="flex justify-center space-x-8">
       {en.contact.socials.links.map((social, index) => (
         <a
-          key={index}
+          className="transform text-muted-foreground transition-all duration-300 hover:scale-110 hover:text-primary"
           href={social.url}
-          className="text-muted-foreground hover:text-primary transform hover:scale-110 transition-all duration-300"
-          target="_blank"
+          key={index}
           rel="noopener noreferrer"
+          target="_blank"
         >
           <social.name
-            className={`w-8 h-8 ${
+            className={`h-8 w-8 ${
               (social.url.includes("twitter.com") ||
                 social.url.includes("x.com")) &&
               "dark:invert"

@@ -1,25 +1,25 @@
-import { IconProps } from "@/components/icons";
-import { JSX } from "react";
+import type { JSX } from "react";
+import type { IconProps } from "@/components/icons";
 
-export interface Achievement {
+export type Achievement = {
   title: string;
   description: string;
   Icon: (props: IconProps) => JSX.Element;
-}
+};
 
-export interface Project {
+export type Project = {
   title: string;
   description: string;
   tags: string[];
   githubLink?: string;
   liveLink?: string;
-}
+};
 
-export interface HeroSectionProps {
+export type HeroSectionProps = {
   image: string;
   name: string;
   title: string;
   company: string;
   description: string;
   companyLink?: string;
-}
+};

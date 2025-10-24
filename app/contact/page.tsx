@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { ThoughtSection } from "@/components/contact/thought-section";
-import { ContactImage } from "@/components/contact/contact-image";
 import { ContactForm } from "@/components/contact/contact-form";
+import { ContactImage } from "@/components/contact/contact-image";
+import { ThoughtSection } from "@/components/contact/thought-section";
 
 export default function ContactPage() {
   return (
@@ -10,12 +10,12 @@ export default function ContactPage() {
       <ThoughtSection />
 
       {/* Section 2: Image and Contact Form */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <section className="grid grid-cols-1 items-center gap-10 md:grid-cols-2">
         <ContactImage />
 
         <Suspense
           fallback={
-            <div className="h-[400px] animate-pulse bg-muted rounded-lg"></div>
+            <div className="h-[400px] animate-pulse rounded-lg bg-muted" />
           }
         >
           <ContactForm />

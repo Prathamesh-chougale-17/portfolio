@@ -10,7 +10,7 @@ import type { AppRouter } from "./routers/_app";
 
 export const trpc = createTRPCReact<AppRouter>();
 
-let clientQueryClientSingleton: QueryClient | undefined = undefined;
+let clientQueryClientSingleton: QueryClient | undefined;
 
 function getQueryClient() {
   if (typeof window === "undefined") {
@@ -33,7 +33,7 @@ function getUrl() {
 export function TRPCProvider(
   props: Readonly<{
     children: React.ReactNode;
-  }>,
+  }>
 ) {
   const queryClient = getQueryClient();
 
@@ -49,7 +49,7 @@ export function TRPCProvider(
           },
         }),
       ],
-    }),
+    })
   );
 
   return (

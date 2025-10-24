@@ -1,42 +1,42 @@
+import type { JSX } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { IconProps } from "../icons";
-import { JSX } from "react";
+import type { IconProps } from "../icons";
 
-interface TechSkill {
+type TechSkill = {
   name: string;
   level: number;
   icon: (props: IconProps) => JSX.Element;
-}
+};
 
-interface TechStackSectionProps {
+type TechStackSectionProps = {
   skills: TechSkill[];
-}
+};
 
 export function TechStackSection({ skills }: TechStackSectionProps) {
   return (
     <section className="mb-16">
-      <h2 className="text-3xl font-bold mb-8 tracking-tight">Tech Stack</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <h2 className="mb-8 font-bold text-3xl tracking-tight">Tech Stack</h2>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {skills.map((Skill, index) => (
           <Card
-            key={Skill.name}
             className="animate-fade-in"
+            key={Skill.name}
             style={{ animationDelay: `${index * 100}ms` }}
           >
             <CardHeader className="pb-2">
               <div className="flex justify-center text-primary">
-                <Skill.icon className="w-8 h-8" />
+                <Skill.icon className="h-8 w-8" />
               </div>
             </CardHeader>
             <CardContent className="text-center">
               <h3 className="font-medium">{Skill.name}</h3>
-              <div className="flex justify-center mt-2 space-x-1">
-                {[...Array(5)].map((_, i) => (
+              <div className="mt-2 flex justify-center space-x-1">
+                {[...new Array(5)].map((_, i) => (
                   <div
-                    key={i}
                     className={`h-1.5 w-4 rounded-full ${
                       i < Skill.level ? "bg-primary" : "bg-muted"
                     }`}
+                    key={i}
                   />
                 ))}
               </div>
