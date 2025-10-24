@@ -6,6 +6,7 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
+import { AnimatedLink } from "@/components/ui/animated-link";
 
 interface NavItem {
   title: string;
@@ -38,14 +39,14 @@ export function MobileNav({ navItems }: MobileNavProps) {
           </div>
           <nav className="flex flex-col gap-5">
             {navItems.map((item) => (
-              <Link
+              <AnimatedLink
                 key={item.href}
                 href={item.href}
                 className="text-foreground/70 transition-colors hover:text-foreground text-lg font-medium hover:translate-x-1 duration-200"
                 onClick={() => setOpen(false)}
               >
                 {item.title}
-              </Link>
+              </AnimatedLink>
             ))}
           </nav>
         </div>

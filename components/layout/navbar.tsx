@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AnimatedThemeToggler } from "@/components/ui/theme-toggle";
+import { AnimatedLink } from "@/components/ui/animated-link";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import Image from "next/image";
 // Navigation items
@@ -14,7 +15,7 @@ export function Navbar({
       <div className="flex justify-between items-center h-16 py-4">
         {/* Logo - Left */}
         <div className="flex items-center">
-          <Link href="/" className="items-center space-x-2 md:flex">
+          <AnimatedLink href="/" className="items-center space-x-2 md:flex">
             <Image
               src="/icons/android-chrome-192x192.png"
               alt="Logo"
@@ -23,19 +24,19 @@ export function Navbar({
               className="hidden md:inline-block"
             />
             {/* <span className="text-xl font-bold">MyApp</span> */}
-          </Link>
+          </AnimatedLink>
         </div>
 
         {/* Desktop navigation - Center */}
         <nav className="hidden md:flex justify-center gap-6">
           {navItems.map((item) => (
-            <Link
+            <AnimatedLink
               key={item.href}
               href={item.href}
               className="flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm"
             >
               {item.title}
-            </Link>
+            </AnimatedLink>
           ))}
         </nav>
 
