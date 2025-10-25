@@ -90,8 +90,8 @@ export default function ChatButton() {
     }
   }, [messages, sendMessageMutation.isPending]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
     if (!input.trim() || sendMessageMutation.isPending) {
       return;
     }
@@ -179,7 +179,23 @@ export default function ChatButton() {
                   variant="contained"
                 >
                   {m.role === "assistant" ? (
-                    <ReactMarkdown>{m.content}</ReactMarkdown>
+                    <ReactMarkdown
+                      components={{
+                        a: ({ href, children, ...props }) => (
+                          <a
+                            className="text-blue-600 underline transition-colors hover:text-blue-800 hover:no-underline"
+                            href={href}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            {...props}
+                          >
+                            {children}
+                          </a>
+                        ),
+                      }}
+                    >
+                      {m.content}
+                    </ReactMarkdown>
                   ) : (
                     <p>{m.content}</p>
                   )}
@@ -222,7 +238,7 @@ export default function ChatButton() {
             <Textarea
               className="flex-1 resize-none rounded-xl border border-border bg-muted/30 focus-visible:ring-1 focus-visible:ring-primary"
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
+              onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
                   handleSubmit(e as any);
