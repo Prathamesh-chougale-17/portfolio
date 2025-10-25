@@ -350,15 +350,22 @@ export const en: entype = {
         {
           name: Icons.instagram,
           url: "https://instagram.com/prathamesh_chougale_17",
+          label: "Instagram",
         },
-        { name: Icons.x, url: "https://twitter.com/prathamesh_7717" },
+        {
+          name: Icons.x,
+          url: "https://twitter.com/prathamesh_7717",
+          label: "X (Twitter)",
+        },
         {
           name: Icons.linkedin,
           url: "https://linkedin.com/in/prathamesh-chougale",
+          label: "LinkedIn",
         },
         {
           name: Icons.gitHub,
           url: "https://github.com/prathamesh-chougale-17",
+          label: "GitHub",
         },
       ],
     },

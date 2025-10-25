@@ -71,6 +71,7 @@ export type entype = {
       links: {
         name: (props: IconProps) => JSX.Element;
         url: string;
+        label: string;
       }[];
     };
     form: {
