@@ -127,7 +127,7 @@ export default function ChatButton() {
   };
 
   return (
-    <div className="fixed right-4 bottom-4 z-50 sm:right-6 sm:bottom-6">
+    <div className="fixed right-4 bottom-4 z-100 sm:right-6 sm:bottom-6">
       {isOpen ? (
         <Card
           className={cn(
