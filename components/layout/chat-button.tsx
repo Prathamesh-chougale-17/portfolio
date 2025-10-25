@@ -9,6 +9,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
@@ -137,9 +138,13 @@ export default function ChatButton() {
           {/* Header */}
           <div className="flex items-center justify-between border-b p-3">
             <div className="flex items-center gap-2">
-              <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm">
-                AI
-              </div>
+              <Image
+                alt={en.hero.name}
+                className="rounded-full"
+                height={32}
+                src="/icons/android-chrome-192x192.png"
+                width={32}
+              />
               <div>
                 <h3 className="font-semibold text-sm">{en.hero.name}</h3>
                 <p className="text-muted-foreground text-xs">
