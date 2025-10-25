@@ -24,6 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { en } from "@/data/en";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/server/client";
+import { Shimmer } from "../ai-elements/shimmer";
 
 type ChatMessage = {
   id: string;
@@ -87,7 +88,7 @@ export default function ChatButton() {
         behavior: "smooth",
       });
     }
-  }, []);
+  }, [messages, sendMessageMutation.isPending]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -207,10 +208,9 @@ export default function ChatButton() {
                   className="border border-border bg-muted/50"
                   variant="contained"
                 >
-                  <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Thinking...
-                  </div>
+                  <Shimmer as="div" className="h-4 w-16 text-accent">
+                    Ahh, let me think...
+                  </Shimmer>
                 </MessageContent>
               </Message>
             )}
