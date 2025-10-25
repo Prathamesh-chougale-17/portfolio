@@ -208,9 +208,7 @@ export default function ChatButton() {
                   className="border border-border bg-muted/50"
                   variant="contained"
                 >
-                  <Shimmer as="div" className="h-4 w-16 text-accent">
-                    Ahh, let me think...
-                  </Shimmer>
+                  <Shimmer as="div">Ahh, let me think...</Shimmer>
                 </MessageContent>
               </Message>
             )}

@@ -8,7 +8,6 @@ export type TextShimmerProps = {
   as?: ElementType;
   className?: string;
   duration?: number;
-  spread?: number;
 };
 
 export function Shimmer({
@@ -16,22 +15,17 @@ export function Shimmer({
   as: Component = "p",
   className,
   duration = 2,
-  spread = 2,
 }: TextShimmerProps) {
   return (
     <Component
       className={cn(
-        "relative inline-block bg-size-[250%_100%,auto] bg-clip-text text-transparent",
-        "bg-[linear-gradient(90deg,#0000_calc(50%-var(--spread)),#fff,#0000_calc(50%+var(--spread)))], [background-repeat:no-repeat,padding-box]",
-        "shimmer-bg animate-shimmer",
+        "relative animate-shimmer bg-linear-to-r bg-size-[200%_100%] bg-clip-text text-transparent",
+        "from-foreground via-foreground/40 to-foreground",
         className
       )}
       style={
         {
-          "--spread": `${(children?.length ?? 0) * spread}px`,
           "--duration": `${duration}s`,
-          backgroundImage:
-            "linear-gradient(90deg,#0000_calc(50%-var(--spread)),#fff,#0000_calc(50%+var(--spread)))",
           animationDuration: "var(--duration)",
         } as React.CSSProperties
       }
