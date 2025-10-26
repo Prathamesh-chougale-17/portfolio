@@ -35,9 +35,7 @@ export function HeroSection({
           alt={name}
           className="rounded-full border-4 border-primary object-cover hover:animate-pulse"
           fill
-          placeholder="blur"
           priority // ✅ automatically uses built-in tiny blur
-          quality={80}
           src={image}
         />
       </div>
