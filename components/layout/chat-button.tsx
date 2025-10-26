@@ -132,7 +132,7 @@ export default function ChatButton() {
         <Card
           className={cn(
             "h-[500px] w-[calc(100vw-32px)] sm:w-[380px]",
-            "flex flex-col rounded-2xl border border-border bg-background/60 py-0 shadow-lg backdrop-blur-xl",
+            "flex flex-col rounded-2xl border border-border bg-background/60 py-0 shadow-lg backdrop-blur-xl"
           )}
         >
           {/* Header */}
@@ -179,7 +179,7 @@ export default function ChatButton() {
                     "text-sm leading-relaxed",
                     m.role === "user"
                       ? "bg-primary text-primary-foreground"
-                      : "border border-border bg-muted/50",
+                      : "border border-border bg-muted/50"
                   )}
                   variant="contained"
                 >

@@ -36,8 +36,10 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       <div className="relative h-50 w-full">
         <Image
           alt={project.title}
-          className="object-cover"
+          className="rounded-lg object-cover"
           fill
+          loading="lazy"
+          quality={75}
           src={project.image}
         />
       </div>
