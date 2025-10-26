@@ -42,7 +42,7 @@ export default function ChatButton() {
     {
       id: "welcome",
       role: "assistant",
-      content: `Hi 👋 I'm ${en.hero.name}, your AI assistant. I love building scalable web applications and have won 5+ hackathons! Ask me about my projects, tech stack, or anything else you'd like to know. How can I help?`,
+      content: `Hi 👋 I'm ${en.hero.name}, your AI assistant. How can I help?`,
       timestamp: new Date(),
     },
   ]);
