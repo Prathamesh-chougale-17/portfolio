@@ -50,7 +50,7 @@ export const en: entype = {
         "A wellness platform offering personalized mental and physical health assessments. Integrated AI features for personalized recommendations and interactive learning.",
       tags: ["Next.js", "Next Auth", "Shadcn", "MongoDB"],
       liveLink: "https://oorjaai.vercel.app",
-      image: "/projects/oorja.png",
+      image: "/projects/oorja.webp",
       featured: true,
     },
     {
@@ -60,7 +60,7 @@ export const en: entype = {
       tags: ["React.js", "Clerk", "Node.js", "Express.js", "MongoDB"],
       githubLink: "https://github.com/Prathamesh-chougale-17/swaadLink",
       liveLink: "https://swaadlink.vercel.app",
-      image: "/projects/swaadlink.png",
+      image: "/projects/swaadlink.webp",
       featured: false,
     },
     {
@@ -70,7 +70,7 @@ export const en: entype = {
       tags: ["Next.js", "Sanity", "MongoDB", "Clerk"],
       githubLink: "https://github.com/Prathamesh-chougale-17/health-vault",
       liveLink: "https://health-vault.vercel.app",
-      image: "/projects/health-vault.png",
+      image: "/projects/health-vault.webp",
       featured: false,
     },
     {
@@ -80,7 +80,7 @@ export const en: entype = {
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "Open Source"],
       githubLink: "https://github.com/nextjs/saas-starter",
       liveLink: "https://next-saas-start.vercel.app",
-      image: "/projects/saas.png",
+      image: "/projects/saas.webp",
       featured: true,
     },
     {
@@ -88,7 +88,7 @@ export const en: entype = {
       description:
         "A modern renting and leasing platform for heavy vehicles and machinery. Built with Next.js, Tailwind CSS, and MongoDB, it offers real-time search, booking, and secure payments.",
       tags: ["Next.js", "Tailwind CSS", "MongoDB"],
-      image: "/projects/bighorn.png",
+      image: "/projects/bighorn.webp",
       liveLink: "https://big-horn.vercel.app",
       featured: false,
     },
@@ -97,7 +97,7 @@ export const en: entype = {
       description:
         "Bounty-Quest is a decentralized task-based rewards system that generates daily tasks using the Gemini API. Participants complete tasks by posting on the blockchain via Twitter, providing a link to their tweet for AI-powered evaluation. The top three winners are announced based on AI scoring, and authentication is managed through Solana. Future updates will include smart contract integration to distribute rewards in DevSOL.",
       tags: ["Solana", "Next.js", "Tailwind CSS", "AI"],
-      image: "/projects/bounty-quest.png",
+      image: "/projects/bounty-quest.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/bounty-quest",
       liveLink: "https://solana-ai-steel.vercel.app",
       featured: false,
@@ -107,7 +107,7 @@ export const en: entype = {
       description:
         "Track every product from raw materials to final delivery using ERC-1155 tokens on Avalanche blockchain. Generate immutable Digital Product Passports with complete carbon footprint data and supply chain verification.",
       tags: ["Next.js", "Tailwind CSS", "Avalanche", "Blockchain"],
-      image: "/projects/carbon-track.png",
+      image: "/projects/carbon-track.webp",
       githubLink:
         "https://github.com/Prathamesh-chougale-17/next-carbon-footprint",
       liveLink: "https://next-carbon-footprint.vercel.app",
@@ -118,7 +118,7 @@ export const en: entype = {
       description:
         "A classic portfolio website template built with Next.js and Tailwind CSS, featuring responsive design and easy customization options.",
       tags: ["Next.js", "Tailwind CSS", "Shadcn", "TypeScript", "Clerk"],
-      image: "/projects/classic-portfolio-template.png",
+      image: "/projects/classic-portfolio-template.webp",
       githubLink:
         "https://github.com/Prathamesh-chougale-17/classic-portfolio-template",
       liveLink: "https://classic-portfolio-template-green.vercel.app",
@@ -129,7 +129,7 @@ export const en: entype = {
       description:
         "A customizable template for building Next.js applications with Tailwind CSS.",
       tags: ["Next.js", "Tailwind CSS", "Shadcn", "TypeScript", "Clerk"],
-      image: "/projects/custom-template.png",
+      image: "/projects/custom-template.webp",
       githubLink:
         "https://github.com/Prathamesh-chougale-17/nextjs-custom-template",
       liveLink: "https://nextjs-custom-template.vercel.app",
@@ -140,7 +140,7 @@ export const en: entype = {
       description:
         "A competitive gaming platform that offers tournaments, matchmaking, and player statistics. Built with Next.js, Tailwind CSS, and Firebase.",
       tags: ["Next.js", "Tailwind CSS", "Sanity"],
-      image: "/projects/esport.png",
+      image: "/projects/esport.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/esport",
       liveLink: "https://esport-nexus.vercel.app",
       featured: false,
@@ -150,7 +150,7 @@ export const en: entype = {
       description:
         "Gamify is a platform that allows users to create and participate in various games and challenges. Built with Next.js, Tailwind CSS, and Firebase, it offers real-time multiplayer support and user authentication.",
       tags: ["Next.js", "Tailwind CSS", "Sanity"],
-      image: "/projects/gamify.png",
+      image: "/projects/gamify.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/gamify",
       liveLink: "https://gamify-swart.vercel.app/",
       featured: false,
@@ -160,7 +160,7 @@ export const en: entype = {
       description:
         "This repository is a starter project that demonstrates a secure, scalable authentication system using: Go (Golang) for the backend and Tanstack for the frontend. It includes features such as user registration, login, password hashing, JWT-based session management, and protected routes.",
       tags: ["Go", "Tanstack", "Authentication"],
-      image: "/projects/go-auth.png",
+      image: "/projects/go-auth.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/go-auth",
       featured: false,
     },
@@ -169,7 +169,7 @@ export const en: entype = {
       description:
         "Advance AI Detection and Environmental Monitoring System using computer vision and IoT sensors. Built with Next.js, Tailwind CSS, and integrated with AI models for real-time analysis. Used Yolov12 for object detection and custom-trained models for specific use cases.",
       tags: ["Next.js", "Tailwind CSS", "AI", "IoT", "Yolov12"],
-      image: "/projects/homebrew.png",
+      image: "/projects/homebrew.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/ideathon-web",
       liveLink: "https://homebrew-nine.vercel.app",
       featured: false,
@@ -179,7 +179,7 @@ export const en: entype = {
       description:
         "This is a comprehensive dashboard that provides insights into financial fraud detection using various data visualization techniques. The dashboard is built using Nextjs, TypeScript, Tailwind CSS, and Recharts.",
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "Recharts"],
-      image: "/projects/hsbc.png",
+      image: "/projects/hsbc.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/hsbc",
       liveLink: "https://hsbc-five.vercel.app",
       featured: false,
@@ -189,7 +189,7 @@ export const en: entype = {
       description:
         "A modern, full-stack URL shortener application built with Go backend and React frontend. It also features realtime click analytics",
       tags: ["Go", "React", "Tailwind CSS", "MongoDB"],
-      image: "/projects/link-shorter.png",
+      image: "/projects/link-shorter.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/link-shorter",
       featured: false,
     },
@@ -198,7 +198,7 @@ export const en: entype = {
       description:
         "Mirrorship combines daily journaling with AI-powered insights and activity tracking. Write, reflect, and discover patterns in your personal growth journey.",
       tags: ["Next.js", "Tailwind CSS", "AI"],
-      image: "/projects/mirrorship.png",
+      image: "/projects/mirrorship.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/mirrorship",
       liveLink: "https://mirrorship.vercel.app",
       featured: false,
@@ -208,7 +208,7 @@ export const en: entype = {
       description:
         "A sleek and modern portfolio website template built with Next.js and Tailwind CSS, designed to showcase your projects and skills effectively.",
       tags: ["Next.js", "Tailwind CSS", "Shadcn", "TypeScript"],
-      image: "/projects/modern-portfolio-template.png",
+      image: "/projects/modern-portfolio-template.webp",
       githubLink:
         "https://github.com/Prathamesh-chougale-17/next-modern-portfolio-template",
       liveLink: "https://next-modern-portfolio-template.vercel.app",
@@ -219,7 +219,7 @@ export const en: entype = {
       description:
         "Muxify is a music streaming web application that allows users to browse, search, and play their favorite songs. Built with Next.js for the frontend and MongoDB for the database, it features a sleek UI and seamless playback experience.",
       tags: ["Next.js", "Tailwind CSS", "Sanity", "MongoDB"],
-      image: "/projects/muxify.png",
+      image: "/projects/muxify.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/muxicify",
       liveLink: "https://muxify.vercel.app",
       featured: false,
@@ -229,7 +229,7 @@ export const en: entype = {
       description:
         "A starter template for building Algorand applications using Next.js.",
       tags: ["Next.js", "Algorand"],
-      image: "/projects/next-algorand-starter.png",
+      image: "/projects/next-algorand-starter.webp",
       githubLink:
         "https://github.com/Prathamesh-chougale-17/algorand-nextjs-starter",
       featured: false,
@@ -239,7 +239,7 @@ export const en: entype = {
       description:
         "Optimize parking, reduce congestion, and find rides easily with our integrated platform. Parkpoolx leverages real-time data and user-friendly design to enhance urban mobility and parking efficiency.",
       tags: ["Next.js", "Tailwind CSS", "MongoDB", "Next Auth"],
-      image: "/projects/parkpoolx.png",
+      image: "/projects/parkpoolx.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/parkpoolx",
       liveLink: "https://parkpoolx.vercel.app",
       featured: false,
@@ -249,7 +249,7 @@ export const en: entype = {
       description:
         "A futuristic space-themed website template built with Next.js and Tailwind CSS, perfect for showcasing your projects in a unique way.",
       tags: ["Next.js", "Tailwind CSS", "Shadcn", "TypeScript"],
-      image: "/projects/space-theme-template.png",
+      image: "/projects/space-theme-template.webp",
       githubLink:
         "https://github.com/Prathamesh-chougale-17/space-theme-template",
       liveLink: "https://space-theme-template.vercel.app",
@@ -260,7 +260,7 @@ export const en: entype = {
       description:
         "Study Status is a web application that helps students track their study progress and manage their time effectively. Built with Next.js and Tailwind CSS, it features a clean and intuitive interface.",
       tags: ["Next.js", "Tailwind CSS", "TypeScript"],
-      image: "/projects/study-status.png",
+      image: "/projects/study-status.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/status-study",
       liveLink: "https://status-study-seven.vercel.app",
       featured: false,
@@ -270,7 +270,7 @@ export const en: entype = {
       description:
         "Tankshooter is an exciting multiplayer tank battle game built with Next.js and Socket.io. Players can join battles, customize their tanks, and compete for the top spot on the leaderboard.",
       tags: ["Next.js", "Socket.io", "Game Development"],
-      image: "/projects/tankshooter.png",
+      image: "/projects/tankshooter.webp",
       githubLink: "https://github.com/Prathamesh-chougale-17/tankshooter",
       liveLink: "https://tankshooter-seven.vercel.app",
       featured: false,
@@ -280,7 +280,7 @@ export const en: entype = {
       description:
         "It is Simple PG/Hostel Management Web Application that allows users to easily find PGs and hostels based on their preferences. Built with Next.js, Tailwind CSS, and MongoDB, it offers advanced search and filtering options for a seamless user experience.",
       tags: ["Next.js", "Tailwind CSS", "TypeScript"],
-      image: "/projects/tulippg.png",
+      image: "/projects/tulippg.webp",
       liveLink: "https://tulippg.in",
       featured: true,
     },
