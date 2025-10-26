@@ -201,6 +201,6 @@ export const chatRouter = createTRPCRouter({
   // Initial welcome message
   getWelcome: publicProcedure.query(() => ({
     success: true,
-    message: `Hi there! 👋 I'm ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}. I love building scalable web applications and have won ${en.about.stats.statItems[1].value} hackathons! Ask me about my projects, tech stack, or anything else you'd like to know. How can I help you today?`,
+    message: `Hi there! 👋 I'm ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}. How can I help you today?`,
   })),
 });
