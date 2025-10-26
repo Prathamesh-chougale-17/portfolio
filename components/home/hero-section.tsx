@@ -36,7 +36,8 @@ export function HeroSection({
           className="rounded-full border-4 border-primary object-cover hover:animate-pulse"
           fill
           priority // mobile vs desktop
-          sizes="(max-width: 768px) 120px, 200px" // ✅ automatically uses built-in tiny blur
+          quality={75} // ✅ automatically uses built-in tiny blur
+          sizes="(max-width: 768px) 120px, 200px"
           src={image}
         />
       </div>
