@@ -39,7 +39,6 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           className="rounded-lg object-cover"
           fill
           loading="lazy"
-          quality={75}
           src={project.image}
         />
       </div>
