@@ -132,7 +132,7 @@ export default function ChatButton() {
         <Card
           className={cn(
             "h-[500px] w-[calc(100vw-32px)] sm:w-[380px]",
-            "flex flex-col rounded-2xl border border-border bg-background/60 py-0 shadow-lg backdrop-blur-xl"
+            "flex flex-col rounded-2xl border border-border bg-background/60 py-0 shadow-lg backdrop-blur-xl",
           )}
         >
           {/* Header */}
@@ -172,14 +172,14 @@ export default function ChatButton() {
               <Message from={m.role} key={m.id}>
                 <MessageAvatar
                   name={m.role === "assistant" ? en.hero.name : "You"}
-                  src={m.role === "user" ? "/user.png" : "/profile.jpg"}
+                  src={m.role === "user" ? "/user.png" : "/profile.webp"}
                 />
                 <MessageContent
                   className={cn(
                     "text-sm leading-relaxed",
                     m.role === "user"
                       ? "bg-primary text-primary-foreground"
-                      : "border border-border bg-muted/50"
+                      : "border border-border bg-muted/50",
                   )}
                   variant="contained"
                 >
@@ -224,7 +224,7 @@ export default function ChatButton() {
 
             {sendMessageMutation.isPending && (
               <Message from="assistant">
-                <MessageAvatar name={en.hero.name} src="/profile.jpg" />
+                <MessageAvatar name={en.hero.name} src="/profile.webp" />
                 <MessageContent
                   className="border border-border bg-muted/50"
                   variant="contained"

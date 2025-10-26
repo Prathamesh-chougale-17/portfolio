@@ -10,7 +10,7 @@ export const en: entype = {
   ],
   hero: {
     name: "Prathamesh Chougale",
-    image: "/profile.jpg",
+    image: "/profile.webp",
     title: "Software Engineer",
     company: "RDM",
     companyLink: "https://rdmtoken.com",
@@ -288,7 +288,7 @@ export const en: entype = {
   about: {
     hero: {
       title: "About Me",
-      image: "/profile.jpg",
+      image: "/profile.webp",
       subtitle:
         "Full Stack Developer | Open Source Contributor | Problem Solver",
       description:
