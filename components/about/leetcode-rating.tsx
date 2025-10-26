@@ -2,6 +2,7 @@
 
 import { AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { Icons } from "@/components/icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
@@ -11,7 +12,6 @@ import {
 } from "@/components/ui/tooltip";
 import { en } from "@/data/en";
 import { trpc } from "@/server/client";
-import { Icons } from "../icons";
 
 export function LeetcodeRating() {
   const username = en.leetcode_username;

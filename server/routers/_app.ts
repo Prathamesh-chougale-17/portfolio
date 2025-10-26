@@ -1,4 +1,4 @@
-import { createTRPCRouter } from "../init";
+import { createTRPCRouter } from "@/server/init";
 import { chatRouter } from "./chat";
 import { contactRouter } from "./contact";
 import { leetcodeRouter } from "./leetcode";

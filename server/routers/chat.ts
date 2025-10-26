@@ -2,7 +2,9 @@ import { google } from "@ai-sdk/google";
 import { streamText } from "ai";
 import { z } from "zod";
 import { en } from "@/data/en";
-import { createTRPCRouter, publicProcedure } from "../init";
+import client from "@/db/client";
+import { insertChatMessage } from "@/db/schema/chat";
+import { createTRPCRouter, publicProcedure } from "@/server/init";
 
 const chatMessageSchema = z.object({
   messages: z.array(
@@ -88,20 +90,7 @@ ${en.projects
 
 ### Contact & Social Links
 ${en.contact.socials.links
-  .map((link) => {
-    const name = link.name.toString();
-    let iconName = "Social";
-    if (name.includes("instagram")) {
-      iconName = "Instagram";
-    } else if (name.includes("linkedin")) {
-      iconName = "LinkedIn";
-    } else if (name.includes("gitHub")) {
-      iconName = "GitHub";
-    } else if (name.includes("x")) {
-      iconName = "X (Twitter)";
-    }
-    return `- ${iconName}: ${link.url}`;
-  })
+  .map((link) => `- ${link.label}: ${link.url}`)
   .join("\n")}
 
 ### Website Navigation
@@ -155,6 +144,18 @@ export const chatRouter = createTRPCRouter({
 
         const response = await result.text;
 
+        // Save assistant response to database
+        try {
+          const db = client.db("portfolio");
+          await insertChatMessage(db, {
+            role: "assistant",
+            content: response,
+            timestamp: new Date(),
+          });
+        } catch (err) {
+          console.error("Failed to save chat message:", err);
+        }
+
         return {
           success: true,
           response,
@@ -187,6 +188,18 @@ export const chatRouter = createTRPCRouter({
         });
 
         const response = await result.text;
+
+        // Save assistant response to database
+        try {
+          const db = client.db("portfolio");
+          await insertChatMessage(db, {
+            role: "assistant",
+            content: response,
+            timestamp: new Date(),
+          });
+        } catch (err) {
+          console.error("Failed to save chat message:", err);
+        }
 
         return {
           success: true,

@@ -19,13 +19,13 @@ import {
   MessageAvatar,
   MessageContent,
 } from "@/components/ai-elements/message";
+import { Shimmer } from "@/components/ai-elements/shimmer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { en } from "@/data/en";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/server/client";
-import { Shimmer } from "../ai-elements/shimmer";
 
 type ChatMessage = {
   id: string;

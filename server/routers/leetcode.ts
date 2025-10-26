@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../init";
+import { createTRPCRouter, publicProcedure } from "@/server/init";
 
 const leetcodeUsernameSchema = z.object({
   username: z.string().min(1, { message: "Username is required" }),

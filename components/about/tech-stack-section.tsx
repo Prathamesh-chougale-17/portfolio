@@ -1,6 +1,6 @@
 import type { JSX } from "react";
+import type { IconProps } from "@/components/icons";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import type { IconProps } from "../icons";
 
 type TechSkill = {
   name: string;
