@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Project } from "@/components/project/project-card";
 import { ProjectFilters } from "@/components/project/project-filters";
 import { ProjectList } from "@/components/project/project-list";
@@ -10,6 +10,11 @@ const ProjectPage = () => {
   const { t } = useLocale();
   const { projects } = t;
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
+
+  // Update filtered projects when locale changes
+  useEffect(() => {
+    setFilteredProjects(projects);
+  }, [projects]);
 
   return (
     <section className="py-12">
