@@ -23,7 +23,7 @@ import { Shimmer } from "@/components/ai-elements/shimmer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { en } from "@/data/en";
+import { useLocale } from "@/context/locale-provider";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/server/client";
 
@@ -35,6 +35,7 @@ type ChatMessage = {
 };
 
 export default function ChatButton() {
+  const { t } = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -42,7 +43,7 @@ export default function ChatButton() {
     {
       id: "welcome",
       role: "assistant",
-      content: `Hi 👋 I'm ${en.hero.name}, your AI assistant. How can I help?`,
+      content: `Hi 👋 I'm ${t.hero.name}, your AI assistant. How can I help?`,
       timestamp: new Date(),
     },
   ]);
@@ -139,14 +140,14 @@ export default function ChatButton() {
           <div className="flex items-center justify-between border-b p-3">
             <div className="flex items-center gap-2">
               <Image
-                alt={en.hero.name}
+                alt={t.hero.name}
                 className="rounded-full"
                 height={32}
                 src="/icons/android-chrome-192x192.png"
                 width={32}
               />
               <div>
-                <h3 className="font-semibold text-sm">{en.hero.name}</h3>
+                <h3 className="font-semibold text-sm">{t.hero.name}</h3>
                 <p className="text-muted-foreground text-xs">
                   {sendMessageMutation.isPending ? "Typing..." : "Online"}
                 </p>
@@ -171,7 +172,7 @@ export default function ChatButton() {
             {messages.map((m) => (
               <Message from={m.role} key={m.id}>
                 <MessageAvatar
-                  name={m.role === "assistant" ? en.hero.name : "You"}
+                  name={m.role === "assistant" ? t.hero.name : "You"}
                   src={m.role === "user" ? "/user.png" : "/profile.webp"}
                 />
                 <MessageContent
@@ -224,7 +225,7 @@ export default function ChatButton() {
 
             {sendMessageMutation.isPending && (
               <Message from="assistant">
-                <MessageAvatar name={en.hero.name} src="/profile.webp" />
+                <MessageAvatar name={t.hero.name} src="/profile.webp" />
                 <MessageContent
                   className="border border-border bg-muted/50"
                   variant="contained"

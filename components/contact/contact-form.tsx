@@ -8,17 +8,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { en } from "@/data/en";
+import { useLocale } from "@/context/locale-provider";
 import { trpc } from "@/server/client";
 
 export function ContactForm() {
+  const { t } = useLocale();
+
   const contactMutation = trpc.contact.submit.useMutation({
     onSuccess: (data) => {
-      toast.success(data.message || "Message sent successfully!");
+      toast.success(data.message || t.contact.form.success);
       form.reset();
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to send message. Please try again.");
+      toast.error(error.message || t.contact.form.error);
     },
   });
 
@@ -39,7 +41,7 @@ export function ContactForm() {
   return (
     <Card className="animate-fade-in-right">
       <CardContent className="pt-6">
-        <h2 className="mb-6 font-bold text-2xl">{en.contact.form.title}</h2>
+        <h2 className="mb-6 font-bold text-2xl">{t.contact.form.title}</h2>
 
         <form
           className="space-y-4"
@@ -71,7 +73,7 @@ export function ContactForm() {
               return (
                 <div className="space-y-2">
                   <label className="font-medium text-sm" htmlFor="name">
-                    {en.contact.form.name.label}
+                    {t.contact.form.name.label}
                   </label>
                   <Input
                     aria-invalid={isInvalid}
@@ -81,7 +83,7 @@ export function ContactForm() {
                     name={field.name}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder={en.contact.form.name.placeholder}
+                    placeholder={t.contact.form.name.placeholder}
                     value={field.state.value}
                   />
                   {isInvalid && (
@@ -115,7 +117,7 @@ export function ContactForm() {
               return (
                 <div className="space-y-2">
                   <label className="font-medium text-sm" htmlFor="email">
-                    {en.contact.form.email.label}
+                    {t.contact.form.email.label}
                   </label>
                   <Input
                     aria-invalid={isInvalid}
@@ -125,7 +127,7 @@ export function ContactForm() {
                     name={field.name}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder={en.contact.form.email.placeholder}
+                    placeholder={t.contact.form.email.placeholder}
                     type="email"
                     value={field.state.value}
                   />
@@ -160,7 +162,7 @@ export function ContactForm() {
               return (
                 <div className="space-y-2">
                   <label className="font-medium text-sm" htmlFor="subject">
-                    {en.contact.form.subject?.label || "Subject"}
+                    {t.contact.form.subject?.label || "Subject"}
                   </label>
                   <Input
                     aria-invalid={isInvalid}
@@ -171,7 +173,7 @@ export function ContactForm() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     placeholder={
-                      en.contact.form.subject?.placeholder ||
+                      t.contact.form.subject?.placeholder ||
                       "Enter message subject"
                     }
                     value={field.state.value}
@@ -209,7 +211,7 @@ export function ContactForm() {
               return (
                 <div className="space-y-2">
                   <label className="font-medium text-sm" htmlFor="message">
-                    {en.contact.form.message.label}
+                    {t.contact.form.message.label}
                   </label>
                   <Textarea
                     aria-invalid={isInvalid}
@@ -219,7 +221,7 @@ export function ContactForm() {
                     name={field.name}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder={en.contact.form.message.placeholder}
+                    placeholder={t.contact.form.message.placeholder}
                     rows={4}
                     value={field.state.value}
                   />
@@ -238,7 +240,7 @@ export function ContactForm() {
             disabled={isPending}
             type="submit"
           >
-            {isPending ? "Sending..." : en.contact.form.submit}
+            {isPending ? "Sending..." : t.contact.form.submit}
           </Button>
         </form>
       </CardContent>

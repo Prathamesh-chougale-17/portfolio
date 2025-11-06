@@ -1,11 +1,15 @@
+"use client";
+
 import { ExperienceTimeline } from "@/components/about/experience-timeline";
 import { HeroSection } from "@/components/about/hero-section";
 import { StatsSection } from "@/components/about/stats-section";
 import { TechStackSection } from "@/components/about/tech-stack-section";
-import { en } from "@/data/en";
+import { useLocale } from "@/context/locale-provider";
 
 export default function AboutPage() {
-  const { about } = en;
+  const { t } = useLocale();
+  const { about } = t;
+
   return (
     <main className="py-12">
       <HeroSection

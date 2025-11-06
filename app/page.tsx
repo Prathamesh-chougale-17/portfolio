@@ -1,21 +1,25 @@
+"use client";
+
 import { AchievementsSection } from "@/components/home/achievements-section";
 import { HeroSection } from "@/components/home/hero-section";
 import { ProjectsSection } from "@/components/home/projects-section";
-import { en } from "@/data/en";
+import { useLocale } from "@/context/locale-provider";
 
 export default function Home() {
+  const { t } = useLocale();
+
   return (
     <main>
       <HeroSection
-        company={en.hero.company}
-        companyLink={en.hero.companyLink}
-        description={en.hero.description}
-        image={en.hero.image}
-        name={en.hero.name}
-        title={en.hero.title}
+        company={t.hero.company}
+        companyLink={t.hero.companyLink}
+        description={t.hero.description}
+        image={t.hero.image}
+        name={t.hero.name}
+        title={t.hero.title}
       />
-      <AchievementsSection achievements={en.achievements.slice(0, 3)} />
-      <ProjectsSection projects={en.projects.slice(0, 3)} />
+      <AchievementsSection achievements={t.achievements.slice(0, 3)} />
+      <ProjectsSection projects={t.projects.slice(0, 3)} />
     </main>
   );
 }

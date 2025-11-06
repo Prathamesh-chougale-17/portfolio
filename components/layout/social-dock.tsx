@@ -1,15 +1,19 @@
+"use client";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { en } from "@/data/en";
+import { useLocale } from "@/context/locale-provider";
 
 export default function SocialDock() {
+  const { t } = useLocale();
+
   return (
     <div className="-translate-x-1/2 fixed bottom-5 left-1/2 z-50 hidden transform md:flex">
       <div className="flex items-center gap-3 rounded-full border border-border/50 bg-background/80 px-4 py-2 shadow-lg backdrop-blur-sm">
-        {en.contact.socials.links.map((site) => {
+        {t.contact.socials.links.map((site) => {
           const label = site.label;
           return (
             <Tooltip key={site.url}>

@@ -10,11 +10,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { en } from "@/data/en";
+import { useLocale } from "@/context/locale-provider";
 import { trpc } from "@/server/client";
 
 export function LeetcodeRating() {
-  const username = en.leetcode_username;
+  const { t } = useLocale();
+  const username = t.leetcode_username;
   const { data, isLoading, error } = trpc.leetcode.getRating.useQuery({
     username,
   });
@@ -37,7 +38,7 @@ export function LeetcodeRating() {
     return (
       <div className="text-center">
         <div className="font-bold text-4xl text-primary">
-          {en.about.stats.leetcodeRating || "--"}
+          {t.about.stats.leetcodeRating || "--"}
         </div>
         <div className="flex items-center justify-center gap-2 text-muted-foreground">
           <div className="text-muted-foreground text-sm">LeetCode Rating</div>

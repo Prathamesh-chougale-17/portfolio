@@ -1,12 +1,14 @@
 "use client";
+
 import { useState } from "react";
 import type { Project } from "@/components/project/project-card";
 import { ProjectFilters } from "@/components/project/project-filters";
 import { ProjectList } from "@/components/project/project-list";
-import { en } from "@/data/en";
+import { useLocale } from "@/context/locale-provider";
 
 const ProjectPage = () => {
-  const { projects } = en;
+  const { t } = useLocale();
+  const { projects } = t;
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
 
   return (

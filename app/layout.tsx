@@ -9,7 +9,7 @@ import { Navbar } from "@/components/layout/navbar";
 import SocialDock from "@/components/layout/social-dock";
 import { PWARegister } from "@/components/pwa-register";
 import { ThemeProvider } from "@/context/theme-provider";
-import { en } from "@/data/en";
+import { LocaleProvider } from "@/context/locale-provider";
 import { env } from "@/env";
 import { ICONS, MANIFEST_ROUTE, OG_IMAGE, SITE_URL } from "@/lib/constant";
 import { TRPCProvider } from "@/server/client";
@@ -111,12 +111,14 @@ export default function RootLayout({
         <PWARegister />
         <TRPCProvider>
           <ThemeProvider attribute="class" defaultTheme="dark">
-            <Navbar navItems={en.navItems} />
-            <main className="px-4 sm:px-6 md:px-8 lg:px-12">{children}</main>
-            <ChatButton />
-            <SocialDock />
-            <Footer />
-            <Toaster />
+            <LocaleProvider>
+              <Navbar />
+              <main className="px-4 sm:px-6 md:px-8 lg:px-12">{children}</main>
+              <ChatButton />
+              <SocialDock />
+              <Footer />
+              <Toaster />
+            </LocaleProvider>
           </ThemeProvider>
         </TRPCProvider>
       </body>

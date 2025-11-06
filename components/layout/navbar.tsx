@@ -1,14 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { AnimatedLink } from "@/components/ui/animated-link";
 import { AnimatedThemeToggler } from "@/components/ui/theme-toggle";
-// Navigation items
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { useLocale } from "@/context/locale-provider";
 
-export function Navbar({
-  navItems,
-}: {
-  navItems: { title: string; href: string }[];
-}) {
+export function Navbar() {
+  const { t } = useLocale();
+  const navItems = t.navItems;
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:px-6 md:px-8 lg:px-12">
       <div className="flex h-16 items-center justify-between py-4">
@@ -43,8 +44,9 @@ export function Navbar({
           ))}
         </nav>
 
-        {/* Theme toggle and mobile nav - Right */}
+        {/* Language toggle, theme toggle and mobile nav - Right */}
         <div className="flex items-center justify-end gap-2">
+          <LanguageSwitcher />
           <AnimatedThemeToggler />
           <MobileNav navItems={navItems} />
         </div>
