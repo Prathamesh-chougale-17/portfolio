@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type MouseEvent, useCallback, useRef } from "react";
 import { flushSync } from "react-dom";
+import { useLocale } from "@/context/locale-provider";
 import { cn } from "@/lib/utils";
 
 type AnimatedLinkProps = {
@@ -27,8 +28,12 @@ export const AnimatedLink = ({
   const linkRef = useRef<HTMLAnchorElement>(null);
   const router = useRouter();
   const pathname = usePathname();
+  const { getLocalizedHref } = useLocale();
 
-  // Check if this link is active
+  // Get localized href with language parameter
+  const localizedHref = getLocalizedHref(href);
+
+  // Check if this link is active (compare base pathname without query params)
   const isActive =
     pathname === href || (href !== "/" && pathname.startsWith(href));
 
@@ -37,13 +42,13 @@ export const AnimatedLink = ({
       e.preventDefault();
 
       if (!linkRef.current) {
-        router.push(href);
+        router.push(localizedHref);
         return;
       }
 
       // Check if View Transitions API is supported
       if (!document.startViewTransition) {
-        router.push(href);
+        router.push(localizedHref);
         return;
       }
 
@@ -58,7 +63,7 @@ export const AnimatedLink = ({
 
       const transition = document.startViewTransition(() => {
         flushSync(() => {
-          router.push(href);
+          router.push(localizedHref);
         });
       });
 
@@ -78,7 +83,7 @@ export const AnimatedLink = ({
         }
       );
     },
-    [href, router]
+    [localizedHref, router]
   );
 
   return (
@@ -88,7 +93,7 @@ export const AnimatedLink = ({
         className,
         isActive && (activeClassName || "font-semibold text-foreground")
       )}
-      href={href}
+      href={localizedHref}
       onClick={handleClick}
       ref={linkRef}
       {...props}
