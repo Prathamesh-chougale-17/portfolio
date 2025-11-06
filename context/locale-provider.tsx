@@ -35,6 +35,23 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     setTranslations(getTranslations(localeParam));
   }, [localeParam]);
 
+  // If the raw query param contains an invalid locale (e.g. ?lang=h), remove it
+  // and fall back to default (English). This runs only on the client.
+  React.useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const rawLang = params.get("lang");
+
+    if (rawLang && !locales.includes(rawLang as Locale)) {
+      // remove invalid lang param from URL via nuqs (use null to clear)
+      setLocaleParam(null);
+      // translations will update in the other effect which watches localeParam
+    }
+  }, [setLocaleParam]);
+
   const setLocale = React.useCallback(
     (newLocale: Locale) => {
       setLocaleParam(newLocale);
