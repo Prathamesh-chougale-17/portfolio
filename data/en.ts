@@ -1,6 +1,6 @@
 import { Icons } from "@/components/icons";
-import type { entype } from "@/types/en";
-export const en: entype = {
+import type { langtype } from "@/types/en";
+export const en: langtype = {
   leetcode_username: "prathameshchougale17",
   navItems: [
     { title: "Home", href: "/" },

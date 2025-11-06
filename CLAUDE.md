@@ -5,18 +5,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 **Local Development:**
+
 ```bash
 bun install          # Install dependencies
 bun dev              # Start dev server at http://localhost:3000
 ```
 
 **Code Quality:**
+
 ```bash
 bun lint             # Run Biome linter (checks code)
 bun format           # Format code with Biome
 ```
 
 **Production:**
+
 ```bash
 bun run build        # Build for production
 bun start            # Start production server
@@ -43,6 +46,7 @@ This is a Next.js 16 App Router portfolio application with tRPC API integration,
 The API is built with tRPC v11.6.0 for end-to-end type safety:
 
 **Setup chain:**
+
 ```
 server/init.ts → server/routers/_app.ts → app/api/trpc/[trpc]/route.ts
                             ↓
@@ -50,15 +54,18 @@ server/init.ts → server/routers/_app.ts → app/api/trpc/[trpc]/route.ts
 ```
 
 **Three main routers in `server/routers/`:**
+
 1. `chat.ts` - AI chat using Google Gemini API (gemini-2.0-flash-exp), stores messages in MongoDB
 2. `contact.ts` - Contact form submission via Nodemailer email
 3. `leetcode.ts` - Fetches LeetCode user statistics from GraphQL API
 
 **Client usage:**
+
 - Client components use `trpc.routerName.procedureName.useMutation()` or `.useQuery()`
 - Server components use `serverTrpc.routerName.procedureName()` from `server/server.tsx`
 
 **Context creation:**
+
 - Context created in `server/init.ts` via `createTRPCContext()` using React `cache()`
 - Currently includes headers for future auth implementation
 
@@ -67,6 +74,7 @@ server/init.ts → server/routers/_app.ts → app/api/trpc/[trpc]/route.ts
 Validated with Zod in `env.ts`. Required variables:
 
 **Server-only:**
+
 - `MONGODB_URI` - Database connection string
 - `DATABASE_NAME` - Database name
 - `EMAIL_SERVER_HOST`, `EMAIL_SERVER_PORT`, `EMAIL_SERVER_USER`, `EMAIL_SERVER_PASSWORD` - SMTP config
@@ -75,15 +83,18 @@ Validated with Zod in `env.ts`. Required variables:
 - `GOOGLE_ANALYTICS_ID` - Analytics tracking
 
 **Public (optional):**
+
 - `NEXT_PUBLIC_SITE_URL` - Site URL (defaults to localhost)
 
 ### Database (MongoDB)
 
 **Client:** `db/client.ts` uses singleton pattern with HMR support in development
+
 - Global variable caching during hot reload (`_mongoClient`)
 - Fresh client per connection in production
 
 **Schemas:** Defined in `db/schema/`
+
 - `chat.ts` - Chat message schema with `insertChatMessage()` and `getChatHistory()` operations
 - Collection: `chatMessages` in database specified by `DATABASE_NAME` env var
 
@@ -95,6 +106,7 @@ Validated with Zod in `env.ts`. Required variables:
 - `client-only` package prevents client code from running server-side
 
 **Client components include:**
+
 - Forms (TanStack Form)
 - Chat interface
 - Theme toggle
@@ -103,6 +115,7 @@ Validated with Zod in `env.ts`. Required variables:
 ### Form Handling
 
 Uses **TanStack Form** (v1.23.7) with Zod validation:
+
 - Client-side validation in component
 - Server-side validation in tRPC router (same schema)
 - See `components/contact/contact-form.tsx` for example
@@ -120,10 +133,12 @@ Uses **TanStack Form** (v1.23.7) with Zod validation:
 The portfolio supports multiple languages with a custom i18n implementation:
 
 **Supported Languages:**
+
 - English (`en`) - Default
 - Hindi (`hi`)
 
 **Architecture:**
+
 - Translations stored in `data/` folder (`en.ts`, `hi.ts`)
 - Type-safe via `types/en.ts` interface (all languages share same structure)
 - Locale management via `context/locale-provider.tsx`
@@ -131,6 +146,7 @@ The portfolio supports multiple languages with a custom i18n implementation:
 - Language switcher in navbar (`components/ui/language-switcher.tsx`)
 
 **Usage in components:**
+
 ```typescript
 "use client";
 import { useLocale } from "@/context/locale-provider";
@@ -142,7 +158,8 @@ export default function MyComponent() {
 ```
 
 **Adding new languages:**
-1. Create `data/{locale}.ts` with translations (use `entype` interface)
+
+1. Create `data/{locale}.ts` with translations (use `langtype` interface)
 2. Update `lib/i18n.ts` to add locale to `Locale` type and arrays
 3. Register in `lib/translations.ts`
 4. See [docs/I18N_GUIDE.md](docs/I18N_GUIDE.md) for detailed instructions
@@ -152,6 +169,7 @@ export default function MyComponent() {
 ### Content Management
 
 All content lives in language-specific files in `data/`:
+
 - `data/en.ts` - English content
 - `data/hi.ts` - Hindi content
 - Each contains: Hero section, projects, achievements, experiences, tech stack, stats
@@ -161,8 +179,9 @@ All content lives in language-specific files in `data/`:
 ### Path Aliases
 
 TypeScript path alias configured in `tsconfig.json`:
+
 ```typescript
-"@/*" // Maps to root directory
+"@/*"; // Maps to root directory
 ```
 
 Example: `import { useLocale } from "@/context/locale-provider"`
@@ -170,6 +189,7 @@ Example: `import { useLocale } from "@/context/locale-provider"`
 ### Code Quality Tools
 
 **Biome** (v2.3.0) replaces ESLint + Prettier:
+
 - Linter and formatter in one
 - Configuration in `biome.json`
 - 2-space indentation
@@ -179,6 +199,7 @@ Example: `import { useLocale } from "@/context/locale-provider"`
 ### Accessibility Requirements
 
 The `.github/copilot-instructions.md` file contains comprehensive accessibility rules. Key requirements:
+
 - Avoid `accessKey` and `aria-hidden` on focusable elements
 - Use semantic HTML elements vs ARIA roles when possible
 - Pair keyboard and mouse event handlers (`onClick` with `onKeyUp/Down/Press`)
@@ -190,6 +211,7 @@ The `.github/copilot-instructions.md` file contains comprehensive accessibility 
 ### Security Headers
 
 Production security headers configured in `next.config.ts`:
+
 - HSTS (2 years, includeSubDomains, preload)
 - X-Frame-Options: SAMEORIGIN
 - X-Content-Type-Options: nosniff
@@ -208,6 +230,7 @@ Production security headers configured in `next.config.ts`:
 ### Deployment
 
 Designed for Vercel deployment:
+
 - References `VERCEL_URL` in `server/client.tsx`
 - Set environment variables in Vercel dashboard
 - Standalone output configured in `next.config.ts`
@@ -220,6 +243,7 @@ Designed for Vercel deployment:
 4. Use in components via `trpc.{router}.{procedure}.useMutation()` or `.useQuery()`
 
 Example:
+
 ```typescript
 // server/routers/example.ts
 export const exampleRouter = createTRPCRouter({

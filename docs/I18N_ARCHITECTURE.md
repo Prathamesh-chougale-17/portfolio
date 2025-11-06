@@ -23,7 +23,7 @@
 │  │  ┌─────────────────────────────────────────────────┐   │   │
 │  │  │  State:                                          │   │   │
 │  │  │  - locale: "en" | "hi"                          │   │   │
-│  │  │  - translations: entype                         │   │   │
+│  │  │  - translations: langtype                         │   │   │
 │  │  │                                                  │   │   │
 │  │  │  API:                                            │   │   │
 │  │  │  - t (translations object)                      │   │   │
@@ -59,7 +59,7 @@
 │  │        ▲                        ▲                        │   │
 │  │        └────────────┬───────────┘                        │   │
 │  │                     │                                    │   │
-│  │            Both implement: entype                        │   │
+│  │            Both implement: langtype                        │   │
 │  │                     │                                    │   │
 │  │                     ▼                                    │   │
 │  │           ┌──────────────────┐                          │   │
@@ -144,7 +144,7 @@ app/layout.tsx
 ```
 ┌────────────────────────────────────────────────┐
 │  types/en.ts                                   │
-│  export type entype = {                        │
+│  export type langtype = {                        │
 │    navItems: { title: string, href: string }[]│
 │    hero: { name, title, description, ... }    │
 │    projects: [...],                            │
@@ -157,18 +157,18 @@ app/layout.tsx
                     ▼
 ┌────────────────────────────────────────────────┐
 │  data/en.ts                                    │
-│  export const en: entype = { ... }             │
+│  export const en: langtype = { ... }             │
 └────────────────────────────────────────────────┘
 ┌────────────────────────────────────────────────┐
 │  data/hi.ts                                    │
-│  export const hi: entype = { ... }             │
+│  export const hi: langtype = { ... }             │
 └────────────────────────────────────────────────┘
                     │
                     │ loaded by
                     ▼
 ┌────────────────────────────────────────────────┐
 │  lib/translations.ts                           │
-│  const translations: Record<Locale, entype>    │
+│  const translations: Record<Locale, langtype>    │
 └────────────────────────────────────────────────┘
                     │
                     │ provided by
@@ -176,7 +176,7 @@ app/layout.tsx
 ┌────────────────────────────────────────────────┐
 │  context/locale-provider.tsx                   │
 │  const [translations, setTranslations] =       │
-│    useState<entype>(...)                       │
+│    useState<langtype>(...)                       │
 └────────────────────────────────────────────────┘
                     │
                     │ consumed by
@@ -220,15 +220,17 @@ data/hi.ts
 ## 🔐 Type Safety Guarantees
 
 1. **All languages have same structure**
-   - `entype` interface ensures consistency
+
+   - `langtype` interface ensures consistency
    - TypeScript errors if fields are missing
 
 2. **No runtime errors from missing keys**
+
    - If `t.hero.title` exists in English, it exists in all languages
    - Autocomplete works everywhere
 
 3. **Easy refactoring**
-   - Change field name in `entype` → TypeScript shows all places to update
+   - Change field name in `langtype` → TypeScript shows all places to update
    - Can't forget to update any translation file
 
 ## 🚀 Performance Characteristics

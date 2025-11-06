@@ -92,9 +92,9 @@ Create `data/es.ts`:
 
 ```typescript
 import { Icons } from "@/components/icons";
-import type { entype } from "@/types/en";
+import type { langtype } from "@/types/en";
 
-export const es: entype = {
+export const es: langtype = {
   leetcode_username: "prathameshchougale17",
   navItems: [
     { title: "Inicio", href: "/" },
@@ -121,7 +121,7 @@ Edit [lib/translations.ts](lib/translations.ts:7):
 ```typescript
 import { es } from "@/data/es";
 
-const translations: Record<Locale, entype> = {
+const translations: Record<Locale, langtype> = {
   en,
   hi,
   es, // Add new translation
@@ -131,6 +131,7 @@ const translations: Record<Locale, entype> = {
 ## 🎨 Language Switcher Component
 
 The language switcher is already added to the navbar. It shows:
+
 - Flag emoji for each language
 - Language name in native script
 - Current selection highlighted
@@ -141,16 +142,21 @@ Location: [components/ui/language-switcher.tsx](components/ui/language-switcher.
 ## 🔧 How It Works
 
 ### 1. Locale Detection
+
 On first visit, the system:
+
 1. Checks `localStorage` for saved preference
 2. Falls back to browser language detection
 3. Defaults to English if no match found
 
 ### 2. Locale Persistence
+
 Selected language is saved to `localStorage` and persists across sessions.
 
 ### 3. Type Safety
-All translations use the same `entype` interface, ensuring:
+
+All translations use the same `langtype` interface, ensuring:
+
 - All languages have the same structure
 - No missing translations
 - Full TypeScript autocomplete
@@ -160,6 +166,7 @@ All translations use the same `entype` interface, ensuring:
 To migrate existing pages from hardcoded `en` to using translations:
 
 ### Before:
+
 ```typescript
 import { en } from "@/data/en";
 
@@ -169,6 +176,7 @@ export default function Page() {
 ```
 
 ### After:
+
 ```typescript
 "use client";
 
@@ -201,16 +209,19 @@ The following pages should be updated to use `useLocale()`:
 ## 🐛 Troubleshooting
 
 ### Language not switching?
+
 - Check that `LocaleProvider` wraps your component in the layout
 - Verify localStorage is enabled in browser
 - Check browser console for errors
 
 ### Missing translations?
-- Ensure new translation file exports the correct type (`entype`)
+
+- Ensure new translation file exports the correct type (`langtype`)
 - Verify the translation is registered in `lib/translations.ts`
 - Check TypeScript errors for missing fields
 
 ### Hydration errors?
+
 - Make sure pages using `useLocale()` are marked as `"use client"`
 - Verify the same locale is used on server and client initial render
 

@@ -6,12 +6,12 @@ import { SITE_URL } from "@/lib/constant";
 import type { Locale } from "@/lib/i18n";
 import { defaultLocale, locales } from "@/lib/i18n";
 import { getTranslations } from "@/lib/translations";
-import type { entype } from "@/types/en";
+import type { langtype } from "@/types/en";
 
 type LocaleContextType = {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: entype;
+  t: langtype;
   getLocalizedHref: (href: string) => string;
 };
 
@@ -26,7 +26,7 @@ function LocaleProviderInner({ children }: { children: React.ReactNode }) {
     parseAsStringLiteral(locales).withDefault(defaultLocale)
   );
 
-  const [translations, setTranslations] = React.useState<entype>(
+  const [translations, setTranslations] = React.useState<langtype>(
     getTranslations(localeParam)
   );
 

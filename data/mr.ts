@@ -1,7 +1,7 @@
 import { Icons } from "@/components/icons";
-import type { entype } from "@/types/en";
+import type { langtype } from "@/types/en";
 
-export const mr: entype = {
+export const mr: langtype = {
   leetcode_username: "prathameshchougale17",
   navItems: [
     { title: "मुख्यपृष्ठ", href: "/" },

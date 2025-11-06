@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import type { IconProps } from "@/components/icons";
 
-export type entype = {
+export type langtype = {
   leetcode_username: string;
   navItems: {
     title: string;

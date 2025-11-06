@@ -16,6 +16,7 @@ Your portfolio already has i18n configured! Here's what you need to know:
 ## 📝 Convert a Page to Use Translations
 
 ### Before:
+
 ```typescript
 import { en } from "@/data/en";
 
@@ -30,6 +31,7 @@ export default function Page() {
 ```
 
 ### After:
+
 ```typescript
 "use client"; // Add this!
 
@@ -77,11 +79,12 @@ export default function Page() {
 ### 1. Create Translation File
 
 Create `data/es.ts`:
+
 ```typescript
 import { Icons } from "@/components/icons";
-import type { entype } from "@/types/en";
+import type { langtype } from "@/types/en";
 
-export const es: entype = {
+export const es: langtype = {
   leetcode_username: "prathameshchougale17",
   navItems: [
     { title: "Inicio", href: "/" },
@@ -95,6 +98,7 @@ export const es: entype = {
 ### 2. Update i18n Config
 
 Edit `lib/i18n.ts`:
+
 ```typescript
 export type Locale = "en" | "hi" | "es"; // Add new locale
 
@@ -116,12 +120,13 @@ export const localeFlags: Record<Locale, string> = {
 ### 3. Register Translation
 
 Edit `lib/translations.ts`:
+
 ```typescript
 import { en } from "@/data/en";
 import { hi } from "@/data/hi";
 import { es } from "@/data/es"; // Import
 
-const translations: Record<Locale, entype> = {
+const translations: Record<Locale, langtype> = {
   en,
   hi,
   es, // Register
@@ -135,6 +140,7 @@ The language switcher will automatically show the new language.
 ## 🔍 Find Pages to Update
 
 Search for files still using hardcoded `en`:
+
 ```bash
 # Windows PowerShell
 Get-ChildItem -Path app,components -Recurse -Include *.tsx,*.ts | Select-String "from '@/data/en'"
@@ -146,6 +152,7 @@ grep -r "from '@/data/en'" app/ components/
 ## ⚡ Common Patterns
 
 ### Hero Section
+
 ```typescript
 <HeroSection
   name={t.hero.name}
@@ -155,14 +162,16 @@ grep -r "from '@/data/en'" app/ components/
 ```
 
 ### Projects List
+
 ```typescript
 <ProjectsList projects={t.projects} />
 ```
 
 ### Navigation
+
 ```typescript
 <nav>
-  {t.navItems.map(item => (
+  {t.navItems.map((item) => (
     <Link href={item.href} key={item.href}>
       {item.title}
     </Link>
@@ -171,6 +180,7 @@ grep -r "from '@/data/en'" app/ components/
 ```
 
 ### Form Labels
+
 ```typescript
 <label>{t.contact.form.name.label}</label>
 <input placeholder={t.contact.form.name.placeholder} />
@@ -199,7 +209,7 @@ grep -r "from '@/data/en'" app/ components/
 → Check that same locale is used on server and client
 
 **TypeScript errors?**
-→ Verify all translation files use `entype` interface
+→ Verify all translation files use `langtype` interface
 
 **Missing dropdown?**
 → Run `bun install` to ensure @radix-ui/react-dropdown-menu is installed
