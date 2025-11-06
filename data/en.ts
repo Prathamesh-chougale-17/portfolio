@@ -42,6 +42,13 @@ export const en: langtype = {
     subtitle: "Showcasing My Creative Work",
     description:
       "Explore my portfolio of projects that combine creativity, engineering, and real-world problem solving using React, Next.js, and AI technologies.",
+    filters: {
+      searchPlaceholder: "Search projects by title, description, or tags...",
+      filterByTag: "Filter by tag",
+      allTags: "All Tags",
+      featuredOnly: "Featured only",
+      clearFilters: "Clear filters",
+    },
   },
   projects: [
     {
@@ -382,5 +389,24 @@ export const en: langtype = {
       success: "Thanks for reaching out! I'll get back to you soon.",
       error: "Something went wrong. Please try again.",
     },
+  },
+  offline: {
+    title: "You're Offline",
+    description:
+      "It looks like you've lost your internet connection. Some features may not be available until you're back online.",
+    returnToHome: "Return to Home",
+    tryAgain: "Try Again",
+  },
+  chat: {
+    typing: "Typing...",
+    online: "Online",
+    clear: "Clear",
+    close: "Close",
+    messagePlaceholder: "Type your message...",
+    copy: "Copy",
+    copied: "Copied",
+    chatCleared: "Chat cleared",
+    failedToSend: "Failed to send message",
+    errorResponse: "I'm having trouble responding right now. Try again later.",
   },
 };

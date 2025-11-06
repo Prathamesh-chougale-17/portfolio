@@ -1,13 +1,12 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import TryAgainButton from "@/components/offline/try-again";
-
-export const metadata: Metadata = {
-  title: "Offline",
-  description: "You are currently offline",
-};
+import { useLocale } from "@/context/locale-provider";
 
 export default function OfflinePage() {
+  const { t } = useLocale();
+  
   return (
     <div className="flex h-[78vh] min-h-[60vh] flex-col items-center justify-center px-4 text-center">
       <div className="mb-8">
@@ -28,11 +27,10 @@ export default function OfflinePage() {
         </svg>
       </div>
 
-      <h1 className="mb-4 font-bold text-4xl">You're Offline</h1>
+      <h1 className="mb-4 font-bold text-4xl">{t.offline.title}</h1>
 
       <p className="mb-8 max-w-md text-gray-600 text-lg dark:text-gray-400">
-        It looks like you've lost your internet connection. Some features may
-        not be available until you're back online.
+        {t.offline.description}
       </p>
 
       <div className="space-y-4">
@@ -42,7 +40,7 @@ export default function OfflinePage() {
             className="underline hover:text-gray-700 dark:hover:text-gray-300"
             href="/"
           >
-            Return to Home
+            {t.offline.returnToHome}
           </Link>
         </div>
       </div>
