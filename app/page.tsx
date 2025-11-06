@@ -15,6 +15,7 @@ export default function Home() {
         companyLink={t.hero.companyLink}
         description={t.hero.description}
         image={t.hero.image}
+        intro={t.hero.intro}
         name={t.hero.name}
         title={t.hero.title}
       />

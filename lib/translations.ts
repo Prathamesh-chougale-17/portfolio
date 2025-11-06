@@ -7,7 +7,7 @@ import { en } from "@/data/en";
 import { hi } from "@/data/hi";
 import { mr } from "@/data/mr";
 import type { Locale } from "@/lib/i18n";
-import type { langtype } from "@/types/en";
+import type { langtype } from "@/types/lang";
 
 const translations: Record<Locale, langtype> = {
   en,

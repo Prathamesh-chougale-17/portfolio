@@ -18,6 +18,7 @@ export type Project = {
 export type HeroSectionProps = {
   image: string;
   name: string;
+  intro: string;
   title: string;
   company: string;
   description: string;

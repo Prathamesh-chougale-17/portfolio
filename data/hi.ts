@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import type { langtype } from "@/types/en";
+import type { langtype } from "@/types/lang";
 
 export const hi: langtype = {
   leetcode_username: "prathameshchougale17",
@@ -13,6 +13,7 @@ export const hi: langtype = {
     name: "प्रथमेश चौगले",
     image: "/profile.webp",
     title: "सॉफ्टवेयर इंजीनियर",
+    intro: "नमस्ते, मैं ",
     company: "RDM",
     companyLink: "https://rdmtoken.com",
     description:
@@ -407,7 +408,6 @@ export const hi: langtype = {
     copied: "कॉपी किया गया",
     chatCleared: "चैट साफ़ की गई",
     failedToSend: "संदेश भेजने में विफल",
-    errorResponse:
-      "मुझे अभी जवाब देने में समस्या हो रही है। बाद में पुनः प्रयास करें।",
+    errorResponse: "मुझे अभी जवाब देने में समस्या हो रही है। बाद में पुनः प्रयास करें।",
   },
 };

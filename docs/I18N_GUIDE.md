@@ -12,12 +12,12 @@ portfolio/
 ├── context/
 │   └── locale-provider.tsx   # Locale context & provider
 ├── data/
-│   ├── en.ts                 # English translations
+│   ├── lang.ts                 # English translations
 │   └── hi.ts                 # Hindi translations
 ├── components/ui/
 │   └── language-switcher.tsx # Language switcher component
 └── types/
-    └── en.ts                 # Type definition for all languages
+    └── lang.ts                 # Type definition for all languages
 ```
 
 ## 🌍 Currently Supported Languages
@@ -232,4 +232,4 @@ The following pages should be updated to use `useLocale()`:
 - [context/locale-provider.tsx](context/locale-provider.tsx) - React context
 - [components/ui/language-switcher.tsx](components/ui/language-switcher.tsx) - UI component
 - [app/layout.tsx](app/layout.tsx) - Root layout with providers
-- [types/en.ts](types/en.ts) - Translation type definition
+- [types/lang.ts](types/lang.ts) - Translation type definition

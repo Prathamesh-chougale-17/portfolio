@@ -5,6 +5,7 @@ import type { HeroSectionProps } from "@/types/home";
 export function HeroSection({
   name,
   image,
+  intro,
   title,
   company,
   description,
@@ -14,7 +15,8 @@ export function HeroSection({
     <section className="flex animate-fade-in flex-col items-center justify-between gap-8 py-12 md:flex-row">
       <div className="max-w-xl space-y-4">
         <h1 className="font-bold text-4xl tracking-tight md:text-6xl">
-          Hi, I&apos;m <span className="text-primary">{name}</span>
+          {intro}
+          <span className="text-primary">{name}</span>
         </h1>
         <div className="flex items-center gap-2">
           <h2 className="font-semibold text-2xl text-muted-foreground">

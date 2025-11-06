@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AnimatedLink } from "@/components/ui/animated-link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useLocale } from "@/context/locale-provider";
 
 type NavItem = {
   title: string;
@@ -17,6 +18,7 @@ type MobileNavProps = {
 };
 
 export function MobileNav({ navItems }: MobileNavProps) {
+  const { t } = useLocale();
   const [open, setOpen] = useState(false);
 
   return (
@@ -33,7 +35,7 @@ export function MobileNav({ navItems }: MobileNavProps) {
       >
         <div className="flex h-full flex-col">
           <div className="mb-6 flex items-center justify-between border-b pb-6">
-            <DialogTitle>Prathamesh Chougale</DialogTitle>
+            <DialogTitle>{t.hero.name}</DialogTitle>
             <DialogDescription />
           </div>
           <nav className="flex flex-col gap-3">

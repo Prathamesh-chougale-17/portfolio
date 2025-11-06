@@ -11,6 +11,7 @@ export type langtype = {
     name: string;
     image: string;
     title: string;
+    intro: string;
     company: string;
     companyLink: string;
     description: string;

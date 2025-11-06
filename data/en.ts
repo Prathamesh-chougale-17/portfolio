@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import type { langtype } from "@/types/en";
+import type { langtype } from "@/types/lang";
 export const en: langtype = {
   leetcode_username: "prathameshchougale17",
   navItems: [
@@ -11,6 +11,7 @@ export const en: langtype = {
   hero: {
     name: "Prathamesh Chougale",
     image: "/profile.webp",
+    intro: "Hi, I'm ",
     title: "Software Engineer",
     company: "RDM",
     companyLink: "https://rdmtoken.com",

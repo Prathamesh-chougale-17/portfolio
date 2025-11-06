@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import type { langtype } from "@/types/en";
+import type { langtype } from "@/types/lang";
 
 export const mr: langtype = {
   leetcode_username: "prathameshchougale17",
@@ -13,6 +13,7 @@ export const mr: langtype = {
     name: "प्रथमेश चौगुले",
     image: "/profile.webp",
     title: "सॉफ्टवेअर अभियंता",
+    intro: "नमस्ते, मैं ",
     company: "RDM",
     companyLink: "https://rdmtoken.com",
     description:
@@ -406,7 +407,6 @@ export const mr: langtype = {
     copied: "कॉपी केले",
     chatCleared: "चॅट साफ केले",
     failedToSend: "संदेश पाठवण्यात अयशस्वी",
-    errorResponse:
-      "मला आत्ता प्रतिसाद देण्यात अडचण येत आहे. नंतर पुन्हा प्रयत्न करा.",
+    errorResponse: "मला आत्ता प्रतिसाद देण्यात अडचण येत आहे. नंतर पुन्हा प्रयत्न करा.",
   },
 };

@@ -15,6 +15,7 @@ All other dependencies (tRPC, TanStack Query, React Markdown) are already instal
 ## 🏗️ Architecture Overview
 
 ### The Stack
+
 - **tRPC**: Type-safe API layer for all backend communication
 - **Vercel AI SDK**: Handles AI model interactions (Google Gemini)
 - **TanStack Query**: Built into tRPC for state management and caching
@@ -35,23 +36,25 @@ portfolio/
 │       ├── message.tsx          # Message display components
 │       └── actions.tsx          # Action buttons (copy, clear, etc.)
 └── data/
-    └── en.ts                    # Portfolio data for AI context
+    └── lang.ts                    # Portfolio data for AI context
 ```
 
 ## 🎯 How It Works
 
 ### 1. User sends a message
+
 ```tsx
 // Client-side (chat-button.tsx)
 const sendMessageMutation = trpc.chat.sendMessage.useMutation({
   onSuccess: (data) => {
     // Add AI response to messages
     setMessages([...messages, { role: "assistant", content: data.response }]);
-  }
+  },
 });
 ```
 
 ### 2. tRPC routes to AI handler
+
 ```typescript
 // Server-side (server/routers/chat.ts)
 sendMessage: publicProcedure
@@ -62,20 +65,23 @@ sendMessage: publicProcedure
       system: systemPrompt,
       messages: input.messages,
     });
-    
+
     return { success: true, response: await result.text };
-  })
+  });
 ```
 
 ### 3. AI generates response
+
 The AI SDK communicates with Google Gemini using your portfolio context, generating personalized responses.
 
 ### 4. Response streams back to client
+
 tRPC sends the complete response back, and the UI updates with the AI message.
 
 ## 🚀 Features
 
 ### Beautiful UI
+
 - ✨ Glassmorphism effects with gradient backgrounds
 - 💬 Animated message bubbles
 - 👤 User and AI avatars
@@ -84,6 +90,7 @@ tRPC sends the complete response back, and the UI updates with the AI message.
 - 💫 Smooth animations and transitions
 
 ### Smart AI
+
 - 🧠 Context-aware about your portfolio
 - 📚 Knows your experience, skills, and projects
 - 💬 Natural, conversational responses
@@ -92,6 +99,7 @@ tRPC sends the complete response back, and the UI updates with the AI message.
 - 💻 Code syntax highlighting
 
 ### User Experience
+
 - ⌨️ Keyboard shortcuts (Enter to send, Shift+Enter for new line)
 - 📋 Copy messages to clipboard
 - 🗑️ Clear chat history
@@ -102,6 +110,7 @@ tRPC sends the complete response back, and the UI updates with the AI message.
 - 🔔 Pulse animation to attract attention
 
 ### Developer Experience
+
 - 🔒 Full type safety end-to-end
 - 🚀 Fast with tRPC batching
 - 🎯 Single source of truth for API
@@ -120,6 +129,7 @@ GOOGLE_GENERATIVE_AI_API_KEY=your-gemini-api-key-here
 ```
 
 **Get your API key:**
+
 1. Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
 2. Sign in with your Google account
 3. Click "Get API Key" or "Create API Key"
@@ -132,17 +142,17 @@ Edit `server/routers/chat.ts`:
 
 ```typescript
 // Change the AI model
-model: google("gemini-2.0-flash-exp")  // Fast & latest
+model: google("gemini-2.0-flash-exp"); // Fast & latest
 // or
-model: google("gemini-1.5-pro")        // More capable
+model: google("gemini-1.5-pro"); // More capable
 // or
-model: google("gemini-1.5-flash")      // Stable
+model: google("gemini-1.5-flash"); // Stable
 
 // Adjust creativity
-temperature: 0.7  // Balanced (0.0 = factual, 1.0 = creative)
+temperature: 0.7; // Balanced (0.0 = factual, 1.0 = creative)
 
 // Limit response length
-maxTokens: 1000   // ~750 words
+maxTokens: 1000; // ~750 words
 ```
 
 ### Customize System Prompt
@@ -163,15 +173,15 @@ In `components/layout/chat-button.tsx`:
 
 ```tsx
 // Chat window size
-className="w-[400px] h-[600px]"  // Adjust dimensions
+className = "w-[400px] h-[600px]"; // Adjust dimensions
 
 // Colors
-className="bg-gradient-to-br from-primary..."  // Button gradient
-className="bg-primary text-primary-foreground"  // User messages
-className="bg-muted/80 backdrop-blur"           // AI messages
+className = "bg-gradient-to-br from-primary..."; // Button gradient
+className = "bg-primary text-primary-foreground"; // User messages
+className = "bg-muted/80 backdrop-blur"; // AI messages
 
 // Animations
-className="animate-in slide-in-from-bottom-5"  // Entry animation
+className = "animate-in slide-in-from-bottom-5"; // Entry animation
 ```
 
 ## 📝 API Reference
@@ -179,6 +189,7 @@ className="animate-in slide-in-from-bottom-5"  // Entry animation
 ### tRPC Chat Router
 
 #### `chat.sendMessage`
+
 Send a message and get AI response.
 
 ```typescript
@@ -188,22 +199,24 @@ mutation.mutate({
   messages: [
     { role: "user", content: "Tell me about your experience" },
     { role: "assistant", content: "I have 5 years of..." },
-    { role: "user", content: "What technologies do you use?" }
-  ]
+    { role: "user", content: "What technologies do you use?" },
+  ],
 });
 ```
 
 **Input:**
+
 ```typescript
 {
   messages: Array<{
     role: "user" | "assistant" | "system";
     content: string;
-  }>
+  }>;
 }
 ```
 
 **Output:**
+
 ```typescript
 {
   success: boolean;
@@ -213,6 +226,7 @@ mutation.mutate({
 ```
 
 #### `chat.getWelcome`
+
 Get the initial welcome message.
 
 ```typescript
@@ -236,6 +250,7 @@ import { Message, MessageContent, MessageAvatar } from "@/components/ai-elements
 ```
 
 **Props:**
+
 - `from`: `"user" | "assistant"` - Determines message alignment and styling
 - `variant`: `"contained" | "flat"` - Message bubble style
 
@@ -251,10 +266,11 @@ import { Actions, Action } from "@/components/ai-elements/actions";
   <Action tooltip="Delete" onClick={handleDelete}>
     <Trash className="h-4 w-4" />
   </Action>
-</Actions>
+</Actions>;
 ```
 
 **Props:**
+
 - `tooltip`: String to show on hover
 - `onClick`: Click handler function
 - `disabled`: Optional boolean to disable action
@@ -288,6 +304,7 @@ UI updates with new message
 ### Basic Usage
 
 The chat button is already integrated in your layout. Users can:
+
 1. Click the floating AI button (bottom-right)
 2. Type their question
 3. Press Enter or click Send
@@ -301,7 +318,7 @@ The chat button is already integrated in your layout. Users can:
 const sendMessage = trpc.chat.sendMessage.useMutation();
 
 await sendMessage.mutateAsync({
-  messages: [{ role: "user", content: "Hello!" }]
+  messages: [{ role: "user", content: "Hello!" }],
 });
 ```
 
@@ -310,9 +327,15 @@ await sendMessage.mutateAsync({
 ```tsx
 const mutation = trpc.chat.sendMessage.useMutation();
 
-{mutation.isPending && <Loader2 className="animate-spin" />}
-{mutation.isError && <p>Error: {mutation.error.message}</p>}
-{mutation.isSuccess && <p>Success!</p>}
+{
+  mutation.isPending && <Loader2 className="animate-spin" />;
+}
+{
+  mutation.isError && <p>Error: {mutation.error.message}</p>;
+}
+{
+  mutation.isSuccess && <p>Success!</p>;
+}
 ```
 
 ### With Toast Notifications
@@ -329,6 +352,7 @@ const mutation = trpc.chat.sendMessage.useMutation({
 ## 🎯 Best Practices
 
 ### 1. Context Management
+
 Keep conversation context but limit history to last 10 messages to reduce token usage:
 
 ```typescript
@@ -336,6 +360,7 @@ const recentMessages = messages.slice(-10);
 ```
 
 ### 2. Error Handling
+
 Always handle errors gracefully:
 
 ```typescript
@@ -347,6 +372,7 @@ try {
 ```
 
 ### 3. Input Validation
+
 Validate user input before sending:
 
 ```typescript
@@ -358,6 +384,7 @@ if (input.length > 500) {
 ```
 
 ### 4. Rate Limiting
+
 Consider implementing rate limiting to prevent abuse:
 
 ```typescript
@@ -370,34 +397,44 @@ if (messageCount > 10) {
 ## 🐛 Troubleshooting
 
 ### "API key not valid" error
+
 **Solution:**
+
 - Check `GOOGLE_GENERATIVE_AI_API_KEY` in `.env.local`
 - Ensure no extra spaces or quotes
 - Restart dev server: `bun run dev`
 - Verify key at [Google AI Studio](https://aistudio.google.com/app/apikey)
 
 ### Messages not appearing
+
 **Solution:**
+
 - Check browser console for errors
 - Verify tRPC is properly set up
 - Ensure `TRPCProvider` wraps your app in `layout.tsx`
 - Check network tab for failed requests
 
 ### Markdown not rendering
+
 **Solution:**
+
 - Ensure `react-markdown` is installed: `bun add react-markdown`
 - Check ReactMarkdown component configuration
 - Verify message content is valid markdown
 
 ### Slow responses
+
 **Solution:**
+
 - Switch to faster model: `gemini-2.0-flash-exp`
 - Reduce `maxTokens` setting
 - Limit conversation context
 - Check your internet connection
 
 ### tRPC errors
+
 **Solution:**
+
 - Check server console for detailed errors
 - Verify API route at `/api/trpc/[trpc]/route.ts`
 - Ensure all tRPC dependencies are installed
@@ -419,9 +456,9 @@ sendMessage: publicProcedure
       messages: input.messages,
       timestamp: new Date(),
     });
-    
+
     // Generate response...
-  })
+  });
 ```
 
 ### Add Streaming Responses
@@ -433,12 +470,14 @@ For real-time streaming (advanced):
 stream: publicProcedure
   .input(chatMessageSchema)
   .subscription(async function* ({ input }) {
-    const result = streamText({ /* ... */ });
-    
+    const result = streamText({
+      /* ... */
+    });
+
     for await (const chunk of result.textStream) {
       yield { text: chunk };
     }
-  })
+  });
 ```
 
 ### Add Function Calling
@@ -480,7 +519,9 @@ if (!success) throw new Error("Rate limit exceeded");
 ### Track Token Usage
 
 ```typescript
-const result = await streamText({ /* ... */ });
+const result = await streamText({
+  /* ... */
+});
 
 console.log("Tokens used:", {
   prompt: result.usage?.promptTokens,
@@ -501,16 +542,19 @@ await db.collection("analytics").insertOne({
 ## 🔐 Security Considerations
 
 1. **API Key Protection**
+
    - Never expose your API key client-side
    - Use environment variables only
    - Rotate keys regularly
 
 2. **Rate Limiting**
+
    - Implement per-user rate limits
    - Monitor usage patterns
    - Set up alerts for abuse
 
 3. **Input Validation**
+
    - Sanitize user inputs
    - Limit message length
    - Block malicious content
@@ -548,6 +592,7 @@ await db.collection("analytics").insertOne({
 ## 🎉 Summary
 
 You now have a production-ready AI chatbot that:
+
 - ✅ Uses tRPC for type-safe communication
 - ✅ Powered by Google Gemini 2.0 Flash
 - ✅ Beautiful, modern UI with animations

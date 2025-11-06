@@ -37,7 +37,7 @@
 │  ┌──────────────────────┐  ┌───────────────────────────┐      │
 │  │ lib/translations.ts  │  │   localStorage             │      │
 │  │ ┌──────────────────┐ │  │   key: "locale"           │      │
-│  │ │  en → data/en.ts │ │  │   value: "en" | "hi"      │      │
+│  │ │  en → data/lang.ts │ │  │   value: "en" | "hi"      │      │
 │  │ │  hi → data/hi.ts │ │  └───────────────────────────┘      │
 │  │ └──────────────────┘ │                                      │
 │  └──────────────────────┘                                      │
@@ -46,7 +46,7 @@
 │  ┌─────────────────────────────────────────────────────────┐   │
 │  │                  Translation Files                       │   │
 │  │  ┌────────────────┐     ┌────────────────┐             │   │
-│  │  │  data/en.ts    │     │  data/hi.ts    │             │   │
+│  │  │  data/lang.ts    │     │  data/hi.ts    │             │   │
 │  │  │  ┌──────────┐  │     │  ┌──────────┐  │             │   │
 │  │  │  │ hero: {  │  │     │  │ hero: {  │  │             │   │
 │  │  │  │   title, │  │     │  │   title, │  │             │   │
@@ -63,7 +63,7 @@
 │  │                     │                                    │   │
 │  │                     ▼                                    │   │
 │  │           ┌──────────────────┐                          │   │
-│  │           │  types/en.ts     │                          │   │
+│  │           │  types/lang.ts     │                          │   │
 │  │           │  (Type Interface)│                          │   │
 │  │           └──────────────────┘                          │   │
 │  └─────────────────────────────────────────────────────────┘   │
@@ -84,7 +84,7 @@
    ├─ Found: Use saved locale
    └─ Not found: Detect browser language
    ↓
-4. Load appropriate translation file (en.ts or hi.ts)
+4. Load appropriate translation file (lang.ts or hi.ts)
    ↓
 5. Provide translations via context
    ↓
@@ -143,7 +143,7 @@ app/layout.tsx
 
 ```
 ┌────────────────────────────────────────────────┐
-│  types/en.ts                                   │
+│  types/lang.ts                                   │
 │  export type langtype = {                        │
 │    navItems: { title: string, href: string }[]│
 │    hero: { name, title, description, ... }    │
@@ -156,7 +156,7 @@ app/layout.tsx
                     │ enforces
                     ▼
 ┌────────────────────────────────────────────────┐
-│  data/en.ts                                    │
+│  data/lang.ts                                    │
 │  export const en: langtype = { ... }             │
 └────────────────────────────────────────────────┘
 ┌────────────────────────────────────────────────┐
@@ -200,20 +200,20 @@ components/ui/language-switcher.tsx
 context/locale-provider.tsx
 ├─ depends on: lib/i18n.ts
 ├─ depends on: lib/translations.ts
-└─ depends on: types/en.ts
+└─ depends on: types/lang.ts
 
 lib/translations.ts
 ├─ depends on: lib/i18n.ts
-├─ depends on: types/en.ts
-├─ depends on: data/en.ts
+├─ depends on: types/lang.ts
+├─ depends on: data/lang.ts
 └─ depends on: data/hi.ts
 
-data/en.ts
-├─ depends on: types/en.ts
+data/lang.ts
+├─ depends on: types/lang.ts
 └─ depends on: components/icons.tsx
 
 data/hi.ts
-├─ depends on: types/en.ts
+├─ depends on: types/lang.ts
 └─ depends on: components/icons.tsx
 ```
 

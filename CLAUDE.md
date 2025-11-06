@@ -35,7 +35,7 @@ This is a Next.js 16 App Router portfolio application with tRPC API integration,
 - `server/` - tRPC backend layer (initialization, routers, client setup)
 - `components/` - Feature-organized React components (home/, about/, contact/, project/, layout/, ui/, ai-elements/)
 - `db/` - MongoDB client singleton and schema definitions
-- `data/` - **Multi-language content files** (`en.ts` for English, `hi.ts` for Hindi, etc.)
+- `data/` - **Multi-language content files** (`lang.ts` for English, `hi.ts` for Hindi, etc.)
 - `context/` - React Context providers (theme, locale)
 - `lib/` - Utility functions, constants, and i18n configuration
 - `types/` - TypeScript type definitions
@@ -139,8 +139,8 @@ The portfolio supports multiple languages with a custom i18n implementation:
 
 **Architecture:**
 
-- Translations stored in `data/` folder (`en.ts`, `hi.ts`)
-- Type-safe via `types/en.ts` interface (all languages share same structure)
+- Translations stored in `data/` folder (`lang.ts`, `hi.ts`)
+- Type-safe via `types/lang.ts` interface (all languages share same structure)
 - Locale management via `context/locale-provider.tsx`
 - Language detection from browser or localStorage
 - Language switcher in navbar (`components/ui/language-switcher.tsx`)
@@ -170,10 +170,10 @@ export default function MyComponent() {
 
 All content lives in language-specific files in `data/`:
 
-- `data/en.ts` - English content
+- `data/lang.ts` - English content
 - `data/hi.ts` - Hindi content
 - Each contains: Hero section, projects, achievements, experiences, tech stack, stats
-- Type-safe via `types/en.ts` interface
+- Type-safe via `types/lang.ts` interface
 - All languages share the same structure
 
 ### Path Aliases

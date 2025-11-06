@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/constant";
 import type { Locale } from "@/lib/i18n";
 import { defaultLocale, locales } from "@/lib/i18n";
 import { getTranslations } from "@/lib/translations";
-import type { langtype } from "@/types/en";
+import type { langtype } from "@/types/lang";
 
 type LocaleContextType = {
   locale: Locale;
