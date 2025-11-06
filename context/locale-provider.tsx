@@ -1,7 +1,7 @@
 "use client";
 
 import { parseAsStringLiteral, useQueryState } from "nuqs";
-import React from "react";
+import React, { Suspense } from "react";
 import { SITE_URL } from "@/lib/constant";
 import type { Locale } from "@/lib/i18n";
 import { defaultLocale, locales } from "@/lib/i18n";
@@ -19,7 +19,7 @@ const LocaleContext = React.createContext<LocaleContextType | undefined>(
   undefined
 );
 
-export function LocaleProvider({ children }: { children: React.ReactNode }) {
+function LocaleProviderInner({ children }: { children: React.ReactNode }) {
   // Use nuqs to manage locale via query params
   const [localeParam, setLocaleParam] = useQueryState(
     "lang",
@@ -101,6 +101,14 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
+  );
+}
+
+export function LocaleProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={null}>
+      <LocaleProviderInner>{children}</LocaleProviderInner>
+    </Suspense>
   );
 }
 
