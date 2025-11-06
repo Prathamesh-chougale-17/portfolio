@@ -64,13 +64,13 @@ export default function ChatButton() {
       ]);
     },
     onError: () => {
-      toast.error("Failed to send message");
+      toast.error(t.chat.failedToSend);
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now().toString(),
           role: "assistant",
-          content: "I'm having trouble responding right now. Try again later.",
+          content: t.chat.errorResponse,
           timestamp: new Date(),
         },
       ]);
@@ -118,13 +118,13 @@ export default function ChatButton() {
   const handleCopy = async (content: string, id: string) => {
     await navigator.clipboard.writeText(content);
     setCopiedId(id);
-    toast.success("Copied");
+    toast.success(t.chat.copied);
     setTimeout(() => setCopiedId(null), 2000);
   };
 
   const handleClear = () => {
     setMessages([messages[0]]);
-    toast.success("Chat cleared");
+    toast.success(t.chat.chatCleared);
   };
 
   return (
@@ -210,7 +210,7 @@ export default function ChatButton() {
                   <Actions>
                     <Action
                       onClick={() => handleCopy(m.content, m.id)}
-                      tooltip="Copy"
+                      tooltip={t.chat.copy}
                     >
                       {copiedId === m.id ? (
                         <Check className="h-4 w-4" />

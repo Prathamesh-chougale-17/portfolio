@@ -116,5 +116,10 @@ export type langtype = {
     clear: string;
     close: string;
     messagePlaceholder: string;
+    copy: string;
+    copied: string;
+    chatCleared: string;
+    failedToSend: string;
+    errorResponse: string;
   };
 };

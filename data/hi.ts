@@ -403,5 +403,11 @@ export const hi: langtype = {
     clear: "साफ़ करें",
     close: "बंद करें",
     messagePlaceholder: "अपना संदेश टाइप करें...",
+    copy: "कॉपी करें",
+    copied: "कॉपी किया गया",
+    chatCleared: "चैट साफ़ की गई",
+    failedToSend: "संदेश भेजने में विफल",
+    errorResponse:
+      "मुझे अभी जवाब देने में समस्या हो रही है। बाद में पुनः प्रयास करें।",
   },
 };

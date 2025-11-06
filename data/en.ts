@@ -403,5 +403,10 @@ export const en: langtype = {
     clear: "Clear",
     close: "Close",
     messagePlaceholder: "Type your message...",
+    copy: "Copy",
+    copied: "Copied",
+    chatCleared: "Chat cleared",
+    failedToSend: "Failed to send message",
+    errorResponse: "I'm having trouble responding right now. Try again later.",
   },
 };

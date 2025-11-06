@@ -402,5 +402,11 @@ export const mr: langtype = {
     clear: "साफ करा",
     close: "बंद करा",
     messagePlaceholder: "तुमचा संदेश टाइप करा...",
+    copy: "कॉपी करा",
+    copied: "कॉपी केले",
+    chatCleared: "चॅट साफ केले",
+    failedToSend: "संदेश पाठवण्यात अयशस्वी",
+    errorResponse:
+      "मला आत्ता प्रतिसाद देण्यात अडचण येत आहे. नंतर पुन्हा प्रयत्न करा.",
   },
 };
