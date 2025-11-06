@@ -11,7 +11,7 @@ export function Navbar() {
   const { t } = useLocale();
   const navItems = t.navItems;
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:px-6 md:px-8 lg:px-12">
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 px-4 backdrop-blur supports-backdrop-filter:bg-background/60 sm:px-6 md:px-8 lg:px-12">
       <div className="flex h-16 items-center justify-between py-4">
         {/* Logo - Left */}
         <div className="flex items-center">

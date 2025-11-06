@@ -104,9 +104,28 @@ function LocaleProviderInner({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Fallback provider for SSR/Suspense
+function LocaleProviderFallback({ children }: { children: React.ReactNode }) {
+  const fallbackValue = React.useMemo(
+    () => ({
+      locale: defaultLocale,
+      setLocale: () => {},
+      t: getTranslations(defaultLocale),
+      getLocalizedHref: (href: string) => href,
+    }),
+    []
+  );
+
+  return (
+    <LocaleContext.Provider value={fallbackValue}>
+      {children}
+    </LocaleContext.Provider>
+  );
+}
+
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<LocaleProviderFallback>{children}</LocaleProviderFallback>}>
       <LocaleProviderInner>{children}</LocaleProviderInner>
     </Suspense>
   );
