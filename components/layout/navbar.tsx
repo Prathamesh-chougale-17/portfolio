@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { AnimatedLink } from "@/components/ui/animated-link";
-import { AnimatedThemeToggler } from "@/components/ui/theme-toggle";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { AnimatedThemeToggler } from "@/components/ui/theme-toggle";
 import { useLocale } from "@/context/locale-provider";
 
 export function Navbar() {

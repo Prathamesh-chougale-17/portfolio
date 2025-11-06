@@ -35,7 +35,7 @@ export const env = createEnv({
 
   client: {
     // Public variables exposed to client bundles (prefix NEXT_PUBLIC_)
-    NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
+    NEXT_PUBLIC_SITE_URL: z.url().optional(),
     NEXT_PUBLIC_SOME_FEATURE_FLAG: z.string().optional(),
   },
 
