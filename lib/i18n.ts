@@ -3,20 +3,22 @@
  * Manages language detection, locale preferences, and translations
  */
 
-export type Locale = "en" | "hi";
+export type Locale = "en" | "hi" | "mr";
 
-export const locales: Locale[] = ["en", "hi"];
+export const locales: Locale[] = ["en", "hi", "mr"];
 
 export const defaultLocale: Locale = "en";
 
 export const localeNames: Record<Locale, string> = {
   en: "English",
   hi: "हिन्दी",
+  mr: "मराठी",
 };
 
 export const localeFlags: Record<Locale, string> = {
   en: "🇺🇸",
   hi: "🇮🇳",
+  mr: "🇮🇳",
 };
 
 /**
