@@ -109,7 +109,9 @@ function LocaleProviderFallback({ children }: { children: React.ReactNode }) {
   const fallbackValue = React.useMemo(
     () => ({
       locale: defaultLocale,
-      setLocale: () => {},
+      setLocale: () => {
+        // no-op
+      },
       t: getTranslations(defaultLocale),
       getLocalizedHref: (href: string) => href,
     }),
@@ -125,7 +127,9 @@ function LocaleProviderFallback({ children }: { children: React.ReactNode }) {
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback={<LocaleProviderFallback>{children}</LocaleProviderFallback>}>
+    <Suspense
+      fallback={<LocaleProviderFallback>{children}</LocaleProviderFallback>}
+    >
       <LocaleProviderInner>{children}</LocaleProviderInner>
     </Suspense>
   );
