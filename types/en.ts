@@ -24,6 +24,13 @@ export type langtype = {
     title: string;
     subtitle: string;
     description: string;
+    filters: {
+      searchPlaceholder: string;
+      filterByTag: string;
+      allTags: string;
+      featuredOnly: string;
+      clearFilters: string;
+    };
   };
   projects: {
     title: string;
@@ -96,5 +103,18 @@ export type langtype = {
       success: string;
       error: string;
     };
+  };
+  offline: {
+    title: string;
+    description: string;
+    returnToHome: string;
+    tryAgain: string;
+  };
+  chat: {
+    typing: string;
+    online: string;
+    clear: string;
+    close: string;
+    messagePlaceholder: string;
   };
 };

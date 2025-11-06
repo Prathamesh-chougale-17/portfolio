@@ -149,7 +149,7 @@ export default function ChatButton() {
               <div>
                 <h3 className="font-semibold text-sm">{t.hero.name}</h3>
                 <p className="text-muted-foreground text-xs">
-                  {sendMessageMutation.isPending ? "Typing..." : "Online"}
+                  {sendMessageMutation.isPending ? t.chat.typing : t.chat.online}
                 </p>
               </div>
             </div>
@@ -157,11 +157,11 @@ export default function ChatButton() {
               <Action
                 disabled={messages.length <= 1}
                 onClick={handleClear}
-                tooltip="Clear"
+                tooltip={t.chat.clear}
               >
                 <Trash2 className="h-4 w-4" />
               </Action>
-              <Action onClick={() => setIsOpen(false)} tooltip="Close">
+              <Action onClick={() => setIsOpen(false)} tooltip={t.chat.close}>
                 <X className="h-4 w-4" />
               </Action>
             </Actions>
@@ -250,7 +250,7 @@ export default function ChatButton() {
                   handleSubmit(e as any);
                 }
               }}
-              placeholder="Type your message..."
+              placeholder={t.chat.messagePlaceholder}
               ref={inputRef}
               rows={1}
               value={input}

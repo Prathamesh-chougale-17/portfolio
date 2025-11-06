@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useLocale } from "@/context/locale-provider";
 
 type ProjectFiltersProps = {
   projects: Project[];
@@ -21,6 +22,7 @@ export function ProjectFilters({
   projects,
   onFilteredProjectsChange,
 }: ProjectFiltersProps) {
+  const { t } = useLocale();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string>("all");
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false);
@@ -83,7 +85,7 @@ export function ProjectFilters({
           <Input
             className="w-full pl-10"
             onChange={(e) => handleSearchChange(e.target.value)}
-            placeholder="Search projects by title, description, or tags..."
+            placeholder={t.projectsPage.filters.searchPlaceholder}
             value={searchQuery}
           />
         </div>
@@ -94,10 +96,10 @@ export function ProjectFilters({
         <div className="flex items-center gap-2">
           <Select onValueChange={handleTagChange} value={selectedTag}>
             <SelectTrigger className="w-full sm:w-[180px]">
-              <SelectValue placeholder="Filter by tag" />
+              <SelectValue placeholder={t.projectsPage.filters.filterByTag} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Tags</SelectItem>
+              <SelectItem value="all">{t.projectsPage.filters.allTags}</SelectItem>
               {allTags.map((tag) => (
                 <SelectItem key={tag} value={tag}>
                   {tag}
@@ -120,13 +122,13 @@ export function ProjectFilters({
             className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             htmlFor="featured"
           >
-            Featured only
+            {t.projectsPage.filters.featuredOnly}
           </label>
         </div>
 
         {/* Clear Filters */}
         <Button onClick={clearFilters} size="sm" variant="outline">
-          Clear filters
+          {t.projectsPage.filters.clearFilters}
         </Button>
       </div>
     </div>
