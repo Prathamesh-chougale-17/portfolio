@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
 import Link from "next/link";
 import TryAgainButton from "@/components/offline/try-again";
 import { useLocale } from "@/context/locale-provider";
