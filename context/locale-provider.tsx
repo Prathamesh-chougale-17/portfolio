@@ -2,14 +2,9 @@
 
 import { parseAsStringLiteral, useQueryState } from "nuqs";
 import React from "react";
+import { SITE_URL } from "@/lib/constant";
 import type { Locale } from "@/lib/i18n";
-import {
-  defaultLocale,
-  detectBrowserLocale,
-  getStoredLocale,
-  locales,
-  setStoredLocale,
-} from "@/lib/i18n";
+import { defaultLocale, locales } from "@/lib/i18n";
 import { getTranslations } from "@/lib/translations";
 import type { entype } from "@/types/en";
 
@@ -34,43 +29,15 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const [translations, setTranslations] = React.useState<entype>(
     getTranslations(localeParam)
   );
-  const [initialized, setInitialized] = React.useState(false);
 
-  // Initialize locale from query param, localStorage, or browser
-  React.useEffect(() => {
-    if (initialized) {
-      return;
-    }
-
-    // If no query param is set, check localStorage or browser
-    if (!localeParam || localeParam === defaultLocale) {
-      const storedLocale = getStoredLocale();
-      if (storedLocale && storedLocale !== defaultLocale) {
-        setLocaleParam(storedLocale);
-      } else {
-        const browserLocale = detectBrowserLocale();
-        if (browserLocale !== defaultLocale) {
-          setLocaleParam(browserLocale);
-          setStoredLocale(browserLocale);
-        }
-      }
-    } else {
-      // Sync query param to localStorage
-      setStoredLocale(localeParam);
-    }
-    setInitialized(true);
-  }, [initialized, localeParam, setLocaleParam]);
-
-  // Update translations when locale changes
+  // Update translations when locale changes (query param only)
   React.useEffect(() => {
     setTranslations(getTranslations(localeParam));
-    setStoredLocale(localeParam);
   }, [localeParam]);
 
   const setLocale = React.useCallback(
     (newLocale: Locale) => {
       setLocaleParam(newLocale);
-      setStoredLocale(newLocale);
     },
     [setLocaleParam]
   );
@@ -89,11 +56,18 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
       }
 
       // Parse the href to handle existing query params
-      const url = new URL(href, window.location.origin);
-      url.searchParams.set("lang", localeParam);
+      try {
+        // Use SITE_URL as the base for parsing relative URLs (SSR-safe)
+        const url = new URL(href, SITE_URL);
+        url.searchParams.set("lang", localeParam);
 
-      // Return pathname + search (relative URL)
-      return `${url.pathname}${url.search}${url.hash}`;
+        // Return pathname + search + hash (relative URL)
+        return `${url.pathname}${url.search}${url.hash}`;
+      } catch {
+        // Fallback for invalid URLs
+        const separator = href.includes("?") ? "&" : "?";
+        return `${href}${separator}lang=${localeParam}`;
+      }
     },
     [localeParam]
   );

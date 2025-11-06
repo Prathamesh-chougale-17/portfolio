@@ -82,20 +82,18 @@ function MyComponent() {
 - External links are not modified
 - Existing query parameters are preserved
 
-### ✅ Fallback Support
+### ✅ Pure Query Parameter Based
 
-- Still checks localStorage for initial language
-- Detects browser language on first visit
-- Query parameter takes priority over localStorage
+- No localStorage usage - language preference is ONLY in the URL
+- Clean, stateless approach
+- Share any link and it will show the exact language
 
 ## Implementation Details
 
 ### Priority Order
 
-1. **URL Query Parameter** (`?lang=mr`) - Highest priority
-2. **LocalStorage** - For returning users without query param
-3. **Browser Detection** - For new users
-4. **Default** (English) - Final fallback
+1. **URL Query Parameter** (`?lang=mr`) - The ONLY source of language state
+2. **Default** (English) - Fallback when no query parameter present
 
 ### Component Updates
 
@@ -127,13 +125,14 @@ function MyComponent() {
 
 ## Example: Complete Flow
 
-1. User visits `https://example.com/`
-2. System detects browser language or uses localStorage
-3. If Marathi, URL updates to `https://example.com/?lang=mr`
+1. User visits `https://example.com/` (sees English - default)
+2. User selects Marathi from language switcher
+3. URL updates to `https://example.com/?lang=mr`
 4. User clicks "About" link
 5. URL becomes `https://example.com/about?lang=mr`
 6. User shares this link with a friend
 7. Friend opens `https://example.com/about?lang=mr` and sees Marathi content immediately
+8. If friend removes `?lang=mr` from URL, they see English (default)
 
 ## Migration Notes
 
