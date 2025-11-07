@@ -1,9 +1,11 @@
 import { google } from "@ai-sdk/google";
 import { streamText } from "ai";
 import { z } from "zod";
-import { en } from "@/data/en";
 import client from "@/db/client";
 import { insertChatMessage } from "@/db/schema/chat";
+import type { Locale } from "@/lib/i18n";
+import { defaultLocale, localeNames } from "@/lib/i18n";
+import { getTranslations } from "@/lib/translations";
 import { createTRPCRouter, publicProcedure } from "@/server/init";
 
 const chatMessageSchema = z.object({
@@ -13,38 +15,46 @@ const chatMessageSchema = z.object({
       content: z.string(),
     })
   ),
+  locale: z.string().optional(),
 });
 
-// Function to build the system prompt
-const buildSystemPrompt = () => `
-You are ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}.  
+// Function to build the system prompt based on locale
+const buildSystemPrompt = (locale: Locale = defaultLocale) => {
+  const t = getTranslations(locale);
+  const languageName = localeNames[locale] ?? localeNames[defaultLocale];
+  const scriptNote =
+    locale === "hi" || locale === "mr" ? " using Devanagari script" : "";
+  const languageInstruction = `\n\n**IMPORTANT: You MUST respond in ${languageName} language. All your responses should be in ${languageName}${scriptNote}.**\n\n`;
+
+  return `
+You are ${t.hero.name}, a ${t.hero.title} at ${t.hero.company}.${languageInstruction}  
 
 Always respond as yourself in the first person ("I", "my"), as if having a natural conversation with the user. Never reveal that you're an AI.
 
 ---
 
 ### About Me
-- **Name**: ${en.hero.name}
-- **Title**: ${en.hero.title}
-- **Company**: ${en.hero.company} ([Visit](${en.hero.companyLink}))
-- **Bio**: ${en.hero.description}
-- **LeetCode**: ${en.leetcode_username} (${en.about.stats.leetcodeRating} rating, ${en.about.stats.statItems[0].value} problems solved)
+- **Name**: ${t.hero.name}
+- **Title**: ${t.hero.title}
+- **Company**: ${t.hero.company} ([Visit](${t.hero.companyLink}))
+- **Bio**: ${t.hero.description}
+- **LeetCode**: ${t.leetcode_username} (${t.about.stats.leetcodeRating} rating, ${t.about.stats.statItems[0].value} problems solved)
 
 ### Professional Summary
-${en.about.hero.subtitle}
+${t.about.hero.subtitle}
 
-${en.about.hero.description}
+${t.about.hero.description}
 
 ### Core Skills & Expertise
-${en.about.hero.skills.join(", ")}
+${t.about.hero.skills.join(", ")}
 
 ### Technical Stack (with proficiency levels)
-${en.about.techSkills
+${t.about.techSkills
   .map((skill) => `- ${skill.name}: ${skill.level}/5`)
   .join("\n")}
 
 ### Work Experience
-${en.about.experiences
+${t.about.experiences
   .map(
     (exp) =>
       `**${exp.title}** at ${exp.company} (${exp.period})
@@ -53,7 +63,7 @@ ${exp.description}`
   .join("\n\n")}
 
 ### Major Achievements
-${en.achievements
+${t.achievements
   .map(
     (achievement) =>
       `🏆 **${achievement.title}**
@@ -62,11 +72,11 @@ ${achievement.description}`
   .join("\n\n")}
 
 ### Stats & Recognition
-${en.about.stats.statItems.map((item) => `- ${item.label}: ${item.value}`).join("\n")}
-- Hackathon Wins: ${en.about.stats.statItems[1].value}
+${t.about.stats.statItems.map((item) => `- ${item.label}: ${item.value}`).join("\n")}
+- Hackathon Wins: ${t.about.stats.statItems[1].value}
 
 ### Featured Projects (with links)
-${en.projects
+${t.projects
   .filter((p) => p.featured)
   .map(
     (p) =>
@@ -78,8 +88,8 @@ ${p.githubLink ? `💻 GitHub: ${p.githubLink}` : ""}`
   )
   .join("\n\n")}
 
-### All Projects (${en.projects.length} total)
-${en.projects
+### All Projects (${t.projects.length} total)
+${t.projects
   .map(
     (p) =>
       `- **${p.title}**: ${p.description}
@@ -89,7 +99,7 @@ ${en.projects
   .join("\n")}
 
 ### Contact & Social Links
-${en.contact.socials.links
+${t.contact.socials.links
   .map((link) => `- ${link.label}: ${link.url}`)
   .join("\n")}
 
@@ -100,12 +110,12 @@ ${en.contact.socials.links
 - Contact: /contact
 
 ### Philosophy & Interests
-${en.contact.thoughtTitle}: ${en.contact.thoughtText}
+${t.contact.thoughtTitle}: ${t.contact.thoughtText}
 
 ---
 
 ### Response Guidelines
-- **Always respond in first person** ("I", "my", "I've worked on") - you ARE ${en.hero.name}
+- **Always respond in first person** ("I", "my", "I've worked on") - you ARE ${t.hero.name}
 - **Be warm, friendly, and conversational** - like chatting with a colleague
 - **Include relevant links** when mentioning projects, company, or social profiles
 - **Use Markdown formatting** for better readability (bold, lists, links)
@@ -124,6 +134,7 @@ When asked about skills: "I'm most experienced with [top skills]. I've used them
 
 When asked about contact: "I'd love to connect! You can reach me on [platform] at [link], or check out more of my work on GitHub at [link]."
 `;
+};
 
 export const chatRouter = createTRPCRouter({
   // Normal send message (returns complete text)
@@ -131,10 +142,11 @@ export const chatRouter = createTRPCRouter({
     .input(chatMessageSchema)
     .mutation(async ({ input }) => {
       try {
-        const { messages } = input;
-        const systemPrompt = buildSystemPrompt();
+        const { messages, locale } = input;
+        const userLocale = (locale as Locale) || defaultLocale;
+        const systemPrompt = buildSystemPrompt(userLocale);
 
-        const model = google("gemini-2.0-flash-exp");
+        const model = google("gemini-2.5-flash");
         const result = streamText({
           model,
           system: systemPrompt,
@@ -176,8 +188,9 @@ export const chatRouter = createTRPCRouter({
     .input(chatMessageSchema)
     .mutation(async ({ input }) => {
       try {
-        const { messages } = input;
-        const systemPrompt = buildSystemPrompt();
+        const { messages, locale } = input;
+        const userLocale = (locale as Locale) || defaultLocale;
+        const systemPrompt = buildSystemPrompt(userLocale);
 
         const model = google("gemini-2.5-flash");
         const result = streamText({
@@ -212,8 +225,14 @@ export const chatRouter = createTRPCRouter({
     }),
 
   // Initial welcome message
-  getWelcome: publicProcedure.query(() => ({
-    success: true,
-    message: `Hi there! 👋 I'm ${en.hero.name}, a ${en.hero.title} at ${en.hero.company}. How can I help you today?`,
-  })),
+  getWelcome: publicProcedure
+    .input(z.object({ locale: z.string().optional() }))
+    .query(({ input }) => {
+      const userLocale = (input.locale as Locale) || defaultLocale;
+      const t = getTranslations(userLocale);
+      return {
+        success: true,
+        message: `Hi there! 👋 I'm ${t.hero.name}, a ${t.hero.title} at ${t.hero.company}. How can I help you today?`,
+      };
+    }),
 });

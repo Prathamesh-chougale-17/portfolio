@@ -35,7 +35,7 @@ type ChatMessage = {
 };
 
 export default function ChatButton() {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -112,7 +112,10 @@ export default function ChatButton() {
       role: m.role,
       content: m.content,
     }));
-    await sendMessageMutation.mutateAsync({ messages: conversation });
+    await sendMessageMutation.mutateAsync({
+      messages: conversation,
+      locale,
+    });
   };
 
   const handleCopy = async (content: string, id: string) => {
@@ -149,7 +152,9 @@ export default function ChatButton() {
               <div>
                 <h3 className="font-semibold text-sm">{t.hero.name}</h3>
                 <p className="text-muted-foreground text-xs">
-                  {sendMessageMutation.isPending ? t.chat.typing : t.chat.online}
+                  {sendMessageMutation.isPending
+                    ? t.chat.typing
+                    : t.chat.online}
                 </p>
               </div>
             </div>
