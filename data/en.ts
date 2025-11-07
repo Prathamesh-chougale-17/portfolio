@@ -404,10 +404,13 @@ export const en: langtype = {
     clear: "Clear",
     close: "Close",
     messagePlaceholder: "Type your message...",
+    chatLoading: "Ahh, let me think...",
     copy: "Copy",
     copied: "Copied",
     chatCleared: "Chat cleared",
     failedToSend: "Failed to send message",
     errorResponse: "I'm having trouble responding right now. Try again later.",
+    welcomeMessage:
+      "Hello! I'm Prathamesh Chougale, a Software Engineer passionate about building impactful web applications. How can I assist you today?",
   },
 };

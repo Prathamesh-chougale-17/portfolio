@@ -40,12 +40,7 @@ export default function ChatButton() {
   const [input, setInput] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: "welcome",
-      role: "assistant",
-      content: `Hi 👋 I'm ${t.hero.name}, your AI assistant. How can I help?`,
-      timestamp: new Date(),
-    },
+    // keep messages state for actual conversation messages only; welcome is rendered separately
   ]);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -108,10 +103,13 @@ export default function ChatButton() {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
-    const conversation = [...messages, userMessage].map((m) => ({
-      role: m.role,
-      content: m.content,
-    }));
+    // include the welcome assistant message at the start of the conversation
+    const conversation = [
+      { role: "assistant", content: t.chat.welcomeMessage },
+      ...messages.map((m) => ({ role: m.role, content: m.content })),
+      { role: userMessage.role, content: userMessage.content },
+    ];
+
     await sendMessageMutation.mutateAsync({
       messages: conversation,
       locale,
@@ -126,7 +124,8 @@ export default function ChatButton() {
   };
 
   const handleClear = () => {
-    setMessages([messages[0]]);
+    // clear conversation messages (welcome stays rendered separately)
+    setMessages([]);
     toast.success(t.chat.chatCleared);
   };
 
@@ -160,7 +159,7 @@ export default function ChatButton() {
             </div>
             <Actions>
               <Action
-                disabled={messages.length <= 1}
+                disabled={messages.length === 0}
                 onClick={handleClear}
                 tooltip={t.chat.clear}
               >
@@ -174,6 +173,49 @@ export default function ChatButton() {
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto" ref={chatContainerRef}>
+            {/* Welcome (rendered separately from state) */}
+            <Message from="assistant" key="welcome">
+              <MessageAvatar name={t.hero.name} src="/profile.webp" />
+              <MessageContent
+                className={cn(
+                  "text-sm leading-relaxed",
+                  "border border-border bg-muted/50"
+                )}
+                variant="contained"
+              >
+                <ReactMarkdown
+                  components={{
+                    a: ({ href, children, ...props }) => (
+                      <a
+                        className="text-blue-600 underline transition-colors hover:text-blue-800 hover:no-underline"
+                        href={href}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        {...props}
+                      >
+                        {children}
+                      </a>
+                    ),
+                  }}
+                >
+                  {t.chat.welcomeMessage}
+                </ReactMarkdown>
+              </MessageContent>
+              {/* Copy action for welcome message */}
+              <Actions>
+                <Action
+                  onClick={() => handleCopy(t.chat.welcomeMessage, "welcome")}
+                  tooltip={t.chat.copy}
+                >
+                  {copiedId === "welcome" ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                </Action>
+              </Actions>
+            </Message>
+
             {messages.map((m) => (
               <Message from={m.role} key={m.id}>
                 <MessageAvatar
@@ -235,7 +277,7 @@ export default function ChatButton() {
                   className="border border-border bg-muted/50"
                   variant="contained"
                 >
-                  <Shimmer as="div">Ahh, let me think...</Shimmer>
+                  <Shimmer as="div">{t.chat.chatLoading}</Shimmer>
                 </MessageContent>
               </Message>
             )}

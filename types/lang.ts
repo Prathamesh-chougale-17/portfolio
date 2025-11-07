@@ -117,10 +117,12 @@ export type langtype = {
     clear: string;
     close: string;
     messagePlaceholder: string;
+    chatLoading: string;
     copy: string;
     copied: string;
     chatCleared: string;
     failedToSend: string;
     errorResponse: string;
+    welcomeMessage: string;
   };
 };
