@@ -143,6 +143,13 @@ export const chatRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       try {
         const { messages, locale } = input;
+        if (
+          messages.filter((msg) => msg.role === "user").at(-1) === null ||
+          messages.filter((msg) => msg.role === "user").at(-1)?.content ===
+            undefined
+        ) {
+          throw new Error("No user message provided");
+        }
         const userLocale = (locale as Locale) || defaultLocale;
         const systemPrompt = buildSystemPrompt(userLocale);
 
@@ -150,10 +157,9 @@ export const chatRouter = createTRPCRouter({
         try {
           await insertChatMessage(client.db("portfolio"), {
             role: "user",
-            content: messages
-              .filter((msg) => msg.role === "user")
-              .map((msg) => msg.content)
-              .join("\n"),
+            content:
+              messages.filter((msg) => msg.role === "user").at(-1)?.content ||
+              "No content",
             timestamp: new Date(),
           });
         } catch (err) {
