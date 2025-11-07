@@ -67,7 +67,7 @@ export const en: langtype = {
         "A full-stack web app for booking personal chefs with real-time availability, Chef Profiles, and advanced search/filtering.",
       tags: ["React.js", "Clerk", "Node.js", "Express.js", "MongoDB"],
       githubLink: "https://github.com/Prathamesh-chougale-17/swaadLink",
-      liveLink: "https://swaadlink.vercel.app",
+      liveLink: "https://swaad-link.vercel.app",
       image: "/projects/swaadlink.webp",
       featured: false,
     },

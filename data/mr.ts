@@ -68,7 +68,7 @@ export const mr: langtype = {
         "वास्तविक-वेळ उपलब्धता, शेफ प्रोफाइल्स आणि प्रगत शोध/फिल्टरिंगसह वैयक्तिक शेफ बुकिंगसाठी फुल-स्टॅक वेब अॅप.",
       tags: ["React.js", "Clerk", "Node.js", "Express.js", "MongoDB"],
       githubLink: "https://github.com/Prathamesh-chougale-17/swaadLink",
-      liveLink: "https://swaadlink.vercel.app",
+      liveLink: "https://swaad-link.vercel.app",
       image: "/projects/swaadlink.webp",
       featured: false,
     },
