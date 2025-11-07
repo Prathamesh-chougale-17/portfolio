@@ -146,6 +146,20 @@ export const chatRouter = createTRPCRouter({
         const userLocale = (locale as Locale) || defaultLocale;
         const systemPrompt = buildSystemPrompt(userLocale);
 
+        // save user message to database
+        try {
+          await insertChatMessage(client.db("portfolio"), {
+            role: "user",
+            content: messages
+              .filter((msg) => msg.role === "user")
+              .map((msg) => msg.content)
+              .join("\n"),
+            timestamp: new Date(),
+          });
+        } catch (err) {
+          console.error("Failed to save user message:", err);
+        }
+
         const model = google("gemini-2.5-flash");
         const result = streamText({
           model,
@@ -155,18 +169,6 @@ export const chatRouter = createTRPCRouter({
         });
 
         const response = await result.text;
-
-        // Save assistant response to database
-        try {
-          const db = client.db("portfolio");
-          await insertChatMessage(db, {
-            role: "assistant",
-            content: response,
-            timestamp: new Date(),
-          });
-        } catch (err) {
-          console.error("Failed to save chat message:", err);
-        }
 
         return {
           success: true,
