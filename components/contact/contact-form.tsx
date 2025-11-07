@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
+import { parseAsString, useQueryStates } from "nuqs";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -14,10 +15,31 @@ import { trpc } from "@/server/client";
 export function ContactForm() {
   const { t } = useLocale();
 
+  // Manage form state in URL query params
+  const [formState, setFormState] = useQueryStates(
+    {
+      name: parseAsString.withDefault(""),
+      email: parseAsString.withDefault(""),
+      subject: parseAsString.withDefault(""),
+      message: parseAsString.withDefault(""),
+    },
+    {
+      history: "push",
+      shallow: true,
+    }
+  );
+
   const contactMutation = trpc.contact.submit.useMutation({
     onSuccess: (data) => {
       toast.success(data.message || t.contact.form.success);
       form.reset();
+      // Clear query params after successful submission
+      setFormState({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
     },
     onError: (error) => {
       toast.error(error.message || t.contact.form.error);
@@ -26,10 +48,10 @@ export function ContactForm() {
 
   const form = useForm({
     defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
+      name: formState.name,
+      email: formState.email,
+      subject: formState.subject,
+      message: formState.message,
     },
     onSubmit: async ({ value }) => {
       await contactMutation.mutateAsync(value);
@@ -82,7 +104,11 @@ export function ContactForm() {
                     id="name"
                     name={field.name}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.handleChange(value);
+                      setFormState({ name: value });
+                    }}
                     placeholder={t.contact.form.name.placeholder}
                     value={field.state.value}
                   />
@@ -126,7 +152,11 @@ export function ContactForm() {
                     id="email"
                     name={field.name}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.handleChange(value);
+                      setFormState({ email: value });
+                    }}
                     placeholder={t.contact.form.email.placeholder}
                     type="email"
                     value={field.state.value}
@@ -171,7 +201,11 @@ export function ContactForm() {
                     id="subject"
                     name={field.name}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.handleChange(value);
+                      setFormState({ subject: value });
+                    }}
                     placeholder={
                       t.contact.form.subject?.placeholder ||
                       "Enter message subject"
@@ -220,7 +254,11 @@ export function ContactForm() {
                     id="message"
                     name={field.name}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.handleChange(value);
+                      setFormState({ message: value });
+                    }}
                     placeholder={t.contact.form.message.placeholder}
                     rows={4}
                     value={field.state.value}

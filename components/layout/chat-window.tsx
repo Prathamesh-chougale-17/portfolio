@@ -2,6 +2,7 @@
 
 import { Check, Copy, Loader2, Send, Trash2, X } from "lucide-react";
 import Image from "next/image";
+import { parseAsString, useQueryState } from "nuqs";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
@@ -26,7 +27,13 @@ type Props = {
 
 export default function ChatWindow({ onClose }: Props) {
   const { t, locale } = useLocale();
-  const [input, setInput] = useState("");
+  const [input, setInput] = useQueryState(
+    "chatInput",
+    parseAsString.withDefault("").withOptions({
+      history: "push",
+      shallow: true,
+    })
+  );
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
