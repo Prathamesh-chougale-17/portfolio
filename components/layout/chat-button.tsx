@@ -29,7 +29,7 @@ import { trpc } from "@/server/client";
 
 type ChatMessage = {
   id: string;
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system";
   content: string;
   timestamp: Date;
 };
@@ -104,7 +104,10 @@ export default function ChatButton() {
     setInput("");
 
     // include the welcome assistant message at the start of the conversation
-    const conversation = [
+    const conversation: {
+      role: "user" | "assistant" | "system";
+      content: string;
+    }[] = [
       { role: "assistant", content: t.chat.welcomeMessage },
       ...messages.map((m) => ({ role: m.role, content: m.content })),
       { role: userMessage.role, content: userMessage.content },
