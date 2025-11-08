@@ -105,6 +105,10 @@ export default function RootLayout({
         <meta content="yes" name="mobile-web-app-capable" />
         <meta content="#000000" name="theme-color" />
         <link href="https://prathamesh-chougale.vercel.app" rel="canonical" />
+        <meta
+          content={env.GOOGLE_SITE_VERIFICATION}
+          name="google-site-verification"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
