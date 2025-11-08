@@ -1,8 +1,10 @@
 // Centralized application constants
 // Keep non-sensitive values here. Secrets still belong in env variables.
 
+import { env } from "@/env";
+
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://prathamesh-chougale.vercel.app";
+  env.NEXT_PUBLIC_SITE_URL || "https://prathamesh-chougale.vercel.app";
 
 export const MANIFEST_ROUTE = "/manifest.json";
 
