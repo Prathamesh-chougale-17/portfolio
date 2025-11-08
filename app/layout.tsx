@@ -4,6 +4,7 @@ import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "sonner";
+import { JsonLd } from "@/components/json-ld";
 import ChatButton from "@/components/layout/chat-button";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
@@ -13,6 +14,10 @@ import { LocaleProvider } from "@/context/locale-provider";
 import { ThemeProvider } from "@/context/theme-provider";
 import { env } from "@/env";
 import { ICONS, MANIFEST_ROUTE, OG_IMAGE, SITE_URL } from "@/lib/constant";
+import {
+  generatePersonSchema,
+  generateWebsiteSchema,
+} from "@/lib/structured-data";
 import { TRPCProvider } from "@/server/client";
 
 const geistSans = Geist({
@@ -98,6 +103,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <JsonLd data={generateWebsiteSchema()} />
+        <JsonLd data={generatePersonSchema()} />
         <meta content="Prathamesh Chougale" name="application-name" />
         <meta content="yes" name="apple-mobile-web-app-capable" />
         <meta content="default" name="apple-mobile-web-app-status-bar-style" />

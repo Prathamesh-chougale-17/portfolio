@@ -1,27 +1,46 @@
-"use client";
+import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+import { OG_IMAGE, SITE_URL } from "@/lib/constant";
+import { generateProfilePageSchema } from "@/lib/structured-data";
+import AboutClient from "./about-client";
 
-import { ExperienceTimeline } from "@/components/about/experience-timeline";
-import { HeroSection } from "@/components/about/hero-section";
-import { StatsSection } from "@/components/about/stats-section";
-import { TechStackSection } from "@/components/about/tech-stack-section";
-import { useLocale } from "@/context/locale-provider";
+export const metadata: Metadata = {
+  title: "About Me",
+  description:
+    "Learn more about Prathamesh Chougale - Full-stack Software Engineer with expertise in React, Next.js, TypeScript, and Node.js. Winner of Smart India Hackathon and HSBC Hackathon 2024.",
+  alternates: {
+    canonical: `${SITE_URL}/about`,
+  },
+  openGraph: {
+    title: "About Prathamesh Chougale | Software Engineer",
+    description:
+      "Full-stack Software Engineer with expertise in React, Next.js, TypeScript. Winner of Smart India Hackathon and HSBC Hackathon 2024.",
+    url: `${SITE_URL}/about`,
+    siteName: "Prathamesh Chougale",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "About Prathamesh Chougale",
+      },
+    ],
+    type: "profile",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Prathamesh Chougale | Software Engineer",
+    description:
+      "Full-stack Software Engineer with expertise in React, Next.js, TypeScript.",
+    images: [OG_IMAGE],
+  },
+};
 
 export default function AboutPage() {
-  const { t } = useLocale();
-  const { about } = t;
-
   return (
-    <main className="py-12">
-      <HeroSection
-        description={about.hero.description}
-        image={about.hero.image}
-        skills={about.hero.skills}
-        subtitle={about.hero.subtitle}
-        title={about.hero.title}
-      />
-      <StatsSection statItems={about.stats?.statItems || []} />
-      <TechStackSection skills={about.techSkills} />
-      <ExperienceTimeline experiences={about.experiences} />
-    </main>
+    <>
+      <JsonLd data={generateProfilePageSchema()} />
+      <AboutClient />
+    </>
   );
 }

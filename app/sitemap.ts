@@ -33,19 +33,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
-    {
-      url: `${baseUrl}/offline`,
-      lastModified: currentDate,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    // You can add dynamic routes here as well
-    // For example, if you have project details pages:
-    // {
-    //   url: `${baseUrl}/projects/project-1`,
-    //   lastModified: currentDate,
-    //   changeFrequency: 'monthly',
-    //   priority: 0.7,
-    // },
+    // Removed /offline - it's a PWA utility page not meant for search engines
   ];
 }
