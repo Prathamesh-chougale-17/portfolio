@@ -16,12 +16,13 @@ function StatItem({ value, label }: StatItemProps) {
 
 type StatsProps = {
   statItems: Array<{ label: string; value: string }>;
+  title: string;
 };
 
-export function StatsSection({ statItems }: StatsProps) {
+export function StatsSection({ statItems, title }: StatsProps) {
   return (
     <section className="py-12">
-      <h2 className="mb-8 font-bold text-3xl">Stats</h2>
+      <h2 className="mb-8 font-bold text-3xl">{title}</h2>
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {statItems.map((stat, index) => (
           <StatItem key={index} label={stat.label} value={stat.value} />

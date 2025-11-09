@@ -58,7 +58,7 @@ export function ProjectFilters({
       const matchesSearch =
         project.title.toLowerCase().includes(search) ||
         project.description.toLowerCase().includes(search) ||
-        project.tags.some((t) => t.toLowerCase().includes(search));
+        project.tags.some((tagItem) => tagItem.toLowerCase().includes(search));
 
       const matchesTag = tag === "all" || project.tags.includes(tag);
       const matchesFeatured = !featured || project.featured;
@@ -99,7 +99,9 @@ export function ProjectFilters({
               <SelectValue placeholder={t.projectsPage.filters.filterByTag} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{t.projectsPage.filters.allTags}</SelectItem>
+              <SelectItem value="all">
+                {t.projectsPage.filters.allTags}
+              </SelectItem>
               {allTags.map((tag) => (
                 <SelectItem key={tag} value={tag}>
                   {tag}

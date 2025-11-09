@@ -7,14 +7,16 @@ type WorkExperience = {
 
 type ExperienceTimelineProps = {
   experiences: WorkExperience[];
+  title: string;
 };
 
-export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
+export function ExperienceTimeline({
+  experiences,
+  title,
+}: ExperienceTimelineProps) {
   return (
     <section>
-      <h2 className="mb-8 font-bold text-3xl tracking-tight">
-        Work Experience
-      </h2>
+      <h2 className="mb-8 font-bold text-3xl tracking-tight">{title}</h2>
       <div className="space-y-8">
         {experiences.map((exp, index) => (
           <div

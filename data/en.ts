@@ -18,6 +18,15 @@ export const en: langtype = {
     description:
       "Full-stack developer skilled in React, Next.js, and TypeScript. Passionate about building performant, accessible, and scalable web applications with real-world impact.",
   },
+  homeSection: {
+    achievementSectionTitle: "Achievements",
+    projectSectionTitle: "Projects",
+  },
+  aboutSection: {
+    statsTitle: "Statistics",
+    techStackTitle: "Tech Stack",
+    experienceTitle: "Experience",
+  },
   achievements: [
     {
       title: "Smart India Hackathon Winner",

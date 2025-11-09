@@ -8,7 +8,7 @@ import { useLocale } from "@/context/locale-provider";
 
 export default function AboutClient() {
   const { t } = useLocale();
-  const { about } = t;
+  const { about, aboutSection } = t;
 
   return (
     <main className="py-12">
@@ -19,9 +19,18 @@ export default function AboutClient() {
         subtitle={about.hero.subtitle}
         title={about.hero.title}
       />
-      <StatsSection statItems={about.stats?.statItems || []} />
-      <TechStackSection skills={about.techSkills} />
-      <ExperienceTimeline experiences={about.experiences} />
+      <StatsSection
+        statItems={about.stats?.statItems || []}
+        title={aboutSection.statsTitle}
+      />
+      <TechStackSection
+        skills={about.techSkills}
+        title={aboutSection.techStackTitle}
+      />
+      <ExperienceTimeline
+        experiences={about.experiences}
+        title={aboutSection.experienceTitle}
+      />
     </main>
   );
 }

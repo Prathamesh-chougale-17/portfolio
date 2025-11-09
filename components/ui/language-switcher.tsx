@@ -1,9 +1,6 @@
 "use client";
 
-import * as React from "react";
 import { Languages } from "lucide-react";
-import { useLocale } from "@/context/locale-provider";
-import { locales, localeNames, localeFlags, type Locale } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,6 +8,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useLocale } from "@/context/locale-provider";
+import { localeFlags, localeNames, locales } from "@/lib/i18n";
 
 export function LanguageSwitcher() {
   const { locale, setLocale } = useLocale();

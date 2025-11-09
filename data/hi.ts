@@ -19,6 +19,15 @@ export const hi: langtype = {
     description:
       "React, Next.js और TypeScript में कुशल फुल-स्टैक डेवलपर। प्रदर्शनशील, सुलभ और स्केलेबल वेब एप्लिकेशन बनाने का जुनून जो वास्तविक दुनिया में प्रभाव डालते हैं।",
   },
+  homeSection: {
+    achievementSectionTitle: "उपलब्धियाँ",
+    projectSectionTitle: "प्रोजेक्ट्स",
+  },
+  aboutSection: {
+    statsTitle: "आंकड़े",
+    techStackTitle: "तकनीकी स्टैक",
+    experienceTitle: "अनुभव",
+  },
   achievements: [
     {
       title: "स्मार्ट इंडिया हैकथॉन विजेता",

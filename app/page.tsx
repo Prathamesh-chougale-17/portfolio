@@ -19,8 +19,14 @@ export default function Home() {
         name={t.hero.name}
         title={t.hero.title}
       />
-      <AchievementsSection achievements={t.achievements.slice(0, 3)} />
-      <ProjectsSection projects={t.projects.slice(0, 3)} />
+      <AchievementsSection
+        achievements={t.achievements.slice(0, 3)}
+        title={t.homeSection.achievementSectionTitle}
+      />
+      <ProjectsSection
+        projects={t.projects.slice(0, 3)}
+        title={t.homeSection.projectSectionTitle}
+      />
     </main>
   );
 }

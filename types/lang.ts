@@ -16,6 +16,15 @@ export type langtype = {
     companyLink: string;
     description: string;
   };
+  homeSection: {
+    achievementSectionTitle: string;
+    projectSectionTitle: string;
+  };
+  aboutSection: {
+    statsTitle: string;
+    techStackTitle: string;
+    experienceTitle: string;
+  };
   achievements: {
     title: string;
     description: string;

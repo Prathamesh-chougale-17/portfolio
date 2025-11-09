@@ -6,7 +6,7 @@ import { useLocale } from "@/context/locale-provider";
 
 export default function OfflinePage() {
   const { t } = useLocale();
-  
+
   return (
     <div className="flex h-[78vh] min-h-[60vh] flex-col items-center justify-center px-4 text-center">
       <div className="mb-8">

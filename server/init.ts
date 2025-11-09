@@ -5,7 +5,7 @@ import { cache } from "react";
  * Create the tRPC context for each request
  * This is where you can add things like user authentication, database connections, etc.
  */
-export const createTRPCContext = cache(async () => {
+export const createTRPCContext = cache(() => {
   return {
     // Add any context data here (e.g., user session, database client)
     headers: new Headers(),
@@ -41,7 +41,7 @@ export const publicProcedure = t.procedure;
 /**
  * Middleware for procedures that require validation
  */
-export const validatedProcedure = publicProcedure.use(async (opts) => {
+export const validatedProcedure = publicProcedure.use((opts) => {
   // Add any validation logic here
   return opts.next();
 });

@@ -10,12 +10,13 @@ type TechSkill = {
 
 type TechStackSectionProps = {
   skills: TechSkill[];
+  title: string;
 };
 
-export function TechStackSection({ skills }: TechStackSectionProps) {
+export function TechStackSection({ skills, title }: TechStackSectionProps) {
   return (
     <section className="mb-16">
-      <h2 className="mb-8 font-bold text-3xl tracking-tight">Tech Stack</h2>
+      <h2 className="mb-8 font-bold text-3xl tracking-tight">{title}</h2>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {skills.map((Skill, index) => (
           <Card
