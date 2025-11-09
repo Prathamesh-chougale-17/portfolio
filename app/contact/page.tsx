@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     "Get in touch with Prathamesh Chougale. Open to full-stack development opportunities, collaborations, and tech discussions. Reach out via email, LinkedIn, or GitHub.",
   alternates: {
-    canonical: `${SITE_URL}/contact`,
+    canonical: "/contact",
   },
   openGraph: {
     title: "Contact Prathamesh Chougale | Let's Connect",

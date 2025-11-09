@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Learn more about Prathamesh Chougale - Full-stack Software Engineer with expertise in React, Next.js, TypeScript, and Node.js. Winner of Smart India Hackathon and HSBC Hackathon 2024.",
   alternates: {
-    canonical: `${SITE_URL}/about`,
+    canonical: "/about",
   },
   openGraph: {
     title: "About Prathamesh Chougale | Software Engineer",

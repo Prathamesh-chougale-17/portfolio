@@ -38,6 +38,9 @@ export const metadata: Metadata = {
   description:
     "Full-stack software engineer specializing in React, Next.js, and TypeScript. Winner of Smart India Hackathon and HSBC Hackathon 2024. Building performant, scalable web applications.",
   metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "Software Engineer",
     "Full Stack Developer",
@@ -111,7 +114,6 @@ export default function RootLayout({
         <meta content="Prathamesh Chougale" name="apple-mobile-web-app-title" />
         <meta content="yes" name="mobile-web-app-capable" />
         <meta content="#000000" name="theme-color" />
-        <link href="https://prathamesh-chougale.vercel.app" rel="canonical" />
         <meta
           content={env.GOOGLE_SITE_VERIFICATION}
           name="google-site-verification"

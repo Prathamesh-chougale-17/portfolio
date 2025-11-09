@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Explore Prathamesh Chougale's portfolio of full-stack web applications, including Smart India Hackathon and HSBC Hackathon winning projects. Built with React, Next.js, TypeScript, Node.js, and more.",
   alternates: {
-    canonical: `${SITE_URL}/projects`,
+    canonical: "/projects",
   },
   openGraph: {
     title: "Projects | Prathamesh Chougale",
