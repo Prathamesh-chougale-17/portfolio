@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import AboutClient from "@/components/about/about-client";
 import { JsonLd } from "@/components/json-ld";
 import { OG_IMAGE, SITE_URL } from "@/lib/constant";
 import { generateProfilePageSchema } from "@/lib/structured-data";
-import AboutClient from "./about-client";
 
 export const metadata: Metadata = {
   title: "About Me",

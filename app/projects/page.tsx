@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
+import ProjectsClient from "@/components/project/projects-client";
 import { OG_IMAGE, SITE_URL } from "@/lib/constant";
 import { generateProjectSchema } from "@/lib/structured-data";
-import ProjectsClient from "./projects-client";
 
 export const metadata: Metadata = {
   title: "Projects",
