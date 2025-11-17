@@ -10,7 +10,7 @@ export const mr: langtype = {
     { title: "संपर्क", href: "/contact" },
   ],
   hero: {
-    name: "प्रथमेश चौगुले",
+    name: "प्रथमेश चौगले",
     image: "/profile.webp",
     title: "सॉफ्टवेअर अभियंता",
     intro: "नमस्ते, मैं ",

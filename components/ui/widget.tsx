@@ -2,31 +2,28 @@ import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
 import { cn } from "@/lib/utils";
 
-const widgetVariants = cva(
-  "relative flex flex-col whitespace-nowrap rounded-3xl border-2 shadow-md dark:shadow-secondary/50",
-  {
-    variants: {
-      size: {
-        sm: "size-48",
-        md: "h-48 w-96",
-        lg: "size-96",
-      },
-      design: {
-        default: "p-6",
-        mumbai: "p-4",
-      },
-      variant: {
-        default: "bg-background text-foreground",
-        secondary: "bg-secondary text-secondary-foreground",
-      },
+const widgetVariants = cva("relative flex flex-col whitespace-nowrap", {
+  variants: {
+    size: {
+      sm: "size-48",
+      md: "h-48 w-96",
+      lg: "size-96",
     },
-    defaultVariants: {
-      size: "sm",
-      design: "default",
-      variant: "default",
+    design: {
+      default: "p-6",
+      mumbai: "p-4",
     },
-  }
-);
+    variant: {
+      default: "bg-background text-foreground",
+      secondary: "bg-secondary text-secondary-foreground",
+    },
+  },
+  defaultVariants: {
+    size: "sm",
+    design: "default",
+    variant: "default",
+  },
+});
 
 export interface WidgetProps
   extends React.HTMLAttributes<HTMLDivElement>,

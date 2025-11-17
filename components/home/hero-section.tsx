@@ -1,10 +1,10 @@
-import Image from "next/image";
+import ClockWidget from "@/components/clock-05";
 import { Badge } from "@/components/ui/badge";
 import type { HeroSectionProps } from "@/types/home";
 
 export function HeroSection({
   name,
-  image,
+  // image,
   intro,
   title,
   company,
@@ -32,14 +32,8 @@ export function HeroSection({
         </div>
         <p className="text-lg text-muted-foreground">{description}</p>
       </div>
-      <div className="relative h-64 w-64 md:h-80 md:w-80">
-        <Image
-          alt={name}
-          className="rounded-full border-4 border-primary object-cover hover:animate-pulse"
-          fill
-          priority // mobile vs desktop
-          src={image}
-        />
+      <div className="flex items-center justify-center">
+        <ClockWidget className="p-0" size="lg" />
       </div>
     </section>
   );
